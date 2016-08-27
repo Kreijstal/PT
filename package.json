@@ -4,7 +4,8 @@
   "description": " \"A proxy for ponytown, so we can actually read this piece of shit code\"",
   "main": "proxytown.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node proxytown"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,9 @@
   "bugs": {
     "url": "https://github.com/DrMilgram/PT/issues"
   },
-  "homepage": "https://github.com/DrMilgram/PT#readme"
+  "homepage": "https://github.com/DrMilgram/PT#readme",
+  "dependencies": {
+    "http-proxy": "^1.14.0",
+    "jsdom": "^9.4.2"
+  }
 }
