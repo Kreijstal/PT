@@ -1,3 +1,4 @@
+//Shared with love by bootsy.
 var http = require('http'),
     httpProxy = require('http-proxy'),
     fs = require('fs'),
@@ -5,8 +6,8 @@ var http = require('http'),
 
 var proxy = httpProxy.createProxyServer({
   target: {
-    host: 'example.com',
-    port: 80
+    host: 'https://pony.town/',
+    port: 443
   }
 });
 
