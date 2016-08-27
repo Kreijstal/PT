@@ -1,0 +1,32 @@
+{
+  "name": "proxytown",
+  "version": "0.0.1",
+  "description": " \"A proxy for ponytown, so we can actually read this piece of shit code\"",
+  "main": "proxytown.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DrMilgram/PT.git"
+  },
+  "keywords": [
+    "ponytown",
+    "game",
+    "proxy",
+    "fun",
+    "bootsy",
+    "niggest",
+    "octavia",
+    "catvideos",
+    "pony",
+    "mlp",
+    "4chan"
+  ],
+  "author": "Bootsy",
+  "license": "No license",
+  "bugs": {
+    "url": "https://github.com/DrMilgram/PT/issues"
+  },
+  "homepage": "https://github.com/DrMilgram/PT#readme"
+}
