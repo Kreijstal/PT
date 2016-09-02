@@ -23,7 +23,7 @@ var server = http.createServer(function(req, res) {
         console.log(req.headers.cookie)
         console.log('hm')
         proxy.web(req, res);
-     /*   jsdom.env({
+      /*  jsdom.env({
             url: "https://pony.town",
             cookie: req.headers.cookie,
             headers: {
@@ -36,9 +36,9 @@ var server = http.createServer(function(req, res) {
                     return a
                 }).forEach(function(a) {
                     scripts+=a.outerHTML
-             //       a.parentNode.removeChild(a)
+                    a.parentNode.removeChild(a)
                 });
-                //document.body.innerHTML += "<!--"+scripts.replace(/--/g,"-/-")+"--><script src=\"/js/libraries.js\"></script>    <script src=\"/js/modules.js\"></script>    <script src=\"/js/bootstrap.js\"></script>";
+                document.body.innerHTML += "<!--"+scripts.replace(/--/g,"-/-")+"--><script src=\"/js/libraries.js\"></script>    <script src=\"/js/modules.js\"></script>    <script src=\"/js/bootstrap.js\"></script>";
                 res.writeHead(200, {
                     'Content-Type': 'text/html'
                 });
@@ -50,6 +50,13 @@ var server = http.createServer(function(req, res) {
 
     } else if (["/js/libraries.js"].indexOf(req.url) > -1) {
         fs.createReadStream(path.join(__dirname, 'libraries.js')).pipe(res)
+    }else if (["/scripts/bootstrap-48355.js"].indexOf(req.url) > -1) {//there was no other way
+		console.log("bootstrap requested");
+        res.writeHead(200, {
+                    'Content-Type': 'text/javascript'
+                });
+        res.write("document.write(\"<script src=\\\"\/js\/libraries.js\\\"><\/script>    <script src=\\\"\/js\/modules.js\\\"><\/script>    <script src=\\\"\/js\/bootstrap.js\\\"><\/script>\");");
+        res.end();
     } else if (["/js/modules.js"].indexOf(req.url) > -1) {
         fs.createReadStream(path.join(__dirname, 'modules.js')).pipe(res)
     } else if (["/js/bootstrap.js"].indexOf(req.url) > -1) {
