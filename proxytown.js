@@ -15,6 +15,7 @@ var proxy = httpProxy.createProxyServer({
 });
 
 var server = http.createServer(function(req, res) {
+	delete req.headers.referer;
     console.log(req.url)
     if (req.url === "/script.js") {
         fs.createReadStream(path.join(__dirname, 'script.js')).pipe(res)
