@@ -16,6 +16,14 @@ var proxy = httpProxy.createProxyServer({
 
 var server = http.createServer(function(req, res) {
 	delete req.headers.referer;
+	/*res.on2=res.on;
+	res.on=function(){console.log("On!",arguments);
+	//
+	return res.on2.apply(this,arguments)}
+	var res2=res
+	res=Proxy.create({get:function(a,b){console.log("Get",b);return res2[b]},set:function(a,b,c){console.log("Set",b);res2[b]=c}},res2)
+*/
+	//console.log("hello",Object.keys(res))
     console.log(req.url)
     if (req.url === "/script.js") {
         fs.createReadStream(path.join(__dirname, 'script.js')).pipe(res)
@@ -51,7 +59,7 @@ var server = http.createServer(function(req, res) {
 
     } else if (["/js/libraries.js"].indexOf(req.url) > -1) {
         fs.createReadStream(path.join(__dirname, 'libraries.js')).pipe(res)
-    }else if (["/scripts/bootstrap-48355.js"].indexOf(req.url) > -1) {//there was no other way
+    }else if (/\/scripts\/bootstrap-[0-9]+.js/.test(req.url)) {//there was no other way
 		console.log("bootstrap requested");
         res.writeHead(200, {
                     'Content-Type': 'text/javascript'

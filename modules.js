@@ -21551,23 +21551,25 @@ var modules =
           e.version = r("data-version") || null ,
           e.oauthProviders = JSON.parse(i("oauth-providers") || "[]"),
           n.exports
-      }),
-      t.registerDynamic("main", ["3", "4", "5", "d1", "2f", "7", "20"], !0, function (t, e, n) {
+      });
+	 t.registerDynamic("main", ["3", "4", "5", "d1", "2f", "7", "20"], !0, function (t, e, n) {
         "use strict";
-        t("3"),
-          t("4"),
-          t("5"),
+        t("3");
+          t("4");
+          t("5");
           t("d1");
         var r = t("2f")
           , i = t("7")
           , o = t("20");
-        return o.debug && r.config({
+        o.debug && r.config({
           warnings: !1,
           longStackTraces: !0
-        }),
-          i.element().ready(function () {
-            return i.bootstrap(document, ["app"])
-          }),
-          n.exports
+        });
+        //  i.element().ready(function () {
+			//thanks to document.write magic this isn't so ready-ee anymore
+          /*  return */
+		  i.bootstrap(document, ["app"]);
+        //  }),
+         return n.exports
       })
   }
