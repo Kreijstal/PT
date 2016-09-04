@@ -54626,7 +54626,7 @@ function getLibraries(System){
           }("undefined" != typeof self && self || "undefined" != typeof window && window || this.content || this)
         }(),
           i()
-      }
+      },
   "CanvasContext2DEllipseShim":function (e, n, r) {
         var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
         return function () {
