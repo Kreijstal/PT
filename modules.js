@@ -17,7 +17,7 @@ var npmModules = (function(System) {
     }
     function register(name) {
         var registerArray=getRegisterArray(name);
-        System.registerDynamic(registerArray);
+        System.registerDynamic.apply(this,registerArray);
     }
 
 });
