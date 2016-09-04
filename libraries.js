@@ -1,4 +1,4 @@
-function getlibraries(System){
+function getLibraries(System){
   return {
   angular: function () {
     "format global";
