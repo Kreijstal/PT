@@ -1808,10 +1808,10 @@ var modules =
               var self = this;
               return this.playing || this.joining ? r.resolve() : (this.joining = !0,
                 this.model.join(this.server.id, t).then(function (t) {
-                  var clientSocket = new clientSocket.ClientSocket(t);
-                  clientSocket.client = new clientActions.ClientActions(self, clientSocket.server, self.$timeout);
-                    clientSocket.connect();
-                    game.socket = clientSocket;
+                  var client-socket = new clientSocket.ClientSocket(t);
+                  client-socket.client = new clientActions.ClientActions(self, client-socket.server, self.$timeout);
+                    client-socket.connect();
+                    game.socket = client-socket;
                   var r = a.start(game)
                     , i = r.promise
                     , s = r.cancel;
