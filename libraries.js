@@ -54389,5 +54389,240 @@ var libraries = {
     } else if (typeof self !== 'undefined' && self !== null) {
       self.P = self.Promise;
     }
-  }
+  },
+  "SystemJS/lib/global-helers.js":(function (__global) {
+      function read(t, e) {
+        for (var n = t.split("."); n.length;)
+          e = e[n.shift()];
+        return e
+      }
+
+      function getGlobalValue(exports) {
+        if ("string" == typeof exports)
+          return read(exports, __global);
+        if (!(exports instanceof Array))
+          throw new Error("Global exports must be a string or array.");
+        for (var r = {}, i = !0, o = 0; o < exports.length; o++) {
+          var a = read(exports[o], __global);
+          i && (r.default = a,
+            i = !1),
+            r[exports[o].split(".").pop()] = a
+        }
+        return r
+      }
+
+      function forEachGlobal(callback) {
+        if (Object.keys)
+          Object.keys(__global).forEach(callback);
+        else
+          for (var n in __global)
+            hasOwnProperty.call(__global, n) && callback(n)
+      }
+
+      function forEachGlobalValue(callback) {
+        forEachGlobal(function (globalName) {
+          if (-1 == l.call(ignoredGlobalProps, globalName)) {
+            try {
+              var r = __global[globalName]
+            } catch (t) {
+              ignoredGlobalProps.push(globalName)
+            }
+            callback(globalName, r)
+          }
+        })
+      }
+
+      var a, hasOwnProperty = Object.prototype.hasOwnProperty, l = Array.prototype.indexOf || function (t) {
+          for (var e = 0, n = this.length; n > e; e++)
+            if (this[e] === t)
+              return e;
+          return -1
+        }
+        , ignoredGlobalProps = ["_g", "sessionStorage", "localStorage", "clipboardData", "frames", "frameElement", "external", "mozAnimationStartTime", "webkitStorageInfo", "webkitIndexedDB", "mozInnerScreenY", "mozInnerScreenX"];
+      System.set("@@global-helpers", System.newModule({
+        prepareGlobal: function (t, n, i) {
+          var s = __global.define;
+          __global.define = void 0;
+          var u;
+          if (i) {
+            u = {};
+            for (var l in i)
+              u[l] = __global[l],
+                __global[l] = i[l]
+          }
+          return n || (a = {},
+            forEachGlobalValue(function (t, e) {
+              a[t] = e
+            })),
+            function () {
+              var t;
+              if (n)
+                t = getGlobalValue(n);
+              else {
+                t = {};
+                var i, l;
+                forEachGlobalValue(function (e, n) {
+                  a[e] !== n && "undefined" != typeof n && (t[e] = n,
+                    "undefined" != typeof i ? l || i === n || (l = !0) : i = n)
+                }),
+                  t = l ? t : i
+              }
+              if (u)
+                for (var c in u)
+                  __global[c] = u[c];
+              return __global.define = s,
+                t
+            }
+        }
+      }))
+    }),
+  amdModules:(function (e) {
+        function n(t, e) {
+          t = t.replace(s, "");
+          var n = t.match(c)
+            , r = (n[1].split(",")[e] || "require").replace(f, "")
+            , i = p[r] || (p[r] = new RegExp(u + r + l, "g"));
+          i.lastIndex = 0;
+          for (var o, a = []; o = i.exec(t);)
+            a.push(o[2] || o[3]);
+          return a
+        }
+
+        function r(t, e, n, i) {
+          if ("object" == typeof t && !(t instanceof Array))
+            return r.apply(null, Array.prototype.splice.call(arguments, 1, arguments.length - 1));
+          if ("string" == typeof t && "function" == typeof e && (t = [t]),
+              !(t instanceof Array)) {
+            if ("string" == typeof t) {
+              var a = o.get(t);
+              return a.__useDefault ? a.default : a
+            }
+            throw new TypeError("Invalid require")
+          }
+          for (var s = [], u = 0; u < t.length; u++)
+            s.push(o.import(t[u], i));
+          Promise.all(s).then(function (t) {
+            e && e.apply(null, t)
+          }, n)
+        }
+
+        function i(t, i, s) {
+          "string" != typeof t && (s = i,
+            i = t,
+            t = null ),
+          i instanceof Array || (s = i,
+            i = ["require", "exports", "module"].splice(0, s.length)),
+          "function" != typeof s && (s = function (t) {
+            return function () {
+              return t
+            }
+          }(s)),
+          void 0 === i[i.length - 1] && i.pop();
+          var u, l, c;
+          -1 != (u = a.call(i, "require")) && (i.splice(u, 1),
+          t || (i = i.concat(n(s.toString(), u)))),
+          -1 != (l = a.call(i, "exports")) && i.splice(l, 1),
+          -1 != (c = a.call(i, "module")) && i.splice(c, 1);
+          var f = {
+            name: t,
+            deps: i,
+            execute: function (t, n, a) {
+              for (var f = [], p = 0; p < i.length; p++)
+                f.push(t(i[p]));
+              a.uri = a.id,
+                a.config = function () {
+                }
+                ,
+              -1 != c && f.splice(c, 0, a),
+              -1 != l && f.splice(l, 0, n),
+              -1 != u && f.splice(u, 0, function (e, n, i) {
+                return "string" == typeof e && "function" != typeof n ? t(e) : r.call(o, e, n, i, a.id)
+              });
+              var h = s.apply(-1 == l ? e : n, f);
+              return "undefined" == typeof h && a && (h = a.exports),
+                "undefined" != typeof h ? h : void 0
+            }
+          };
+          if (t)
+            h.anonDefine || h.isBundle ? h.anonDefine && h.anonDefine.name && (h.anonDefine = null ) : h.anonDefine = f,
+              h.isBundle = !0,
+              o.registerDynamic(f.name, f.deps, !1, f.execute);
+          else {
+            if (h.anonDefine && !h.anonDefine.name)
+              throw new Error("Multiple anonymous defines in module " + t);
+            h.anonDefine = f
+          }
+        }
+
+        var o = System
+          , a = Array.prototype.indexOf || function (t) {
+            for (var e = 0, n = this.length; n > e; e++)
+              if (this[e] === t)
+                return e;
+            return -1
+          }
+          , s = /(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/gm
+          , u = "(?:^|[^$_a-zA-Z\\xA0-\\uFFFF.])"
+          , l = "\\s*\\(\\s*(\"([^\"]+)\"|'([^']+)')\\s*\\)"
+          , c = /\(([^\)]*)\)/
+          , f = /^\s+|\s+$/g
+          , p = {};
+        i.amd = {};
+        var h = {
+          isBundle: !1,
+          anonDefine: null
+        };
+        o.amdDefine = i,
+          o.amdRequire = r
+      }),
+  "toBlobShim":function (e, n, r) {
+        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
+        return function () {
+          !function (t) {
+            "use strict";
+            var e, n = t.Uint8Array, r = t.HTMLCanvasElement, i = r && r.prototype, o = /\s*;\s*base64\s*(?:;|$)/i, a = "toDataURL", s = function (t) {
+                for (var r, i, o, a = t.length, s = new n(a / 4 * 3 | 0), u = 0, l = 0, c = [0, 0], f = 0, p = 0; a--;)
+                  i = t.charCodeAt(u++),
+                    r = e[i - 43],
+                  255 !== r && r !== o && (c[1] = c[0],
+                    c[0] = i,
+                    p = p << 6 | r,
+                    f++,
+                  4 === f && (s[l++] = p >>> 16,
+                  61 !== c[1] && (s[l++] = p >>> 8),
+                  61 !== c[0] && (s[l++] = p),
+                    f = 0));
+                return s
+              }
+              ;
+            n && (e = new n([62, -1, -1, -1, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, 0, -1, -1, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1, -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51])),
+            r && !i.toBlob && (i.toBlob = function (t, e) {
+              if (e || (e = "image/png"),
+                  this.mozGetAsFile)
+                return void t(this.mozGetAsFile("canvas", e));
+              if (this.msToBlob && /^\s*image\/png\s*(?:$|;)/i.test(e))
+                return void t(this.msToBlob());
+              var r, i = Array.prototype.slice.call(arguments, 1), u = this[a].apply(this, i), l = u.indexOf(","), c = u.substring(l + 1), f = o.test(u.substring(0, l));
+              Blob.fake ? (r = new Blob,
+                f ? r.encoding = "base64" : r.encoding = "URI",
+                r.data = c,
+                r.size = c.length) : n && (r = f ? new Blob([s(c)], {
+                type: e
+              }) : new Blob([decodeURIComponent(c)], {
+                type: e
+              })),
+                t(r)
+            }
+              ,
+              i.toDataURLHD ? i.toBlobHD = function () {
+                a = "toDataURLHD";
+                var t = this.toBlob();
+                return a = "toDataURL",
+                  t
+              }
+                : i.toBlobHD = i.toBlob)
+          }("undefined" != typeof self && self || "undefined" != typeof window && window || this.content || this)
+        }(),
+          i()
+      }
 }

@@ -15,7 +15,9 @@ var proxy = httpProxy.createProxyServer({
 });
 
 var server = http.createServer(function(req, res) {
-	delete req.headers.referer;
+    console.log("referer",req.headers.referer)
+	//delete req.headers.referer;
+	req.headers.referer="https://pony.town/"
 	/*res.on2=res.on;
 	res.on=function(){console.log("On!",arguments);
 	//
