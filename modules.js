@@ -14,7 +14,7 @@ var npmModules = (function(System) {
             name:"d3",
             dependencies: [],
             executingRequire:false
-        
+        }
     }
           
     var PassThroughs={
