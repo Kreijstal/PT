@@ -4,7 +4,24 @@ var npmModules = (function(System) {
             name:"4",
             dependencies: [],
             executingRequire:false
-        }
+        },
+        "CanvasContext2DEllipseShim":
+            name:"5",
+            dependencies: [],
+            executingRequire:false
+        },
+        "angular.js":
+            name:"d3",
+            dependencies: [],
+            executingRequire:false
+        
+    }
+          
+    var PassThroughs={
+      Angular:{
+        name:"7"
+        passTo:"angular.js"
+      }
     }
     
     libraries["SystemJS/lib/global-helers.js"]("undefined" != typeof self ? self : global);
@@ -18,6 +35,13 @@ var npmModules = (function(System) {
     function register(name) {
         var registerArray=getRegisterArray(name);
         System.registerDynamic.apply(this,registerArray);
+    }
+    function registerPassthrough(name) {
+        var obj=PassThroughs[name];
+        System.registerDynamic(obj.name,[mdls[obj[name]].name],true,function(require,exports,module){
+        module.exports = require(mdls[obj[name]].name);
+        return module.exports;
+        });
     }
 
 });
@@ -42,32 +66,6 @@ var modules =
         })
       })();
       
-      System.registerDynamic("5", [], !1, function (e, n, r) {
-        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
-        return function () {
-          window.performance = window.performance || Date;
-          try {
-            "undefined" == typeof CanvasRenderingContext2D.prototype.ellipse && (CanvasRenderingContext2D.prototype.ellipse = function (t, e, n, r, i, o, a, s) {
-                this.save(),
-                  this.translate(t, e),
-                  this.rotate(i),
-                  this.scale(n, r),
-                  this.arc(0, 0, 1, o, a, s),
-                  this.restore()
-              }
-            )
-          } catch (t) {
-          }
-          try {
-            "undefined" == typeof navigator.getGamepads && (navigator.getGamepads = function () {
-                return []
-              }
-            )
-          } catch (t) {
-          }
-        }(),
-          i()
-      });
       System.registerDynamic("6", ["7"], !1, function (e, n, r) {
         var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
         libraries.angular_route();
@@ -17018,15 +17016,8 @@ var modules =
         return n.exports = t("d2"),
           n.exports
       }),
-      System.registerDynamic("d3", [], !1, function (e, n, r) {
-        var i = System.get("@@global-helpers").prepareGlobal(r.id, "angular", null);
-        libraries.angular()
-        return i();
-      });
-      System.registerDynamic("7", ["d3"], !0, function (t, e, n) {
-        return n.exports = t("d3"),
-          n.exports
-      });
+
+
       System.registerDynamic("20", [], !0, function (t, e, n) {
         "use strict";
         function r(t) {

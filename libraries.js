@@ -1,5 +1,6 @@
 function getLibraries(System){
-  return {
+  //these are the libraries that are unlikely to be changed
+  var libraries={
   angular: function () {
     "format global";
     "exports angular";
@@ -54626,6 +54627,37 @@ function getLibraries(System){
         }(),
           i()
       }
+  "CanvasContext2DEllipseShim":function (e, n, r) {
+        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
+        return function () {
+          window.performance = window.performance || Date;
+          try {
+            "undefined" == typeof CanvasRenderingContext2D.prototype.ellipse && (CanvasRenderingContext2D.prototype.ellipse = function (t, e, n, r, i, o, a, s) {
+                this.save(),
+                  this.translate(t, e),
+                  this.rotate(i),
+                  this.scale(n, r),
+                  this.arc(0, 0, 1, o, a, s),
+                  this.restore()
+              }
+            )
+          } catch (t) {
+          }
+          try {
+            "undefined" == typeof navigator.getGamepads && (navigator.getGamepads = function () {
+                return []
+              }
+            )
+          } catch (t) {
+          }
+        }(),
+          i()
+      },
+  "angular.js":function (e, n, r) {
+        var i = System.get("@@global-helpers").prepareGlobal(r.id, "angular", null);
+        libraries.angular()
+        return i();
+      }
 }
-  
+ return libraries; 
 }
