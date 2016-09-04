@@ -891,11 +891,11 @@ var modules =
                     window.addEventListener("beforeunload", this.beforeunload);
                   var packetReader = new PacketReader.default
                     , packetWriter = new PacketWriter.default
-                    , handlers = handlers.createHandlers(o.getBinary(e.server), o.getBinary(e.client))
+                    , theHandlers = handlers.createHandlers(o.getBinary(e.server), o.getBinary(e.client))
                     , remoteNames = o.getNames(e.server)
                     , readNames = o.getNames(e.client)
                     , ignorePackets = o.getIgnore(e.server).concat(o.getIgnore(e.client));
-                  e.debug ? this.packet = new debugPacketHandler.DebugPacketHandler(readNames, remoteNames, packetWriter, packetReader, handlers, ignorePackets, this.log) : this.packet = new packetHandler.PacketHandler(readNames, remoteNames, packetWriter, packetReader, handlers),
+                  e.debug ? this.packet = new debugPacketHandler.DebugPacketHandler(readNames, remoteNames, packetWriter, packetReader, theHandlers, ignorePackets, this.log) : this.packet = new packetHandler.PacketHandler(readNames, remoteNames, packetWriter, packetReader, theHandlers),
                     this.packet.supportsBinary = !!this.socket.binaryType,
                     this.socket.binaryType = "arraybuffer",
                     this.socket.onmessage = function (e) {
