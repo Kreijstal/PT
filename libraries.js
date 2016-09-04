@@ -1,4 +1,5 @@
-var libraries = {
+function getlibraries(System){
+  return {
   angular: function () {
     "format global";
     "exports angular";
@@ -54625,4 +54626,6 @@ var libraries = {
         }(),
           i()
       }
+}
+  
 }
