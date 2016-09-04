@@ -39,7 +39,7 @@ var npmModules = (function(System) {
     }
     function registerPassthrough(name) {
         var obj=PassThroughs[name];
-        System.registerDynamic(obj.name,[mdls[obj[name]].name],true,function(require,exports,module){
+        System.registerDynamic(obj.name,[mdls[PassThroughs[name].passTo].name],true,function(require,exports,module){
         module.exports = require(mdls[obj[name]].name);
         return module.exports;
         });
