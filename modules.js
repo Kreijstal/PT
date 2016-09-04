@@ -27,6 +27,7 @@ var npmModules = (function(System) {
     libraries["SystemJS/lib/global-helers.js"]("undefined" != typeof self ? self : global);
     libraries.amdModules("undefined" != typeof self ? self : global);
     Object.keys(mdls).forEach(register);
+    Object.keys(PassThrough).forEach(registerPassthrough);
     
     function getRegisterArray(name){
         var obj=mdls[name];
