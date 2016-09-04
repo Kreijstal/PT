@@ -21,12 +21,14 @@ var npmModules = (function(System) {
     }
 
 });
+var libraries;
 var modules =
   function (System) {
     //These variables are not used in ponytown.
     var e = this.require
       , n = this.exports
       , r = this.module;
+      libraries=getLibraries(System);
       npmModules(System);
       (function () {
         !function (t, i) {
