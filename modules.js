@@ -5,12 +5,12 @@ var npmModules = (function(System) {
             dependencies: [],
             executingRequire:false
         },
-        "CanvasContext2DEllipseShim":
+        "CanvasContext2DEllipseShim":{
             name:"5",
             dependencies: [],
             executingRequire:false
         },
-        "angular.js":
+        "angular.js":{
             name:"d3",
             dependencies: [],
             executingRequire:false
