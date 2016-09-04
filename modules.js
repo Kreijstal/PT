@@ -19,7 +19,7 @@ var npmModules = (function(System) {
           
     var PassThroughs={
       Angular:{
-        name:"7"
+        name:"7",
         passTo:"angular.js"
       }
     }
