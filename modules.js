@@ -18,27 +18,7 @@ var modules =
           return t
         })
       })();
-      
 
-      System.registerDynamic("9", ["7"], !1, function (e, n, r) {
-        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
-        libraries.angular_animate();
-        return i()
-      });
-      System.registerDynamic("a", ["9"], !0, function (t, e, n) {
-        return n.exports = t("9"),
-          n.exports
-      });
-      System.registerDynamic("b", [], !1, function (e, n, r) {
-        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
-        libraries.angularUI();
-        return i()
-      });
-      System.registerDynamic("c", [], !1, function (e, i, o) {
-        var a = System.get("@@global-helpers").prepareGlobal(o.id, null, null);
-        libraries.bluebird();
-        return a();
-      });
       System.registerDynamic("d", ["c"], !0, function (t, e, n) {
         return n.exports = t("c"),
           n.exports
