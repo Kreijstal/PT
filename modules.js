@@ -1572,9 +1572,9 @@ var modules =
         return e.ClientActions = x,
           n.exports
       });
-      System.registerDynamic("2e", ["2f", "28", "1d", "22", "2d", "2a", "20"], !0, function(require, exports, module) {
+      System.registerDynamic("2e", [getCodeName("BlueBird"), "28", "1d", "22", "2d", "2a", "20"], !0, function(require, exports, module) {
         "use strict";
-        var r = require("2f"),
+        var r = require(getCodeName("BlueBird")),
           i = require("28"),
           clientSocket = require("1d"),
           a = require("22"),
@@ -1711,7 +1711,7 @@ var modules =
           e.reportError = i,
           n.exports
       });
-      System.registerDynamic("31", ["2f", "28", "32", "22", "30", "20"], !0, function(t, e, n) {
+      System.registerDynamic("31", [getCodeName("BlueBird"), "28", "32", "22", "30", "20"], !0, function(t, e, n) {
         "use strict";
 
         function r(t) {
@@ -1722,7 +1722,7 @@ var modules =
           return e.lastUsed && t.lastUsed ? e.lastUsed.localeCompare(t.lastUsed) : 0
         }
 
-        var o = t("2f"),
+        var o = t(getCodeName("BlueBird")),
           a = t("28"),
           s = t("32"),
           u = t("22"),
@@ -13987,7 +13987,7 @@ var modules =
           },
           n.exports
       }),
-      System.registerDynamic("c3", ["2f", "53", "2e", "31", "33", "35", "37", "39", "3b", "3e", "40", "41", "42", "47", "49", "4b", "4d", "4f", "51", "c2"], !0, function(t, e, n) {
+      System.registerDynamic("c3", [getCodeName("BlueBird"), "53", "2e", "31", "33", "35", "37", "39", "3b", "3e", "40", "41", "42", "47", "49", "4b", "4d", "4f", "51", "c2"], !0, function(t, e, n) {
         "use strict";
 
         function r(t) {
@@ -14053,7 +14053,7 @@ var modules =
             t.component("ponyBox", E.default)
         }
 
-        var i = t("2f"),
+        var i = t(getCodeName("BlueBird")),
           o = t("53"),
           a = t("2e"),
           s = t("31"),
@@ -15389,7 +15389,7 @@ var modules =
           }],
           n.exports
       });
-      System.registerDynamic("22", ["2f", "28", "21"], !0, function(t, e, n) {
+      System.registerDynamic("22", [getCodeName("BlueBird"), "28", "21"], !0, function(t, e, n) {
         "use strict";
 
         function matchString(t) {
@@ -15677,7 +15677,7 @@ var modules =
           return isTouch(t) ? t.touches[0].pageY : t.pageY
         }
 
-        var BluebirdPromise = t("2f"),
+        var BluebirdPromise = t(getCodeName("BlueBird")),
           W = t("28"),
           X = t("21"),
           Z = "abcdefghijklmnopqrstuvwxyz0123456789_",
@@ -15750,7 +15750,7 @@ var modules =
           e.getY = getY,
           n.exports
       }),
-      System.registerDynamic("3c", ["2f", "36", "22"], !0, function(t, e, n) {
+      System.registerDynamic("3c", [getCodeName("BlueBird"), "36", "22"], !0, function(t, e, n) {
         "use strict";
 
         function loadSprites(t, e) {
@@ -15819,7 +15819,7 @@ var modules =
           }
         }
 
-        var BluebirdPromise = t("2f"),
+        var BluebirdPromise = t(getCodeName("BlueBird")),
           c = t("36"),
           f = t("22");
         e.loadSprites = loadSprites,
@@ -18739,14 +18739,8 @@ var modules =
           }]),
           n.exports
       }),
-      System.registerDynamic("d2", ["d"], !1, function(require, i, module) {
-        return module.exports = require("d"),
-          module.exports
-      }),
-      System.registerDynamic("2f", ["d2"], !0, function(t, e, n) {
-        return n.exports = t("d2"),
-          n.exports
-      }),
+
+
 
 
       System.registerDynamic("20", [], !0, function(t, e, n) {
@@ -18766,13 +18760,13 @@ var modules =
           e.oauthProviders = JSON.parse(i("oauth-providers") || "[]"),
           n.exports
       });
-    System.registerDynamic("main", ["3", "4", "5", "d1", "2f", getCodeName("Angular"), "20"], !0, function(t, e, n) {
+    System.registerDynamic("main", ["3", "4", "5", "d1", getCodeName("BlueBird"), getCodeName("Angular"), "20"], !0, function(t, e, n) {
       "use strict";
       t("3");
       t("4");
       t("5");
       t("d1");
-      var BlueBirdPRomise = t("2f"),
+      var BlueBirdPRomise = t(getCodeName("BlueBird")),
         angular = t(getCodeName("Angular")),
         PonyTownAppSettings = t("20");
       PonyTownAppSettings.debug && BlueBirdPRomise.config({
