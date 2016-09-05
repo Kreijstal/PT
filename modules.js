@@ -1,51 +1,3 @@
-var npmModules = (function(System) {
-    var mdls = {
-       "toBlobShim":{
-            name:"4",
-            dependencies: [],
-            executingRequire:false
-        },
-        "CanvasContext2DEllipseShim":{
-            name:"5",
-            dependencies: [],
-            executingRequire:false
-        },
-        "angular.js":{
-            name:"d3",
-            dependencies: [],
-            executingRequire:false
-        }
-    }
-          
-    var PassThroughs={
-      Angular:{
-        name:"7",
-        passTo:"angular.js"
-      }
-    }
-    
-    libraries["SystemJS/lib/global-helers.js"]("undefined" != typeof self ? self : global);
-    libraries.amdModules("undefined" != typeof self ? self : global);
-    Object.keys(mdls).forEach(register);
-    Object.keys(PassThroughs).forEach(registerPassthrough);
-    
-    function getRegisterArray(name){
-        var obj=mdls[name];
-        return [obj.name,obj.dependencies,obj.executingRequire,libraries[name]];
-    }
-    function register(name) {
-        var registerArray=getRegisterArray(name);
-        System.registerDynamic.apply(this,registerArray);
-    }
-    function registerPassthrough(name) {
-        var obj=PassThroughs[name];
-        System.registerDynamic(obj.name,[mdls[PassThroughs[name].passTo].name],true,function(require,exports,module){
-        module.exports = require(mdls[PassThroughs[name].passTo].name);
-        return module.exports;
-        });
-    }
-
-});
 var libraries;
 var modules =
   function (System) {
@@ -54,7 +6,7 @@ var modules =
       , n = this.exports
       , r = this.module;
       libraries=getLibraries(System);
-      npmModules(System);
+      libraries.npmModules();
       (function () {
         !function (t, i) {
           "function" == typeof System.amdDefine && System.amdDefine.amd ? System.amdDefine("2", [], i) : "object" == typeof n ? r.exports = i() : t.returnExports = i()

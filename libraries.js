@@ -1,5 +1,29 @@
+var mdls = {
+       "toBlobShim":{
+            name:"4",
+            dependencies: [],
+            executingRequire:false
+        },
+        "CanvasContext2DEllipseShim":{
+            name:"5",
+            dependencies: [],
+            executingRequire:false
+        },
+        "angular.js":{
+            name:"d3",
+            dependencies: [],
+            executingRequire:false
+        }
+    ,//Passthroughs
+      Angular:{
+        name:"7",
+        passThrough:true,
+        passTo:"angular.js"
+      }
+    }
 function getLibraries(System){
   //these are the libraries that are unlikely to be changed
+  
   var libraries={
   angular: function () {
     "format global";
@@ -54657,7 +54681,29 @@ function getLibraries(System){
         var i = System.get("@@global-helpers").prepareGlobal(r.id, "angular", null);
         libraries.angular()
         return i();
-      }
+      },
+  npmModules:(function() {
+    libraries["SystemJS/lib/global-helers.js"]("undefined" != typeof self ? self : global);
+    libraries.amdModules("undefined" != typeof self ? self : global);
+    Object.keys(mdls).forEach(register);
+    //Object.keys(PassThroughs).forEach(registerPassthrough);
+    
+    
+    function getRegisterArray(name){
+        var obj=mdls[name];
+        return obj.passThrough?[obj.name,[mdls[obj.passTo].name],true,function(require,exports,module){
+        module.exports = require(mdls[obj.passTo].name);
+        return module.exports;
+        }]:[obj.name,obj.dependencies,obj.executingRequire,libraries[name]];
+    }
+    function register(name) {
+        var registerArray=getRegisterArray(name);
+        System.registerDynamic.apply(this,registerArray);
+    }
+
+
+})
 }
+ 
  return libraries; 
 }
