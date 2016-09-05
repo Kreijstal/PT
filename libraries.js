@@ -27,7 +27,7 @@ var mdls = {
       }
     }
 function getCodeName(readableName){
-      return mdls[name].name
+      return mdls[readableName].name
     }      
 function getLibraries(System){
   //these are the libraries that are unlikely to be changed
@@ -54694,7 +54694,7 @@ function getLibraries(System){
         var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
         libraries.angular_route();
         return i();
-      }
+      },
   npmModules:(function() {
     libraries["SystemJS/lib/global-helers.js"]("undefined" != typeof self ? self : global);
     libraries.amdModules("undefined" != typeof self ? self : global);
