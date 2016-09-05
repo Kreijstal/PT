@@ -19,8 +19,16 @@ var mdls = {
         name:"7",
         passThrough:true,
         passTo:"angular.js"
+      },
+      AngularRoute:{
+        name:"6",
+            dependencies: ["Angular"],
+            executingRequire:true
       }
     }
+function getCodeName(readableName){
+      return mdls[name].name
+    }      
 function getLibraries(System){
   //these are the libraries that are unlikely to be changed
   
@@ -54682,19 +54690,24 @@ function getLibraries(System){
         libraries.angular()
         return i();
       },
+  "AngularRoute":function (e, n, r) {
+        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
+        libraries.angular_route();
+        return i();
+      }
   npmModules:(function() {
     libraries["SystemJS/lib/global-helers.js"]("undefined" != typeof self ? self : global);
     libraries.amdModules("undefined" != typeof self ? self : global);
     Object.keys(mdls).forEach(register);
     //Object.keys(PassThroughs).forEach(registerPassthrough);
     
-    
+   
     function getRegisterArray(name){
         var obj=mdls[name];
-        return obj.passThrough?[obj.name,[mdls[obj.passTo].name],true,function(require,exports,module){
-        module.exports = require(mdls[obj.passTo].name);
+        return obj.passThrough?[obj.name,[getCodeName(obj.passTo)],true,function(require,exports,module){
+        module.exports = require(getCodeName(obj.passTo));
         return module.exports;
-        }]:[obj.name,obj.dependencies,obj.executingRequire,libraries[name]];
+        }]:[obj.name,obj.dependencies.map(getCodeName),obj.executingRequire,libraries[name]];
     }
     function register(name) {
         var registerArray=getRegisterArray(name);
