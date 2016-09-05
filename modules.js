@@ -19,15 +19,7 @@ var modules =
         })
       })();
       
-      System.registerDynamic("6", ["7"], !1, function (e, n, r) {
-        var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
-        libraries.angular_route();
-        return i();
-      });
-      System.registerDynamic("8", ["6"], !0, function (t, e, n) {
-        return n.exports = t("6"),
-          n.exports
-      });
+
       System.registerDynamic("9", ["7"], !1, function (e, n, r) {
         var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
         libraries.angular_animate();
