@@ -19,10 +19,6 @@ var modules =
         })
       })();
 
-      System.registerDynamic("d", ["c"], !0, function (t, e, n) {
-        return n.exports = t("c"),
-          n.exports
-      });
       System.registerDynamic("e", [], !0, function (t, e, n) {
         "use strict";
         function getNames(t) {

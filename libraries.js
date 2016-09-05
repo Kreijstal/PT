@@ -50,6 +50,11 @@ var mdls = {
     name: "a",
     passThrough: true,
     passTo: "angular/angular-animate.js"
+  },
+  BlueBird:{
+    name: "d",
+    passThrough: true,
+    passTo: "Bluebird/bluebird.js"
   }
 }
 function getCodeName(readableName) {
