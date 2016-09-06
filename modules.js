@@ -15465,11 +15465,6 @@ var modules = function(System) {
             e.default = o,
             n.exports
     });
-    System.registerDynamic("ca", ["@empty"], !0, libraries.lodash);
-    System.registerDynamic("28", ["ca"], !0, function(t, e, n) {
-        return n.exports = t("ca"),
-            n.exports
-    });
     System.registerDynamic("21", [], !0, function(t, e, n) {
         "use strict";
         return e.PONY_SPEED_TROT = 4,
