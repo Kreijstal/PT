@@ -57166,7 +57166,8 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
   buffer[offset + i - d] |= s * 128
 }},
-    "juliangruber/isarray/index.js":function(require,exports,module){var toString = {}.toString;
+    "juliangruber/isarray/index.js":function(require,exports,module){
+      var toString = {}.toString;
 
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
