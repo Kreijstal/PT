@@ -38,6 +38,22 @@ var mdls = {
     name: "ca",
     dependencies: ["@empty"],
     executingRequire: true
+  },"feross/buffer/index.js":{
+    name: "84",
+    dependencies: [],
+    executingRequire: true
+  },"feross/ieee754/index.js":{
+    name: "80",
+    dependencies: [],
+    executingRequire: true
+  },"base64-js/lib/b64.js":{
+    name: "7e",
+    dependencies: [],
+    executingRequire: true
+  },"juliangruber/isarray/index.js":{
+    name: "82",
+    dependencies: [],
+    executingRequire: true
   }
 
   , //Passthroughs
@@ -65,6 +81,22 @@ var mdls = {
     name: "28",
     passThrough: true,
     passTo: "lodash/lodash.js"
+  },"BufferForTheBrowser":{
+    name: "85",
+    passThrough: true,
+    passTo: "feross/buffer/index.js"
+    },"base64-js":{
+    name: "7f",
+    passThrough: true,
+    passTo: "base64-js/lib/b64.js"
+  },"ieee754":{
+    name: "81",
+    passThrough: true,
+    passTo: "feross/ieee754/index.js"
+  },"isarray":{
+    name: "83",
+    passThrough: true,
+    passTo: "juliangruber/isarray/index.js"
   }
 }
 function getCodeName(readableName) {
