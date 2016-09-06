@@ -3,7 +3,6 @@ var modules = function(System) {
     var e = this.require,
         n = this.exports,
         r = this.module;
-
     libraries = getLibraries(System);
     libraries.npmModules();
     (function() {
@@ -549,7 +548,7 @@ var modules = function(System) {
                 e.encodeString = a,
                 e.decodeString = u,
                 n.exports
-        }),
+        });
         System.registerDynamic("16", ["14"], !0, function(t, e, n) {
             "use strict";
             var r = t("14"),
@@ -597,7 +596,7 @@ var modules = function(System) {
                 }();
             return e.BasePacketReader = i,
                 n.exports
-        }),
+        });
         System.registerDynamic("17", ["16"], !0, function(t, e, n) {
             "use strict";
             var r = this && this.__extends || function(t, e) {
@@ -668,7 +667,7 @@ var modules = function(System) {
                 }),
                 e.default = o,
                 n.exports
-        }),
+        });
         System.registerDynamic("18", ["d", "e", "19", "f", "10", "11", "12", "15", "17", "1a"], !0, function(t, e, n) {
             return function(n) {
                     "use strict";
@@ -1554,7 +1553,7 @@ var modules = function(System) {
                 }();
             return e.ClientActions = w,
                 n.exports
-        }),
+        });
         System.registerDynamic("2e", [getCodeName("BlueBird"), "28", "1d", "22", "2c", "29", "20"], !0, function(t, e, n) {
             "use strict";
             var r = t(getCodeName("BlueBird")),
@@ -13204,7 +13203,7 @@ var modules = function(System) {
             }();
             return e.KeyboardController = i,
                 n.exports
-        }),
+        });
         System.registerDynamic("bc", [], !0, function(t, e, n) {
             "use strict";
             var r = [1002, 1004, 1003],
@@ -13243,7 +13242,7 @@ var modules = function(System) {
                 }();
             return e.MouseController = i,
                 n.exports
-        }),
+        });
         System.registerDynamic("bd", ["22"], !0, function(t, e, n) {
             "use strict";
 
@@ -13366,7 +13365,7 @@ var modules = function(System) {
                 }();
             return e.TouchController = s,
                 n.exports
-        }),
+        });
         System.registerDynamic("be", ["28"], !0, function(t, e, n) {
             "use strict";
             var r = t("28"),
@@ -13421,7 +13420,7 @@ var modules = function(System) {
                 }();
             return e.GamePadController = o,
                 n.exports
-        }),
+        });
         System.registerDynamic("bf", ["28", "bb", "bc", "bd", "be"], !0, function(t, e, n) {
             "use strict";
             var r = t("28"),
@@ -13559,7 +13558,7 @@ var modules = function(System) {
                 e.resizeCanvasToElementSize = i,
                 e.createOrResizeCanvas = o,
                 n.exports
-        }),
+        });
         System.registerDynamic("c0", ["5e", "5c", "22", "21", "2a", "2b", "5f", "24", "23", "60", "68", "6b", "6c", "89", "69", "1f", "bf", "3c", "43", "20"], !0, function(t, e, n) {
             "use strict";
 
@@ -13930,7 +13929,7 @@ var modules = function(System) {
                     }
                 },
                 n.exports
-        }),
+        });
         System.registerDynamic("2d", ["28", "20"], !0, function(t, e, n) {
             "use strict";
 
@@ -13969,11 +13968,11 @@ var modules = function(System) {
                 e.containsCyrillic = i,
                 e.toSocialSiteInfo = o,
                 n.exports
-        }),
+        });
         System.registerDynamic("c1", [], !0, function(t, e, n) {
             return n.exports = '<script type="text/ng-template" id="pony-box-note-popover.html"><textarea cols="20" rows="6" ag-auto-focus ng-model="vm.pony.note" ng-keydown="vm.keydown($event)" ng-blur="vm.blur()" class="form-control pony-box-note-editor"></textarea></script><div class="pony-box"><div class="pony-box-rect"><div class="pony-box-name">{{vm.name}}</div><div class="pony-box-buttons"><div class="btn-group"><button uib-tooltip="{{vm.pony.ignored ? \'Unignore player\' : \'Ignore player\'}}" ng-click="vm.toggleIgnore()" ng-class="{ \'btn-danger\': vm.pony.ignored }" class="btn btn-xs btn-default"><i class="fa fa-ban"></i></button></div> <a ng-if="vm.site" ng-href="{{vm.site.url}}" target="_blank" class="pony-box-site"><i ng-class="vm.site.icon" ng-style="{ color: vm.site.color }" class="fa fa-fw fa-lg"></i><b> {{vm.site.name}}</b></a></div><div ng-if="vm.isMod" class="btn-group pony-box-buttons-mod"><button ng-click="vm.report()" uib-tooltip="Report" class="btn btn-xs btn-default"><i class="fa fa-flag"></i></button><button uib-tooltip="{{vm.isNoteOpen ? null : vm.pony.note}}" tooltip-placement="bottom" tooltip-class="tooltip-pre" uib-popover-template="\'pony-box-note-popover.html\'" popover-placement="bottom" popover-is-open="vm.isNoteOpen" class="btn btn-xs btn-default"><i class="fa fa-sticky-note"></i></button><div uib-dropdown ng-if="vm.isMod" uib-tooltip="{{vm.timeoutTooltip}}" class="btn-group dropdown"><button uib-dropdown-toggle ng-class="{ \'btn-danger\': vm.hasTimeout }" class="btn btn-xs btn-default"><i class="fa fa-clock-o"></i></button><ul uib-dropdown-menu class="dropdown-menu pull-right"><li ng-repeat="t in vm.timeouts"><a ng-click="vm.timeout(t.value)">{{t.label}}</a></li></ul></div><button ng-click="vm.toggleMute()" uib-tooltip="{{vm.pony.muted ? \'Unmute\' : \'Mute\'}}" ng-class="{ \'btn-danger\': vm.pony.muted }" class="btn btn-xs btn-default"><i class="fa fa-microphone-slash"></i></button><button ng-click="vm.toggleShadow()" uib-tooltip="{{vm.pony.shadow ? \'Unshadow\' : \'Shadow\'}}" ng-class="{ \'btn-danger\': vm.pony.shadow }" class="btn btn-xs btn-default"><i class="fa fa-eye-slash"></i></button></div></div><div class="pony-box-avatar"><canvas width="100" height="100"></canvas><div class="pony-box-avatar-cover"></div></div></div>',
                 n.exports
-        }),
+        });
         System.registerDynamic("c2", ["53", "21", "54", "22", "55", "2c", "2d", "c1"], !0, function(t, e, n) {
             "use strict";
             var r = t("53"),
@@ -18871,9 +18870,8 @@ var modules = function(System) {
                         })
                 }]),
                 n.exports
-        }),
-
-        System.registerDynamic("20", [], !0, function(t, e, n) {
+        });
+    System.registerDynamic("20", [], !0, function(t, e, n) {
             "use strict";
 
             function r(t) {
@@ -18889,8 +18887,8 @@ var modules = function(System) {
                 e.version = r("data-version") || null,
                 e.oauthProviders = JSON.parse(i("oauth-providers") || "[]"),
                 n.exports
-        }),
-        System.registerDynamic("main", ["3", "4", "5", "d1", getCodeName("BlueBird"), getCodeName("Angular"), "20"], !0, function(t, e, n) {
+        });
+    System.registerDynamic("main", ["3", "4", "5", "d1", getCodeName("BlueBird"), getCodeName("Angular"), "20"], !0, function(t, e, n) {
             "use strict";
             window.__ponytown = !0,
                 t("3");

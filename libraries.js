@@ -7,7 +7,7 @@ var mdls = {
   "CanvasContext2DEllipseShim": {
     name: "5",
     dependencies: [],
-    executingRequire: false
+    executingRequire: true
   },
   "angular.js": {
     name: "d3",
@@ -32,7 +32,12 @@ var mdls = {
   "Bluebird/bluebird.js":{
     name: "c",
     dependencies: [],
-    executingRequire: false
+    executingRequire: true
+  },
+  "lodash/lodash.js":{
+    name: "ca",
+    dependencies: ["@empty"],
+    executingRequire: true
   }
 
   , //Passthroughs
@@ -55,10 +60,16 @@ var mdls = {
     name: "d",
     passThrough: true,
     passTo: "Bluebird/bluebird.js"
+  },
+  Lodash:{
+    name: "28",
+    passThrough: true,
+    passTo: "lodash/lodash.js"
   }
 }
 function getCodeName(readableName) {
-  return mdls[readableName].name
+  var name=mdls[readableName]
+  return name?name.name:readableName;
 }
 function getLibraries(System) {
   //these are the libraries that are unlikely to be changed
@@ -2561,7 +2572,7 @@ function getLibraries(System) {
       var vo = t;
       return vo
     },
-    lodash: function(t, e, n) {
+    "loadash/lodash.js": function(t, e, n) {
       var r, i = window;
       return function(t, o) {
           (function() {
@@ -55145,8 +55156,6 @@ function getLibraries(System) {
       libraries.amdModules("undefined" != typeof self ? self : global);
       Object.keys(mdls).forEach(register);
       //Object.keys(PassThroughs).forEach(registerPassthrough);
-
-
       function getRegisterArray(name) {
         var obj = mdls[name];
         return obj.passThrough ? [obj.name, [getCodeName(obj.passTo)], true, function(require, exports, module) {
