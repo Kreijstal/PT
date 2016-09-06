@@ -1165,7 +1165,7 @@ var modules = function(System) {
         return e.Animated = o,
             n.exports
     });
-    System.registerDynamic("27", ["28", "1f", "22", "21", "24"], !0, function(t, e, n) {
+    System.registerDynamic("27", [getCodeName("Lodash"), "1f", "22", "21", "24"], !0, function(t, e, n) {
         "use strict";
 
         function r(t, e, n) {
@@ -1317,7 +1317,7 @@ var modules = function(System) {
             return c("tree-stump", t, n, r, l(-.5, -.1, 1, .5), u(o(b.tree.stump, b.tree.stumpShadow, e.treeOffsetX, e.treeOffsetY)))
         }
 
-        var y = t("28"),
+        var y = t(getCodeName("Lodash")),
             b = t("1f"),
             _ = t("22"),
             w = t("21"),
@@ -1335,7 +1335,7 @@ var modules = function(System) {
             e.createTreeStump = g,
             n.exports
     });
-    System.registerDynamic("29", ["28", "1d", "22", "21", "2a", "2b", "1e", "25", "26", "27", "1f", "2c", "2d"], !0, function(t, e, n) {
+    System.registerDynamic("29", [getCodeName("Lodash"), "1d", "22", "21", "2a", "2b", "1e", "25", "26", "27", "1f", "2c", "2d"], !0, function(t, e, n) {
             "use strict";
             var r = this && this.__decorate || function(t, e, n, r) {
                     var i, o = arguments.length,
@@ -1352,7 +1352,7 @@ var modules = function(System) {
                     if ("object" == typeof Reflect && "function" == typeof Reflect.metadata)
                         return Reflect.metadata(t, e)
                 },
-                o = t("28"),
+                o = t(getCodeName("Lodash")),
                 a = t("1d"),
                 s = t("22"),
                 u = t("21"),
@@ -1554,10 +1554,10 @@ var modules = function(System) {
             return e.ClientActions = w,
                 n.exports
         });
-        System.registerDynamic("2e", [getCodeName("BlueBird"), "28", "1d", "22", "2c", "29", "20"], !0, function(t, e, n) {
+        System.registerDynamic("2e", [getCodeName("BlueBird"), getCodeName("Lodash"), "1d", "22", "2c", "29", "20"], !0, function(t, e, n) {
             "use strict";
             var r = t(getCodeName("BlueBird")),
-                i = t("28"),
+                i = t(getCodeName("Lodash")),
                 o = t("1d"),
                 a = t("22"),
                 s = t("2c"),
@@ -1698,7 +1698,7 @@ var modules = function(System) {
             e.reportError = i,
             n.exports
     });
-    System.registerDynamic("31", [getCodeName("BlueBird"), "28", "32", "22", "30", "20", "2d"], !0, function(t, e, n) {
+    System.registerDynamic("31", [getCodeName("BlueBird"), getCodeName("Lodash"), "32", "22", "30", "20", "2d"], !0, function(t, e, n) {
         "use strict";
 
         function r(t) {
@@ -1710,7 +1710,7 @@ var modules = function(System) {
         }
 
         var o = t(getCodeName("BlueBird")),
-            a = t("28"),
+            a = t(getCodeName("Lodash")),
             s = t("32"),
             u = t("22"),
             l = t("30"),
@@ -2805,7 +2805,7 @@ var modules = function(System) {
         e.PlayerAction;
         return n.exports
     });
-    System.registerDynamic("55", ["28"], !0, function(t, e, n) {
+    System.registerDynamic("55", [getCodeName("Lodash")], !0, function(t, e, n) {
         "use strict";
 
         function r(t, e) {
@@ -2820,7 +2820,7 @@ var modules = function(System) {
             return r(t, "mod") || i(t)
         }
 
-        var a = t("28");
+        var a = t(getCodeName("Lodash"));
         return e.hasRole = r,
             e.isAdmin = i,
             e.isMod = o,
@@ -3907,7 +3907,7 @@ var modules = function(System) {
             e.TILE_MAP = [46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 20, 20, 13, 13, 20, 20, 13, 13, 16, 16, 23, 32, 16, 16, 23, 32, 15, 15, 25, 25, 15, 15, 34, 34, 26, 26, 45, 41, 26, 26, 42, 36, 20, 20, 13, 13, 20, 20, 13, 13, 10, 10, 31, 4, 10, 10, 31, 4, 15, 15, 25, 25, 15, 15, 34, 34, 27, 27, 43, 37, 27, 27, 35, 5, 46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 20, 20, 13, 13, 20, 20, 13, 13, 16, 16, 23, 32, 16, 16, 23, 32, 9, 9, 33, 33, 9, 9, 8, 8, 29, 29, 44, 39, 29, 29, 38, 7, 20, 20, 13, 13, 20, 20, 13, 13, 10, 10, 31, 4, 10, 10, 31, 4, 9, 9, 33, 33, 9, 9, 8, 8, 2, 2, 40, 3, 2, 2, 1, 0],
             n.exports
     });
-    System.registerDynamic("60", ["28", "36", "24"], !0, function(t, e, n) {
+    System.registerDynamic("60", [getCodeName("Lodash"), "36", "24"], !0, function(t, e, n) {
         "use strict";
 
         function r(t) {
@@ -3931,7 +3931,7 @@ var modules = function(System) {
             return o.padStart(a.toFixed(), 2, "0") + ":" + o.padStart(i.toFixed(), 2, "0")
         }
 
-        var o = t("28"),
+        var o = t(getCodeName("Lodash")),
             a = t("36"),
             s = t("24"),
             u = "ffffff",
@@ -13366,9 +13366,9 @@ var modules = function(System) {
             return e.TouchController = s,
                 n.exports
         });
-        System.registerDynamic("be", ["28"], !0, function(t, e, n) {
+        System.registerDynamic("be", [getCodeName("Lodash")], !0, function(t, e, n) {
             "use strict";
-            var r = t("28"),
+            var r = t(getCodeName("Lodash")),
                 i = .2,
                 o = function() {
                     function t(t) {
@@ -13421,9 +13421,9 @@ var modules = function(System) {
             return e.GamePadController = o,
                 n.exports
         });
-        System.registerDynamic("bf", ["28", "bb", "bc", "bd", "be"], !0, function(t, e, n) {
+        System.registerDynamic("bf", [getCodeName("Lodash"), "bb", "bc", "bd", "be"], !0, function(t, e, n) {
             "use strict";
-            var r = t("28"),
+            var r = t(getCodeName("Lodash")),
                 i = t("bb"),
                 o = t("bc"),
                 a = t("bd"),
@@ -13930,7 +13930,7 @@ var modules = function(System) {
                 },
                 n.exports
         });
-        System.registerDynamic("2d", ["28", "20"], !0, function(t, e, n) {
+        System.registerDynamic("2d", [getCodeName("Lodash"), "20"], !0, function(t, e, n) {
             "use strict";
 
             function r(t) {
@@ -13960,7 +13960,7 @@ var modules = function(System) {
                 }
             }
 
-            var a = t("28"),
+            var a = t(getCodeName("Lodash")),
                 s = t("20"),
                 u = ["all?ahu?", "aids", "akbar", "alt ?[+-] ?f4", "anal", "anus", "(bitch)?ass(fuck|hole|hat|licker|wipe)?", "autis(ts?|ms?|tic)", "bitch(e?s)?", "(blow|hoof|foot|hand|rim) ?jobs?", "boners?", "boob(s|ie|ies)?", "buttplugs?", "can[cs]er(s|ous)?", "(horse|mare)?cocks?", "clit(oris)?", "(ctrl|control) ?[+-]? ?w", "cum(s|ming)?", "cumdump(sters?)?", "cunts?", "deepthroat(ing)?", "(horse)?dicks?", "dildos?", "fap(p?ing)?", "foalcon", "(brony|furry?|gay|horse|pony|nigg?er)?fag(s|g?[oi]t(s|ry)?)?", "(brony|furry?|gay|horse|pony|nigg?er|butt|mother)?fu(c|k|cc|ck)(ed|er|ing?|able|face)?", "gang ?bang(ed|ing)?", "hitlers?", "(in|self)cest", "jizz(ed|ing)?", "lubed?", "masturbat(e|tion|ing)?", "milfs?", "molest(ation|ing|ed|ia)?", "nazi(s|sm|sts?)?", "negros?", "nigg?as?", "nigg?[e3](rs?|st)?", "norm(y|ies?)", "orgasms?", "org(y|ies)", "piss(ing)?", "penis(es)?", "porno?", "prostitutes?", "(octo|horse|pony)?puss(y|ies)?(juice)?", "raep", "rap(e|ed|es|ing)", "retards?", "sieg ?h[ea]il", "semen", "(anal|butt)?(sex|secks|secs|seks)", "(bull)?shit(s|ting)?", "slut(s|ty)?", "spunk", "(cock)?suck(ing|er)?", "tit(s|ty|ties?)?", "tranny", "wank(ing|ers?)?", "whores?", "vaginas?", "vulva"],
                 l = new RegExp("\\b(" + u.join("|") + ")\\b", "gi");
@@ -14218,9 +14218,9 @@ var modules = function(System) {
             e.removeItem = o,
             n.exports
     });
-    System.registerDynamic("c6", ["28", "21", "22", "44", "32", "1f", "45", "5d", "20", "c5"], !0, function(t, e, n) {
+    System.registerDynamic("c6", [getCodeName("Lodash"), "21", "22", "44", "32", "1f", "45", "5d", "20", "c5"], !0, function(t, e, n) {
         "use strict";
-        var r = t("28"),
+        var r = t(getCodeName("Lodash")),
             i = t("21"),
             o = t("22"),
             a = t("44"),
@@ -14530,9 +14530,9 @@ var modules = function(System) {
             e.default = d,
             n.exports
     });
-    System.registerDynamic("c7", ["28", "21", "22"], !0, function(t, e, n) {
+    System.registerDynamic("c7", [getCodeName("Lodash"), "21", "22"], !0, function(t, e, n) {
         "use strict";
-        var r = t("28"),
+        var r = t(getCodeName("Lodash")),
             i = t("21"),
             o = t("22"),
             a = function() {
@@ -14605,7 +14605,7 @@ var modules = function(System) {
             e.darkenColor = o,
             n.exports
     });
-    System.registerDynamic("32", ["28", "1f", "22", "3a", "21", "36"], !0, function(t, e, n) {
+    System.registerDynamic("32", [getCodeName("Lodash"), "1f", "22", "3a", "21", "36"], !0, function(t, e, n) {
         "use strict";
 
         function r(t) {
@@ -14973,7 +14973,7 @@ var modules = function(System) {
             }
         }
 
-        var D = t("28"),
+        var D = t(getCodeName("Lodash")),
             O = t("1f"),
             I = t("22"),
             R = t("3a"),
@@ -15513,7 +15513,7 @@ var modules = function(System) {
             }],
             n.exports
     });
-    System.registerDynamic("22", [getCodeName("BlueBird"), "28", "21"], !0, function(t, e, n) {
+    System.registerDynamic("22", [getCodeName("BlueBird"), getCodeName("Lodash"), "21"], !0, function(t, e, n) {
         "use strict";
 
         function r(t) {
@@ -15803,7 +15803,7 @@ var modules = function(System) {
         }
 
         var G = t(getCodeName("BlueBird")),
-            W = t("28"),
+            W = t(getCodeName("Lodash")),
             X = t("21"),
             Z = "abcdefghijklmnopqrstuvwxyz0123456789_",
             K = Z + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
