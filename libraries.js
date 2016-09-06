@@ -40,7 +40,7 @@ var mdls = {
     executingRequire: true},
     "feross/buffer/index.js":{
     name: "84",
-    dependencies: [],
+    dependencies: ["base64-js","ieee754","isarray"],
     executingRequire: true},
     "feross/ieee754/index.js":{
     name: "80",
