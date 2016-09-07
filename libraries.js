@@ -54,7 +54,21 @@ var mdls = {
     name: "82",
     dependencies: [],
     executingRequire: true
-  }
+  },
+  "gl-matrix/src/gl-matrix.js":{
+    name: "ba",
+    dependencies: ["gl-matrix/src/gl-matrix/common.js","gl-matrix/src/gl-matrix/mat2.js","gl-matrix/src/gl-matrix/mat2d.js","gl-matrix/src/gl-matrix/mat3.js","gl-matrix/src/gl-matrix/mat4.js","gl-matrix/src/gl-matrix/quat.js","gl-matrix/src/gl-matrix/vec2.js","gl-matrix/src/gl-matrix/vec3.js","gl-matrix/src/gl-matrix/vec4.js"],
+    executingRequire: true
+  },
+  "gl-matrix/src/gl-matrix/common.js":{"name":"b2","dependencies":[],"executingRequire":true},
+"gl-matrix/src/gl-matrix/mat2.js":{"name":"b1","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/mat2d.js":{"name":"b3","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/mat3.js":{"name":"b5","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/mat4.js":{"name":"b4","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/quat.js":{"name":"b6","dependencies":["gl-matrix/src/gl-matrix/common.js","gl-matrix/src/gl-matrix/vec4.js","gl-matrix/src/gl-matrix/vec3.js","gl-matrix/src/gl-matrix/mat3.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/vec2.js":{"name":"b9","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/vec3.js":{"name":"b7","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true},
+"gl-matrix/src/gl-matrix/vec4.js":{"name":"b3","dependencies":["gl-matrix/src/gl-matrix/common.js"],"executingRequire":true}
 
   , //Passthroughs
   Angular: {
@@ -97,6 +111,11 @@ var mdls = {
     name: "83",
     passThrough: true,
     passTo: "juliangruber/isarray/index.js"
+  },
+  "gl-matrix":{
+    name: "5e",
+    passThrough: true,
+    passTo: "gl-matrix/src/gl-matrix.js"
   }
 }
 function getCodeName(readableName) {
@@ -56938,6 +56957,46 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
+},
+"gl-matrix/src/gl-matrix.js":function(require,exports,module){
+//https://github.com/toji/gl-matrix/edit/master/src/gl-matrix.js
+/**
+ * @fileoverview gl-matrix - High performance matrix and vector operations
+ * @author Brandon Jones
+ * @author Colin MacKenzie IV
+ * @version 2.3.2
+ */
+
+/* Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE. */
+// END HEADER
+
+exports.glMatrix = require(getCodeName("gl-matrix/src/gl-matrix/common.js"));
+exports.mat2 = require(getCodeName("gl-matrix/src/gl-matrix/mat2.js"));
+exports.mat2d = require(getCodeName("gl-matrix/src/gl-matrix/mat2d.js"));
+exports.mat3 = require(getCodeName("gl-matrix/src/gl-matrix/mat3.js"));
+exports.mat4 = require(getCodeName("gl-matrix/src/gl-matrix/mat4.js"));
+exports.quat = require(getCodeName("gl-matrix/src/gl-matrix/quat.js"));
+exports.vec2 = require(getCodeName("gl-matrix/src/gl-matrix/vec2.js"));
+exports.vec3 = require(getCodeName("gl-matrix/src/gl-matrix/vec3.js"));
+exports.vec4 = require(getCodeName("gl-matrix/src/gl-matrix/vec4.js"));
 },
     npmModules: (function() {
       libraries["SystemJS/lib/global-helpers.js"]("undefined" != typeof self ? self : global);
