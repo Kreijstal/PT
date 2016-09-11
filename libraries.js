@@ -10,98 +10,98 @@ var mdls = {
         executingRequire: true
     },
     "angular.js": {
-        name: "d3",
+        name: "angular",
         dependencies: [],
         executingRequire: false
     },
     "angular/angular-route.js": {
-        name: "6",
+        name: "ngRoute",
         dependencies: ["Angular"],
         executingRequire: false
     },
     "angular/angular-animate.js": {
-        name: "9",
+        name: "ngAnimate",
         dependencies: ["Angular"],
         executingRequire: false
     },
     "angular-ui/bootstrap.js": {
-        name: "b",
+        name: "bootstrap",
         dependencies: [],
         executingRequire: false
     },
     "Bluebird/bluebird.js": {
-        name: "c",
+        name: "bluebirdjs",
         dependencies: [],
         executingRequire: true
     },
     "lodash/lodash.js": {
-        name: "ca",
+        name: "lodashjs",
         dependencies: ["@empty"],
         executingRequire: true
     },
     "feross/buffer/index.js": {
-        name: "84",
+        name: "c4",
         dependencies: ["base64-js", "ieee754", "isarray"],
         executingRequire: true
     },
     "feross/ieee754/index.js": {
-        name: "80",
+        name: "c0",
         dependencies: [],
         executingRequire: true
     },
     "base64-js/lib/b64.js": {
-        name: "7e",
+        name: "be",
         dependencies: [],
         executingRequire: true
     },
     "juliangruber/isarray/index.js": {
-        name: "82",
+        name: "c2",
         dependencies: [],
         executingRequire: true
     },
     "gl-matrix/src/gl-matrix.js": {
-        name: "ba",
+        name: "9d",
         dependencies: ["gl-matrix/src/gl-matrix/common.js", "gl-matrix/src/gl-matrix/mat2.js", "gl-matrix/src/gl-matrix/mat2d.js", "gl-matrix/src/gl-matrix/mat3.js", "gl-matrix/src/gl-matrix/mat4.js", "gl-matrix/src/gl-matrix/quat.js", "gl-matrix/src/gl-matrix/vec2.js", "gl-matrix/src/gl-matrix/vec3.js", "gl-matrix/src/gl-matrix/vec4.js"],
         executingRequire: true
     },
-    "gl-matrix/src/gl-matrix/common.js": {"name": "b2", "dependencies": [], "executingRequire": true},
+    "gl-matrix/src/gl-matrix/common.js": {"name": "95", "dependencies": [], "executingRequire": true},
     "gl-matrix/src/gl-matrix/mat2.js": {
-        "name": "b1",
+        "name": "94",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/mat2d.js": {
-        "name": "b3",
+        "name": "96",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/mat3.js": {
-        "name": "b5",
+        "name": "98",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/mat4.js": {
-        "name": "b4",
+        "name": "97",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/quat.js": {
-        "name": "b6",
+        "name": "99",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js", "gl-matrix/src/gl-matrix/vec4.js", "gl-matrix/src/gl-matrix/vec3.js", "gl-matrix/src/gl-matrix/mat3.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/vec2.js": {
-        "name": "b9",
+        "name": "9c",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/vec3.js": {
-        "name": "b7",
+        "name": "9a",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     },
     "gl-matrix/src/gl-matrix/vec4.js": {
-        "name": "b3",
+        "name": "9b",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
     }
@@ -128,28 +128,28 @@ var mdls = {
         passTo: "Bluebird/bluebird.js"
     },
     Lodash: {
-        name: "28",
+        name: "26",
         passThrough: true,
         passTo: "lodash/lodash.js"
     }, "BufferForTheBrowser": {
-        name: "85",
+        name: "c5",
         passThrough: true,
         passTo: "feross/buffer/index.js"
     }, "base64-js": {
-        name: "7f",
+        name: "bf",
         passThrough: true,
         passTo: "base64-js/lib/b64.js"
     }, "ieee754": {
-        name: "81",
+        name: "c1",
         passThrough: true,
         passTo: "feross/ieee754/index.js"
     }, "isarray": {
-        name: "83",
+        name: "c3",
         passThrough: true,
         passTo: "juliangruber/isarray/index.js"
     },
     "gl-matrix": {
-        name: "5e",
+        name: "5d",
         passThrough: true,
         passTo: "gl-matrix/src/gl-matrix.js"
     }
