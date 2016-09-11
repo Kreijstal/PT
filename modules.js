@@ -13002,10 +13002,10 @@ var modules = function (System) {
             warnings: !1,
             longStackTraces: !0
         }),
-        //    i.element().ready(function () {
-        //        return
-        i.bootstrap(document, ["app"]);
-           // })
-            return n.exports
+            //    i.element().ready(function () {
+            //        return
+            i.bootstrap(document, ["app"]);
+        // })
+        return n.exports
     })
 }

@@ -10,27 +10,27 @@ var mdls = {
         executingRequire: true
     },
     "angular.js": {
-        name: "angular",
+        name: "d3",
         dependencies: [],
         executingRequire: false
     },
     "angular/angular-route.js": {
-        name: "ngRoute",
+        name: "6",
         dependencies: ["Angular"],
         executingRequire: false
     },
     "angular/angular-animate.js": {
-        name: "ngAnimate",
+        name: "9",
         dependencies: ["Angular"],
         executingRequire: false
     },
     "angular-ui/bootstrap.js": {
-        name: "bootstrap",
+        name: "b",
         dependencies: [],
         executingRequire: false
     },
     "Bluebird/bluebird.js": {
-        name: "bluebirdjs",
+        name: "c",
         dependencies: [],
         executingRequire: true
     },
