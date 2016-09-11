@@ -12998,13 +12998,14 @@ var modules = function (System) {
         var r = t(getCodeName("BlueBird"))
             , i = t( getCodeName("Angular"))
             , o = t("20");
-        return o.debug && r.config({
+        o.debug && r.config({
             warnings: !1,
             longStackTraces: !0
         }),
-            i.element().ready(function () {
-                return i.bootstrap(document, ["app"])
-            }),
-            n.exports
+        //    i.element().ready(function () {
+        //        return
+        i.bootstrap(document, ["app"]);
+           // })
+            return n.exports
     })
 }
