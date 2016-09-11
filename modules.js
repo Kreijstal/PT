@@ -715,7 +715,7 @@ var modules = function (System) {
             e.default = o,
             n.exports
     });
-    System.registerDynamic("18", [getCodeName("BlueBird"), "e", "19", "f", "10", "11", "12", "15", "17", getCodeName("BufferForTheBrowser"], !0, function (t, e, n) {
+    System.registerDynamic("18", [getCodeName("BlueBird"), "e", "19", "f", "10", "11", "12", "15", "17", getCodeName("BufferForTheBrowser")], !0, function (t, e, n) {
         return function (n) {
             "use strict";
             function r() {
@@ -946,7 +946,7 @@ var modules = function (System) {
                     t
             }();
             e.ClientSocket = h
-        }(t(getCodeName("BufferForTheBrowser").Buffer),
+        }(t(getCodeName("BufferForTheBrowser")).Buffer),
             n.exports
     });
     System.registerDynamic("19", [], !0, function (t, e, n) {
@@ -8347,7 +8347,7 @@ var modules = function (System) {
         return n.exports = t("ab"),
             n.exports
     });
-    System.registerDynamic("ad", [getCodeName("BufferForTheBrowser"], !0, function (t, e, n) {
+    System.registerDynamic("ad", [getCodeName("BufferForTheBrowser")], !0, function (t, e, n) {
         return function (t) {
             function e(t) {
                 return !!t.constructor && "function" == typeof t.constructor.isBuffer && t.constructor.isBuffer(t)
@@ -8360,7 +8360,7 @@ var modules = function (System) {
             n.exports = function (t) {
                 return null != t && (e(t) || r(t) || !!t._isBuffer)
             }
-        }(t(getCodeName("BufferForTheBrowser").Buffer),
+        }(t(getCodeName("BufferForTheBrowser")).Buffer),
             n.exports
     });
     System.registerDynamic("ae", ["ad"], !0, function (t, e, n) {
@@ -10030,7 +10030,7 @@ var modules = function (System) {
         return n.exports = t("bc"),
             n.exports
     });
-    System.registerDynamic("c7", ["bb", "bd", getCodeName("BufferForTheBrowser"], !0, function (t, e, n) {
+    System.registerDynamic("c7", ["bb", "bd", getCodeName("BufferForTheBrowser")], !0, function (t, e, n) {
         var r = this;
         return function (n) {
             "use strict";
@@ -10201,7 +10201,7 @@ var modules = function (System) {
                             x[t].length = 0,
                             E[t].length = 0
                 }
-        }(t(getCodeName("BufferForTheBrowser").Buffer),
+        }(t(getCodeName("BufferForTheBrowser")).Buffer),
             n.exports
     });
     System.registerDynamic("58", ["c7"], !0, function (t, e, n) {
