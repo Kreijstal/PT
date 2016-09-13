@@ -65134,13 +65134,543 @@ b"+i+"*=d\
 
             module.exports = wrappedNDArrayCtor
         },
-        "cwise-compiler/compiler.js":{},
-        "cwise-compiler/lib/thunk.js":{},
-        "cwise-compiler/lib/compile.js":{},
-        "uniq/uniq.js":{},
-        "typedarray-pool/pool.js":{},
-        "bit-twiddle/twiddle.js":{},
-        "dup/dup.js":{},
+        "cwise-compiler/compiler.js":{
+            //getCodeName(
+            //function(require,exports,module){
+            //https://github.com/scijs/cwise-compiler/blob/master/compiler.js
+        },
+        "cwise-compiler/lib/thunk.js":{
+            //https://github.com/scijs/cwise-compiler/blob/master/lib/thunk.js
+        },
+        "cwise-compiler/lib/compile.js":{
+            //https://github.com/scijs/cwise-compiler/blob/master/lib/compile.js
+        },
+        "uniq/uniq.js":function(require,exports,module){"use strict"
+
+            function unique_pred(list, compare) {
+                var ptr = 1
+                    , len = list.length
+                    , a = list[0], b = list[0]
+                for(var i=1; i<len; ++i) {
+                    b = a
+                    a = list[i]
+                    if(compare(a, b)) {
+                        if(i === ptr) {
+                            ptr++
+                            continue
+                        }
+                        list[ptr++] = a
+                    }
+                }
+                list.length = ptr
+                return list
+            }
+
+            function unique_eq(list) {
+                var ptr = 1
+                    , len = list.length
+                    , a = list[0], b = list[0]
+                for(var i=1; i<len; ++i) {
+                    b = a
+                    a = list[i]
+                    if(a !== b) {
+                        if(i === ptr) {
+                            ptr++
+                            continue
+                        }
+                        list[ptr++] = a
+                    }
+                }
+                list.length = ptr
+                return list
+            }
+
+            function unique(list, compare, sorted) {
+                if(list.length === 0) {
+                    return list
+                }
+                if(compare) {
+                    if(!sorted) {
+                        list.sort(compare)
+                    }
+                    return unique_pred(list, compare)
+                }
+                if(!sorted) {
+                    list.sort()
+                }
+                return unique_eq(list)
+            }
+
+            module.exports = unique
+        },
+        "typedarray-pool/pool.js":function(require,exports,module){'use strict'
+
+            var bits = require(getCodeName('bit-twiddle'))
+            var dup = require(getCodeName('dup'))
+
+//Legacy pool support
+            if(!global.__TYPEDARRAY_POOL) {
+                global.__TYPEDARRAY_POOL = {
+                    UINT8   : dup([32, 0])
+                    , UINT16  : dup([32, 0])
+                    , UINT32  : dup([32, 0])
+                    , INT8    : dup([32, 0])
+                    , INT16   : dup([32, 0])
+                    , INT32   : dup([32, 0])
+                    , FLOAT   : dup([32, 0])
+                    , DOUBLE  : dup([32, 0])
+                    , DATA    : dup([32, 0])
+                    , UINT8C  : dup([32, 0])
+                    , BUFFER  : dup([32, 0])
+                }
+            }
+
+            var hasUint8C = (typeof Uint8ClampedArray) !== 'undefined'
+            var POOL = global.__TYPEDARRAY_POOL
+
+//Upgrade pool
+            if(!POOL.UINT8C) {
+                POOL.UINT8C = dup([32, 0])
+            }
+            if(!POOL.BUFFER) {
+                POOL.BUFFER = dup([32, 0])
+            }
+
+//New technique: Only allocate from ArrayBufferView and Buffer
+            var DATA    = POOL.DATA
+                , BUFFER  = POOL.BUFFER
+
+            exports.free = function free(array) {
+                if(Buffer.isBuffer(array)) {
+                    BUFFER[bits.log2(array.length)].push(array)
+                } else {
+                    if(Object.prototype.toString.call(array) !== '[object ArrayBuffer]') {
+                        array = array.buffer
+                    }
+                    if(!array) {
+                        return
+                    }
+                    var n = array.length || array.byteLength
+                    var log_n = bits.log2(n)|0
+                    DATA[log_n].push(array)
+                }
+            }
+
+            function freeArrayBuffer(buffer) {
+                if(!buffer) {
+                    return
+                }
+                var n = buffer.length || buffer.byteLength
+                var log_n = bits.log2(n)
+                DATA[log_n].push(buffer)
+            }
+
+            function freeTypedArray(array) {
+                freeArrayBuffer(array.buffer)
+            }
+
+            exports.freeUint8 =
+                exports.freeUint16 =
+                    exports.freeUint32 =
+                        exports.freeInt8 =
+                            exports.freeInt16 =
+                                exports.freeInt32 =
+                                    exports.freeFloat32 =
+                                        exports.freeFloat =
+                                            exports.freeFloat64 =
+                                                exports.freeDouble =
+                                                    exports.freeUint8Clamped =
+                                                        exports.freeDataView = freeTypedArray
+
+            exports.freeArrayBuffer = freeArrayBuffer
+
+            exports.freeBuffer = function freeBuffer(array) {
+                BUFFER[bits.log2(array.length)].push(array)
+            }
+
+            exports.malloc = function malloc(n, dtype) {
+                if(dtype === undefined || dtype === 'arraybuffer') {
+                    return mallocArrayBuffer(n)
+                } else {
+                    switch(dtype) {
+                        case 'uint8':
+                            return mallocUint8(n)
+                        case 'uint16':
+                            return mallocUint16(n)
+                        case 'uint32':
+                            return mallocUint32(n)
+                        case 'int8':
+                            return mallocInt8(n)
+                        case 'int16':
+                            return mallocInt16(n)
+                        case 'int32':
+                            return mallocInt32(n)
+                        case 'float':
+                        case 'float32':
+                            return mallocFloat(n)
+                        case 'double':
+                        case 'float64':
+                            return mallocDouble(n)
+                        case 'uint8_clamped':
+                            return mallocUint8Clamped(n)
+                        case 'buffer':
+                            return mallocBuffer(n)
+                        case 'data':
+                        case 'dataview':
+                            return mallocDataView(n)
+
+                        default:
+                            return null
+                    }
+                }
+                return null
+            }
+
+            function mallocArrayBuffer(n) {
+                var n = bits.nextPow2(n)
+                var log_n = bits.log2(n)
+                var d = DATA[log_n]
+                if(d.length > 0) {
+                    return d.pop()
+                }
+                return new ArrayBuffer(n)
+            }
+            exports.mallocArrayBuffer = mallocArrayBuffer
+
+            function mallocUint8(n) {
+                return new Uint8Array(mallocArrayBuffer(n), 0, n)
+            }
+            exports.mallocUint8 = mallocUint8
+
+            function mallocUint16(n) {
+                return new Uint16Array(mallocArrayBuffer(2*n), 0, n)
+            }
+            exports.mallocUint16 = mallocUint16
+
+            function mallocUint32(n) {
+                return new Uint32Array(mallocArrayBuffer(4*n), 0, n)
+            }
+            exports.mallocUint32 = mallocUint32
+
+            function mallocInt8(n) {
+                return new Int8Array(mallocArrayBuffer(n), 0, n)
+            }
+            exports.mallocInt8 = mallocInt8
+
+            function mallocInt16(n) {
+                return new Int16Array(mallocArrayBuffer(2*n), 0, n)
+            }
+            exports.mallocInt16 = mallocInt16
+
+            function mallocInt32(n) {
+                return new Int32Array(mallocArrayBuffer(4*n), 0, n)
+            }
+            exports.mallocInt32 = mallocInt32
+
+            function mallocFloat(n) {
+                return new Float32Array(mallocArrayBuffer(4*n), 0, n)
+            }
+            exports.mallocFloat32 = exports.mallocFloat = mallocFloat
+
+            function mallocDouble(n) {
+                return new Float64Array(mallocArrayBuffer(8*n), 0, n)
+            }
+            exports.mallocFloat64 = exports.mallocDouble = mallocDouble
+
+            function mallocUint8Clamped(n) {
+                if(hasUint8C) {
+                    return new Uint8ClampedArray(mallocArrayBuffer(n), 0, n)
+                } else {
+                    return mallocUint8(n)
+                }
+            }
+            exports.mallocUint8Clamped = mallocUint8Clamped
+
+            function mallocDataView(n) {
+                return new DataView(mallocArrayBuffer(n), 0, n)
+            }
+            exports.mallocDataView = mallocDataView
+
+            function mallocBuffer(n) {
+                n = bits.nextPow2(n)
+                var log_n = bits.log2(n)
+                var cache = BUFFER[log_n]
+                if(cache.length > 0) {
+                    return cache.pop()
+                }
+                return new Buffer(n)
+            }
+            exports.mallocBuffer = mallocBuffer
+
+            exports.clearCache = function clearCache() {
+                for(var i=0; i<32; ++i) {
+                    POOL.UINT8[i].length = 0
+                    POOL.UINT16[i].length = 0
+                    POOL.UINT32[i].length = 0
+                    POOL.INT8[i].length = 0
+                    POOL.INT16[i].length = 0
+                    POOL.INT32[i].length = 0
+                    POOL.FLOAT[i].length = 0
+                    POOL.DOUBLE[i].length = 0
+                    POOL.UINT8C[i].length = 0
+                    DATA[i].length = 0
+                    BUFFER[i].length = 0
+                }
+            }},
+        "bit-twiddle/twiddle.js":function(require,exports,module){/**
+         * Bit twiddling hacks for JavaScript.
+         *
+         * Author: Mikola Lysenko
+         *
+         * Ported from Stanford bit twiddling hack library:
+         *    http://graphics.stanford.edu/~seander/bithacks.html
+         */
+
+        "use strict"; "use restrict";
+
+//Number of bits in an integer
+            var INT_BITS = 32;
+
+//Constants
+            exports.INT_BITS  = INT_BITS;
+            exports.INT_MAX   =  0x7fffffff;
+            exports.INT_MIN   = -1<<(INT_BITS-1);
+
+//Returns -1, 0, +1 depending on sign of x
+            exports.sign = function(v) {
+                return (v > 0) - (v < 0);
+            }
+
+//Computes absolute value of integer
+            exports.abs = function(v) {
+                var mask = v >> (INT_BITS-1);
+                return (v ^ mask) - mask;
+            }
+
+//Computes minimum of integers x and y
+            exports.min = function(x, y) {
+                return y ^ ((x ^ y) & -(x < y));
+            }
+
+//Computes maximum of integers x and y
+            exports.max = function(x, y) {
+                return x ^ ((x ^ y) & -(x < y));
+            }
+
+//Checks if a number is a power of two
+            exports.isPow2 = function(v) {
+                return !(v & (v-1)) && (!!v);
+            }
+
+//Computes log base 2 of v
+            exports.log2 = function(v) {
+                var r, shift;
+                r =     (v > 0xFFFF) << 4; v >>>= r;
+                shift = (v > 0xFF  ) << 3; v >>>= shift; r |= shift;
+                shift = (v > 0xF   ) << 2; v >>>= shift; r |= shift;
+                shift = (v > 0x3   ) << 1; v >>>= shift; r |= shift;
+                return r | (v >> 1);
+            }
+
+//Computes log base 10 of v
+            exports.log10 = function(v) {
+                return  (v >= 1000000000) ? 9 : (v >= 100000000) ? 8 : (v >= 10000000) ? 7 :
+                    (v >= 1000000) ? 6 : (v >= 100000) ? 5 : (v >= 10000) ? 4 :
+                        (v >= 1000) ? 3 : (v >= 100) ? 2 : (v >= 10) ? 1 : 0;
+            }
+
+//Counts number of bits
+            exports.popCount = function(v) {
+                v = v - ((v >>> 1) & 0x55555555);
+                v = (v & 0x33333333) + ((v >>> 2) & 0x33333333);
+                return ((v + (v >>> 4) & 0xF0F0F0F) * 0x1010101) >>> 24;
+            }
+
+//Counts number of trailing zeros
+            function countTrailingZeros(v) {
+                var c = 32;
+                v &= -v;
+                if (v) c--;
+                if (v & 0x0000FFFF) c -= 16;
+                if (v & 0x00FF00FF) c -= 8;
+                if (v & 0x0F0F0F0F) c -= 4;
+                if (v & 0x33333333) c -= 2;
+                if (v & 0x55555555) c -= 1;
+                return c;
+            }
+            exports.countTrailingZeros = countTrailingZeros;
+
+//Rounds to next power of 2
+            exports.nextPow2 = function(v) {
+                v += v === 0;
+                --v;
+                v |= v >>> 1;
+                v |= v >>> 2;
+                v |= v >>> 4;
+                v |= v >>> 8;
+                v |= v >>> 16;
+                return v + 1;
+            }
+
+//Rounds down to previous power of 2
+            exports.prevPow2 = function(v) {
+                v |= v >>> 1;
+                v |= v >>> 2;
+                v |= v >>> 4;
+                v |= v >>> 8;
+                v |= v >>> 16;
+                return v - (v>>>1);
+            }
+
+//Computes parity of word
+            exports.parity = function(v) {
+                v ^= v >>> 16;
+                v ^= v >>> 8;
+                v ^= v >>> 4;
+                v &= 0xf;
+                return (0x6996 >>> v) & 1;
+            }
+
+            var REVERSE_TABLE = new Array(256);
+
+            (function(tab) {
+                for(var i=0; i<256; ++i) {
+                    var v = i, r = i, s = 7;
+                    for (v >>>= 1; v; v >>>= 1) {
+                        r <<= 1;
+                        r |= v & 1;
+                        --s;
+                    }
+                    tab[i] = (r << s) & 0xff;
+                }
+            })(REVERSE_TABLE);
+
+//Reverse bits in a 32 bit word
+            exports.reverse = function(v) {
+                return  (REVERSE_TABLE[ v         & 0xff] << 24) |
+                    (REVERSE_TABLE[(v >>> 8)  & 0xff] << 16) |
+                    (REVERSE_TABLE[(v >>> 16) & 0xff] << 8)  |
+                    REVERSE_TABLE[(v >>> 24) & 0xff];
+            }
+
+//Interleave bits of 2 coordinates with 16 bits.  Useful for fast quadtree codes
+            exports.interleave2 = function(x, y) {
+                x &= 0xFFFF;
+                x = (x | (x << 8)) & 0x00FF00FF;
+                x = (x | (x << 4)) & 0x0F0F0F0F;
+                x = (x | (x << 2)) & 0x33333333;
+                x = (x | (x << 1)) & 0x55555555;
+
+                y &= 0xFFFF;
+                y = (y | (y << 8)) & 0x00FF00FF;
+                y = (y | (y << 4)) & 0x0F0F0F0F;
+                y = (y | (y << 2)) & 0x33333333;
+                y = (y | (y << 1)) & 0x55555555;
+
+                return x | (y << 1);
+            }
+
+//Extracts the nth interleaved component
+            exports.deinterleave2 = function(v, n) {
+                v = (v >>> n) & 0x55555555;
+                v = (v | (v >>> 1))  & 0x33333333;
+                v = (v | (v >>> 2))  & 0x0F0F0F0F;
+                v = (v | (v >>> 4))  & 0x00FF00FF;
+                v = (v | (v >>> 16)) & 0x000FFFF;
+                return (v << 16) >> 16;
+            }
+
+
+//Interleave bits of 3 coordinates, each with 10 bits.  Useful for fast octree codes
+            exports.interleave3 = function(x, y, z) {
+                x &= 0x3FF;
+                x  = (x | (x<<16)) & 4278190335;
+                x  = (x | (x<<8))  & 251719695;
+                x  = (x | (x<<4))  & 3272356035;
+                x  = (x | (x<<2))  & 1227133513;
+
+                y &= 0x3FF;
+                y  = (y | (y<<16)) & 4278190335;
+                y  = (y | (y<<8))  & 251719695;
+                y  = (y | (y<<4))  & 3272356035;
+                y  = (y | (y<<2))  & 1227133513;
+                x |= (y << 1);
+
+                z &= 0x3FF;
+                z  = (z | (z<<16)) & 4278190335;
+                z  = (z | (z<<8))  & 251719695;
+                z  = (z | (z<<4))  & 3272356035;
+                z  = (z | (z<<2))  & 1227133513;
+
+                return x | (z << 2);
+            }
+
+//Extracts nth interleaved component of a 3-tuple
+            exports.deinterleave3 = function(v, n) {
+                v = (v >>> n)       & 1227133513;
+                v = (v | (v>>>2))   & 3272356035;
+                v = (v | (v>>>4))   & 251719695;
+                v = (v | (v>>>8))   & 4278190335;
+                v = (v | (v>>>16))  & 0x3FF;
+                return (v<<22)>>22;
+            }
+
+//Computes next combination in colexicographic order (this is mistakenly called nextPermutation on the bit twiddling hacks page)
+            exports.nextCombination = function(v) {
+                var t = v | (v - 1);
+                return (t + 1) | (((~t & -~t) - 1) >>> (countTrailingZeros(v) + 1));
+            }
+
+        },
+        "dup/dup.js":function(require,exports,module){"use strict"
+
+            function dupe_array(count, value, i) {
+                var c = count[i]|0
+                if(c <= 0) {
+                    return []
+                }
+                var result = new Array(c), j
+                if(i === count.length-1) {
+                    for(j=0; j<c; ++j) {
+                        result[j] = value
+                    }
+                } else {
+                    for(j=0; j<c; ++j) {
+                        result[j] = dupe_array(count, value, i+1)
+                    }
+                }
+                return result
+            }
+
+            function dupe_number(count, value) {
+                var result, i
+                result = new Array(count)
+                for(i=0; i<count; ++i) {
+                    result[i] = value
+                }
+                return result
+            }
+
+            function dupe(count, value) {
+                if(typeof value === "undefined") {
+                    value = 0
+                }
+                switch(typeof count) {
+                    case "number":
+                        if(count > 0) {
+                            return dupe_number(count|0, value)
+                        }
+                        break
+                    case "object":
+                        if(typeof (count.length) === "number") {
+                            return dupe_array(count, value, 0)
+                        }
+                        break
+                }
+                return []
+            }
+
+            module.exports = dupe},
         npmModules: (function () {
             libraries["SystemJS/lib/global-helpers.js"]("undefined" != typeof self ? self : global);
             libraries.amdModules("undefined" != typeof self ? self : global);
