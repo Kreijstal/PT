@@ -1398,20 +1398,15 @@ var modules = function (System) {
         }
 
         function b(t, e, n, r) {
-            var i = x.cloud.shadow
-                , o = i.w / S.tileWidth
-                , s = i.h / S.tileHeight;
+            var o = x.cloud.shadow
+                , s = o.w / 2
+                , u = o.h;
             return c("cloud", t, e, n, {
                 vx: -.5,
                 vy: 0
             }, {
-                bounds: {
-                    x: -o / 2,
-                    y: -s,
-                    w: o,
-                    h: s
-                }
-            }, k ? a(x.cloud, x.cloud_2, i.w / 2, i.h, r, T.CLOUD_SHADOW_COLOR) : {})
+                bounds: i(x.cloud, s, u)
+            }, k ? a(x.cloud, x.cloud_2, s, u, r, T.CLOUD_SHADOW_COLOR) : {})
         }
 
         function _(t, e, n, r, i, o) {
@@ -1990,15 +1985,13 @@ var modules = function (System) {
                             a.startY = r.getY(e),
                             a.send(e, "start");
                         var s, u = e, l = function (t) {
-                                u = t,
-                                    t.preventDefault(),
-                                    a.send(t, "drag")
-                            }
-                            , c = function (t) {
-                                r.getButton(t) === a.button && (r.isTouch(t) || (u = t),
-                                    s())
-                            }
-                            ;
+                            u = t,
+                                t.preventDefault(),
+                                a.send(t, "drag")
+                        }, c = function (t) {
+                            r.getButton(t) === a.button && (r.isTouch(t) || (u = t),
+                                s())
+                        };
                         s = function () {
                             a.send(u, "end"),
                                 window.removeEventListener(n, l),
@@ -2959,19 +2952,19 @@ var modules = function (System) {
                 template: t("4f")
             },
             n.exports
-    });
-    (function () {
-        var i = System.amdDefine;
-        !function (t, e) {
-            "object" == typeof n && "undefined" != typeof r ? r.exports = e() : "function" == typeof i && i.amd ? i("51", [], e) : t.moment = e()
-        }(this,libraries.momentJS)
-    })();
-    (function () {
-        var e = System.amdDefine;
-        e("52", ["51"], function (t) {
-            return t
-        })
-    })();
+    }),
+        function () {
+            var i = System.amdDefine;
+            !function (t, e) {
+                "object" == typeof n && "undefined" != typeof r ? r.exports = e() : "function" == typeof i && i.amd ? i("51", [], e) : t.moment = e()
+            }(this,libraries.momentJS)
+        }(),
+        function () {
+            var e = System.amdDefine;
+            e("52", ["51"], function (t) {
+                return t
+            })
+        }();
     System.registerDynamic("53", [], !0, function (t, e, n) {
         "use strict";
         !function (t) {
@@ -5488,11 +5481,10 @@ var modules = function (System) {
                 }
             ;
             var s = function (t, e, r) {
-                    return r = (e || []).slice(0),
-                        r.splice(0, 0, t),
-                        n.apply(null, r)
-                }
-                ;
+                return r = (e || []).slice(0),
+                    r.splice(0, 0, t),
+                    n.apply(null, r)
+            };
             "undefined" != typeof e ? (e.sprintf = n,
                 e.vsprintf = s) : (t.sprintf = n,
                 t.vsprintf = s,
@@ -7217,6 +7209,19 @@ var modules = function (System) {
                     D.setItem("game-scale", this.scale.toString())
             }
                 ,
+                t.prototype.isSelected = function (t) {
+                    return this.selected && this.selected.id === t
+                }
+                ,
+                t.prototype.select = function (t) {
+                    var e = this;
+                    this.selected !== t && this.apply(function () {
+                        e.selected && (e.selected.selected = !1),
+                            e.selected = t,
+                        e.selected && (e.selected.selected = !0)
+                    })
+                }
+                ,
                 t.prototype.load = function () {
                     return this.loadPromise || (this.loadPromise = k.loadSpriteSheets(S.spriteSheets, "/images/"))
                 }
@@ -7375,19 +7380,6 @@ var modules = function (System) {
                             this.socket.receivedSize = 0,
                             this.timeSize = 0)
                     }
-                }
-                ,
-                t.prototype.isSelected = function (t) {
-                    return this.selected && this.selected.id === t
-                }
-                ,
-                t.prototype.select = function (t) {
-                    var e = this;
-                    this.selected !== t && this.apply(function () {
-                        e.selected && (e.selected.selected = !1),
-                            e.selected = t,
-                        e.selected && (e.selected.selected = !0)
-                    })
                 }
                 ,
                 t.prototype.draw = function () {
@@ -7715,9 +7707,8 @@ var modules = function (System) {
                 ]),
                 t.filter("fromNow", function () {
                     var t = function (t, e) {
-                            return o(t).fromNow(e)
-                        }
-                        ;
+                        return o(t).fromNow(e)
+                    };
                     return t.$stateful = !0,
                         t
                 }),
@@ -7791,7 +7782,7 @@ var modules = function (System) {
             n.exports
     });
     System.registerDynamic("a8", [], !0, function (t, e, n) {
-        return n.exports = '<div ng-init="vm.init()" class="app"><div ng-style="{ display: vm.playing ? \'block\' : \'none\' }" class="app-game"><canvas id="canvas"></canvas><span id="stats"></span><settings-box></settings-box><chat-box></chat-box><pony-box id="pony-box" pony="vm.selected" ng-if="vm.selected"></pony-box><div id="touch-origin"></div><div id="touch-position"></div></div><div ng-if="!vm.playing" class="app-cover fadeview"><div class="container"><menu-bar logo="true" model="vm.model"><menu-item href="/" name="Home"></menu-item><menu-item href="/about" name="About"></menu-item><menu-item href="/character" name="Characters" ng-if="vm.model.account"></menu-item></menu-bar><div><div ng-view class="app-view"></div></div><footer class="app-footer clearfix"><div class="pull-left text-muted text-nowrap">version <b>0.15.1-alpha</b></div><div class="pull-right text-muted text-nowrap">&copy; 2016 <a href="https://twitter.com/Agamnentzar" class="text-muted">Agamnentzar</a> | <a href="http://agamnentzar.deviantart.com/" title="DeviantArt" class="text-muted"><i class="fa fa-fw fa-deviantart"></i></a><a href="http://agamnentzar.tumblr.com/" title="Tumblr" class="text-muted"><i class="fa fa-fw fa-tumblr"></i></a><a href="https://twitter.com/Agamnentzar" title="Twitter" class="text-muted"><i class="fa fa-fw fa-twitter"></i></a><a href="https://github.com/Agamnentzar" title="Github" class="text-muted"><i class="fa fa-fw fa-github"></i></a> <a href="mailto:agamnentzar&#64;gmail.com" target="_blank" title="Email" class="text-muted"><i class="fa fa-fw fa-envelope"></i></a></div></footer></div></div></div>',
+        return n.exports = '<div ng-init="vm.init()" class="app"><div ng-style="{ display: vm.playing ? \'block\' : \'none\' }" class="app-game"><canvas id="canvas"></canvas><span id="stats"></span><settings-box></settings-box><chat-box></chat-box><pony-box id="pony-box" pony="vm.selected" ng-if="vm.selected"></pony-box><div id="touch-origin"></div><div id="touch-position"></div></div><div ng-if="!vm.playing" class="app-cover fadeview"><div class="container"><menu-bar logo="true" model="vm.model"><menu-item href="/" name="Home"></menu-item><menu-item href="/about" name="About"></menu-item><menu-item href="/character" name="Characters" ng-if="vm.model.account"></menu-item></menu-bar><div><div ng-view class="app-view"></div></div><footer class="app-footer clearfix"><div class="pull-left text-muted text-nowrap">version <b>0.15.2-alpha</b></div><div class="pull-right text-muted text-nowrap">&copy; 2016 <a href="https://twitter.com/Agamnentzar" class="text-muted">Agamnentzar</a> | <a href="http://agamnentzar.deviantart.com/" title="DeviantArt" class="text-muted"><i class="fa fa-fw fa-deviantart"></i></a><a href="http://agamnentzar.tumblr.com/" title="Tumblr" class="text-muted"><i class="fa fa-fw fa-tumblr"></i></a><a href="https://twitter.com/Agamnentzar" title="Twitter" class="text-muted"><i class="fa fa-fw fa-twitter"></i></a><a href="https://github.com/Agamnentzar" title="Github" class="text-muted"><i class="fa fa-fw fa-github"></i></a> <a href="mailto:agamnentzar&#64;gmail.com" target="_blank" title="Email" class="text-muted"><i class="fa fa-fw fa-envelope"></i></a></div></footer></div></div></div>',
             n.exports
     });
     System.registerDynamic("44", ["1f", "3b"], !0, function (t, e, n) {
@@ -10797,7 +10788,7 @@ var modules = function (System) {
     System.registerDynamic("31", [getCodeName("Lodash"), "1f", "27", "22", "39", "21", "35"], !0, function (t, e, n) {
         "use strict";
         function r(t) {
-            return R.mergeWith({}, a(), R.cloneDeep(t), function (t, e) {
+            return F.mergeWith({}, a(), F.cloneDeep(t), function (t, e) {
                 if (null == e)
                     return t
             })
@@ -10807,7 +10798,7 @@ var modules = function (System) {
             void 0 === e && (e = !0),
             void 0 === n && (n = "gold");
             var r = [n, "dodgerblue", "limegreen", "orchid", "crimson", "aquamarine"]
-                , i = r.map(N.fillToOutline);
+                , i = r.map(L.fillToOutline);
             return {
                 type: t,
                 pattern: 0,
@@ -10819,7 +10810,7 @@ var modules = function (System) {
         }
 
         function o() {
-            return R.range(0, L.CM_SIZE * L.CM_SIZE).map(function () {
+            return F.range(0, U.CM_SIZE * U.CM_SIZE).map(function () {
                 return ""
             })
         }
@@ -10867,11 +10858,11 @@ var modules = function (System) {
         }
 
         function s(t) {
-            return U.default.parseWithAlpha(t, 1)
+            return B.default.parseWithAlpha(t, 1)
         }
 
         function u(t) {
-            return s(N.colorToFar(t))
+            return s(L.colorToFar(t))
         }
 
         function l(t) {
@@ -10879,7 +10870,7 @@ var modules = function (System) {
         }
 
         function c(t) {
-            return U.default.parse(t)
+            return B.default.parse(t)
         }
 
         function f(t) {
@@ -10966,7 +10957,7 @@ var modules = function (System) {
         }
 
         function m(t) {
-            return t ? U.default.parse(t).toHexRGB() : ""
+            return t ? B.default.parse(t).toHexRGB() : ""
         }
 
         function g(t) {
@@ -11005,7 +10996,7 @@ var modules = function (System) {
                 !t || n && 0 === t.type)
                 return null;
             var r = e ? v(e) : null
-                , i = r ? j.at(j.at(r, t.type), t.pattern) : 6;
+                , i = r ? N.at(N.at(r, t.type), t.pattern) : 6;
             return [t.type, t.pattern, x(t.fills, i), x(t.outlines, i), _(t.lockFills, i), _(t.lockOutlines, i)]
         }
 
@@ -11024,20 +11015,20 @@ var modules = function (System) {
             var e = {
                 name: t.name,
                 site: t.site,
-                h: $(t.horn, F.ponyHorns),
-                w: $(t.wings, F.ponyWings),
+                h: $(t.horn, P.ponyHorns),
+                w: $(t.wings, P.ponyWings),
                 fh: $(t.frontHooves, null),
                 bh: $(t.backHooves, null),
-                m: $(t.mane, F.ponyManes, !1),
-                bm: $(t.backMane, F.ponyBackManes, !1),
-                t: $(t.tail, F.ponyTails, !1),
-                fac: $(t.facialHair, F.ponyFacialHair),
-                ha: $(t.headAccessory, F.ponyHeadAccessories),
-                ea: $(t.earAccessory, F.ponyEarAccessories),
-                fa: $(t.faceAccessory, F.ponyFaceAccessories),
-                na: $(t.neckAccessory, F.ponyNeckAccessories),
-                fla: $(t.frontLegAccessory, F.ponyFrontLegAccessoriesStand[0]),
-                bla: $(t.backLegAccessory, F.ponyBackLegAccessoriesStand[0]),
+                m: $(t.mane, P.ponyManes, !1),
+                bm: $(t.backMane, P.ponyBackManes, !1),
+                t: $(t.tail, P.ponyTails, !1),
+                fac: $(t.facialHair, P.ponyFacialHair),
+                ha: $(t.headAccessory, P.ponyHeadAccessories),
+                ea: $(t.earAccessory, P.ponyEarAccessories),
+                fa: $(t.faceAccessory, P.ponyFaceAccessories),
+                na: $(t.neckAccessory, P.ponyNeckAccessories),
+                fla: $(t.frontLegAccessory, P.ponyFrontLegAccessoriesStand[0]),
+                bla: $(t.backLegAccessory, P.ponyBackLegAccessoriesStand[0]),
                 cf: m(t.coatFill),
                 co: m(t.coatOutline),
                 lco: y(t.lockCoatOutline),
@@ -11057,7 +11048,7 @@ var modules = function (System) {
                 frc: t.freckles ? m(t.frecklesColor) : null,
                 cm: t.cm && t.cm.some(function (t) {
                     return !!t
-                }) ? R.dropRightWhile(t.cm.map(m), function (t) {
+                }) ? F.dropRightWhile(t.cm.map(m), function (t) {
                     return !t
                 }) : null,
                 cmf: y(t.cmFlip),
@@ -11123,36 +11114,50 @@ var modules = function (System) {
 
         function C(t) {
             return [0].concat(t.map(function (t) {
-                return U.default.parseWithAlpha(t, 1).toInt()
+                return B.default.parseWithAlpha(t, 1).toInt()
             }))
         }
 
         function D(t, e) {
-            return t ? {
-                type: t.type,
-                pattern: t.pattern,
-                palette: e.addInts(C(A(t)))
-            } : null
+            var n = t && N.at(e, t.type)
+                , r = n && N.at(n, t.pattern);
+            return r && r.palette
         }
 
-        function O(t, e) {
+        function O(t, e, n) {
+            if (!t)
+                return null;
+            var r = D(t, e);
+            return {
+                type: t.type,
+                pattern: t.pattern,
+                palette: n.addInts(C(A(t))),
+                extraPalette: r ? n.addInts(r) : null
+            }
+        }
+
+        function I(t, e) {
             return {
                 name: t.name,
                 site: t.site,
-                horn: D(t.horn, e),
-                wings: D(t.wings, e),
-                frontHooves: D(t.frontHooves, e),
-                backHooves: D(t.backHooves, e),
-                mane: D(t.mane, e),
-                backMane: D(t.backMane, e),
-                tail: D(t.tail, e),
-                facialHair: D(t.facialHair, e),
-                headAccessory: D(t.headAccessory, e),
-                earAccessory: D(t.earAccessory, e),
-                faceAccessory: D(t.faceAccessory, e),
-                neckAccessory: D(t.neckAccessory, e),
-                frontLegAccessory: D(t.frontLegAccessory, e),
-                backLegAccessory: D(t.backLegAccessory, e),
+                horn: O(t.horn, P.ponHorns, e),
+                wings: O(t.wings, P.ponWings, e),
+                frontHooves: O(t.frontHooves, [null, [{
+                    color: P.ponFetlocksFrontStand[0]
+                }]], e),
+                backHooves: O(t.backHooves, [null, [{
+                    color: P.ponFetlocksBackStand[0]
+                }]], e),
+                mane: O(t.mane, P.ponManes, e),
+                backMane: O(t.backMane, P.ponBackManes, e),
+                tail: O(t.tail, P.ponTails, e),
+                facialHair: O(t.facialHair, P.ponFacialHair, e),
+                headAccessory: O(t.headAccessory, P.ponHeadAccessories, e),
+                earAccessory: O(t.earAccessory, P.ponEarAccessories, e),
+                faceAccessory: O(t.faceAccessory, P.ponFaceAccessories, e),
+                neckAccessory: O(t.neckAccessory, P.ponNeckAccessories, e),
+                frontLegAccessory: O(t.frontLegAccessory, P.ponFrontLegAccessoriesStand[0], e),
+                backLegAccessory: O(t.backLegAccessory, P.ponBackLegAccessoriesStand[0], e),
                 coatPalette: e.addInts(C([t.coatFill, t.coatOutline])),
                 coatFill: null,
                 coatOutline: null,
@@ -11179,17 +11184,17 @@ var modules = function (System) {
             }
         }
 
-        function I(t) {
-            R.forOwn(t, P.releasePalette)
+        function R(t) {
+            F.forOwn(t, j.releasePalette)
         }
 
-        var R = t(getCodeName("Lodash"))
-            , F = t("1f")
-            , P = t("27")
-            , j = t("22")
-            , N = t("39")
-            , L = t("21")
-            , U = t("35");
+        var F = t(getCodeName("Lodash"))
+            , P = t("1f")
+            , j = t("27")
+            , N = t("22")
+            , L = t("39")
+            , U = t("21")
+            , B = t("35");
         return e.fixPony = r,
             e.createSpriteSet = i,
             e.createDefaultCM = o,
@@ -11197,8 +11202,8 @@ var modules = function (System) {
             e.toRenderInfo = d,
             e.compressPonyInfo = T,
             e.decompressPonyInfo = k,
-            e.toPalette = O,
-            e.releasePalettes = I,
+            e.toPalette = I,
+            e.releasePalettes = R,
             n.exports
     });
     System.registerDynamic("24", ["35"], !0, function (t, e, n) {
@@ -11225,8 +11230,7 @@ var modules = function (System) {
             , i = new Int32Array(r.buffer, 0, 1)
             , o = new Float32Array(r.buffer, 0, 1)
             , a = function () {
-            }
-            ;
+        };
         return a.intBitsToFloat = function (t) {
             return i[0] = t,
                 o[0]
@@ -11856,10 +11860,10 @@ var modules = function (System) {
         function y(t, e) {
             if (!t.bounds || !e.bounds)
                 return !1;
-            var n = t.x + t.bounds.x
-                , r = t.y + t.bounds.y
-                , i = e.x + e.bounds.x
-                , o = e.y + e.bounds.y;
+            var n = t.x * Z.tileWidth + t.bounds.x
+                , r = t.y * Z.tileHeight + t.bounds.y
+                , i = e.x * Z.tileWidth + e.bounds.x
+                , o = e.y * Z.tileHeight + e.bounds.y;
             return x(n, r, t.bounds.w, t.bounds.h, i, o, e.bounds.w, e.bounds.h)
         }
 
@@ -12010,29 +12014,28 @@ var modules = function (System) {
 
         function B(t) {
             var e, n = !1, r = G.resolve(t.load()).then(function () {
-                    if (n)
-                        throw new Error("cancelled");
-                    t.init();
-                    var r = performance.now()
-                        , i = r
-                        , o = 0
-                        , a = 0;
-                    e = requestAnimationFrame(function n(s) {
-                        e = requestAnimationFrame(n),
-                            o++,
-                        s - i > 1e3 && (a = 1e3 * o / (s - i),
-                            o = 0,
-                            i = s),
-                            t.fps = a,
-                            t.update((s - r) / 1e3),
-                            t.draw(),
-                            r = s
-                    })
-                }), i = function () {
-                    cancelAnimationFrame(e),
-                        n = !0
-                }
-                ;
+                if (n)
+                    throw new Error("cancelled");
+                t.init();
+                var r = performance.now()
+                    , i = r
+                    , o = 0
+                    , a = 0;
+                e = requestAnimationFrame(function n(s) {
+                    e = requestAnimationFrame(n),
+                        o++,
+                    s - i > 1e3 && (a = 1e3 * o / (s - i),
+                        o = 0,
+                        i = s),
+                        t.fps = a,
+                        t.update((s - r) / 1e3),
+                        t.draw(),
+                        r = s
+                })
+            }), i = function () {
+                cancelAnimationFrame(e),
+                    n = !0
+            };
             return {
                 promise: r,
                 cancel: i
@@ -12206,7 +12209,7 @@ var modules = function (System) {
     System.registerDynamic("cc", [], !0, function (t, e, n) {
         return n.exports = {
             "pony.png": "pony-85f36bafe3.png",
-            "pony2.png": "pony2-7da47c9017.png",
+            "pony2.png": "pony2-ffea861c16.png",
             "tiles.png": "tiles-1147a10312.png"
         },
             n.exports
@@ -12221,7 +12224,7 @@ var modules = function (System) {
                 h: t[3],
                 ox: t[4],
                 oy: t[5],
-                src: w
+                src: E
             } : null
         }
 
@@ -12234,56 +12237,56 @@ var modules = function (System) {
 
         function o(t, e) {
             return {
-                fill: E[t],
-                outline: E[e]
+                fill: S[t],
+                outline: S[e]
             }
         }
 
         function a(t, e, n) {
             return {
-                fill: E[t],
-                outline: E[e],
-                extra: E[n]
+                fill: S[t],
+                outline: S[e],
+                extra: S[n]
             }
         }
 
         function s(t, e) {
             return {
-                color: E[t],
-                shadow: E[e]
+                color: S[t],
+                shadow: S[e]
             }
         }
 
         function u(t) {
             return {
-                shadow: E[t]
+                shadow: S[t]
             }
         }
 
         function l(t, e, n) {
             return {
-                mouth: E[t],
-                muzzle: E[e],
-                fangs: E[n]
+                mouth: S[t],
+                muzzle: S[e],
+                fangs: S[n]
             }
         }
 
         function c(t, e, n, r) {
             return {
-                fill: E[t],
-                line: E[e],
-                iris: E[n],
-                lashes: E[r]
+                fill: S[t],
+                line: S[e],
+                iris: S[n],
+                lashes: S[r]
             }
         }
 
         function f(t, e, n, r, i) {
             return {
-                stump: E[t],
-                trunk: E[e],
-                crown: E[n],
-                stumpShadow: E[r],
-                shadow: E[i]
+                stump: S[t],
+                trunk: S[e],
+                crown: S[n],
+                stumpShadow: S[r],
+                shadow: S[i]
             }
         }
 
@@ -12295,72 +12298,86 @@ var modules = function (System) {
                 h: t[3],
                 ox: t[4],
                 oy: t[5],
-                src: x
+                src: $
             } : null
         }
 
-        function h(t, e) {
+        function h(t) {
             return {
-                color: $[t],
-                palette: e
+                color: T[t]
             }
         }
 
-        function d(t) {
+        function d(t, e) {
             return {
-                shadow: $[t]
+                color: T[t],
+                palette: e
             }
         }
 
         function v(t, e, n) {
             return {
-                color: $[t],
-                shadow: $[e],
+                color: T[t],
+                extra: T[e],
                 palette: n
             }
         }
 
-        function m(t, e, n) {
+        function m(t) {
             return {
-                mouth: $[t],
-                muzzle: $[e],
-                fangs: $[n]
+                shadow: T[t]
             }
         }
 
         function g(t, e, n) {
             return {
-                normal: $[t],
-                lashes: $[e],
-                iris: $[n]
+                color: T[t],
+                shadow: T[e],
+                palette: n
             }
         }
 
-        function y(t, e, n, r, i, o) {
+        function y(t, e, n) {
             return {
-                stump: $[t],
-                trunk: $[e],
-                crown: $[n],
-                stumpShadow: $[r],
-                shadow: $[i],
+                mouth: T[t],
+                muzzle: T[e],
+                fangs: T[n]
+            }
+        }
+
+        function b(t, e, n) {
+            return {
+                normal: T[t],
+                lashes: T[e],
+                iris: T[n]
+            }
+        }
+
+        function _(t, e, n, r, i, o) {
+            return {
+                stump: T[t],
+                trunk: T[e],
+                crown: T[n],
+                stumpShadow: T[r],
+                shadow: T[i],
                 palette: o
             }
         }
 
-        function b(t, e) {
+        function w(t, e) {
             return {
                 frames: t.map(function (t) {
-                    return $[t]
+                    return T[t]
                 }),
                 palette: e
             }
         }
 
-        var _ = t("cc")
-            , w = _["pony.png"]
-            , x = _["pony2.png"]
-            , E = [null, [175, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [121, 143, 1, 1, 38, 28], null, [211, 284, 8, 7, 31, 28], [371, 298, 12, 6, 29, 30], [95, 315, 7, 4, 33, 30], [31, 305, 9, 5, 32, 30], [416, 298, 9, 6, 31, 29], [359, 298, 12, 6, 29, 30], [154, 305, 7, 5, 32, 28], [444, 133, 1, 1, 40, 30], [78, 298, 4, 7, 31, 28], [36, 319, 4, 4, 29, 32], [495, 298, 7, 6, 33, 28], [138, 305, 8, 5, 33, 30], [193, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [8, 315, 8, 4, 31, 28], null, [148, 285, 4, 6, 31, 29], [181, 315, 6, 4, 29, 32], [435, 309, 6, 5, 34, 28], [187, 315, 6, 4, 35, 30], [175, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [121, 143, 1, 1, 38, 28], null, [211, 284, 8, 7, 31, 28], [371, 298, 12, 6, 29, 30], [95, 315, 7, 4, 33, 30], [31, 305, 9, 5, 32, 30], [416, 298, 9, 6, 31, 29], [359, 298, 12, 6, 29, 30], [154, 305, 7, 5, 32, 28], [444, 133, 1, 1, 40, 30], [78, 298, 4, 7, 31, 28], [36, 319, 4, 4, 29, 32], [495, 298, 7, 6, 33, 28], [138, 305, 8, 5, 33, 30], [193, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [8, 315, 8, 4, 31, 28], null, [148, 285, 4, 6, 31, 29], [181, 315, 6, 4, 29, 32], [435, 309, 6, 5, 34, 28], [187, 315, 6, 4, 35, 30], [124, 213, 8, 15, 35, 26], [98, 212, 10, 15, 34, 28], [439, 155, 2, 1, 37, 26], null, [279, 237, 8, 14, 35, 27], [108, 228, 9, 14, 34, 29], [492, 263, 8, 11, 35, 26], [368, 265, 5, 11, 39, 28], [206, 276, 10, 8, 31, 27], [84, 276, 12, 8, 30, 28], [251, 283, 8, 8, 31, 27], [305, 283, 7, 8, 30, 28], [320, 304, 4, 6, 37, 29], [143, 285, 5, 7, 37, 29], [251, 310, 4, 5, 32, 28], [507, 309, 5, 5, 31, 29], [121, 143, 1, 1, 35, 28], [444, 133, 1, 1, 33, 29], [12, 319, 4, 4, 32, 29], [395, 318, 5, 4, 31, 30], [235, 310, 4, 5, 32, 29], [128, 285, 5, 7, 31, 29], [451, 80, 3, 3, 33, 29], [319, 310, 4, 5, 31, 29], [428, 322, 4, 3, 32, 31], [465, 318, 5, 4, 31, 32], [193, 197, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [455, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [493, 304, 14, 5, 27, 28], [83, 159, 6, 1, 27, 33], [166, 319, 8, 3, 33, 30], [148, 319, 9, 3, 33, 31], [323, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [455, 251, 19, 12, 22, 21], null, [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [365, 253, 15, 12, 25, 21], [360, 208, 15, 15, 26, 19], [312, 283, 7, 8, 34, 25], [487, 274, 9, 9, 33, 25], [263, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [493, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [49, 254, 10, 12, 29, 21], [193, 212, 10, 15, 30, 19], [407, 275, 7, 9, 34, 23], [162, 266, 7, 10, 35, 23], [193, 197, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [455, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [493, 304, 14, 5, 27, 28], [83, 159, 6, 1, 27, 33], [166, 319, 8, 3, 33, 30], [148, 319, 9, 3, 33, 31], [323, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [455, 251, 19, 12, 22, 21], null, [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [365, 253, 15, 12, 25, 21], [360, 208, 15, 15, 26, 19], [312, 283, 7, 8, 34, 25], [487, 274, 9, 9, 33, 25], [263, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [493, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [49, 254, 10, 12, 29, 21], [193, 212, 10, 15, 30, 19], [407, 275, 7, 9, 34, 23], [162, 266, 7, 10, 35, 23], [408, 177, 20, 17, 21, 23], [39, 139, 22, 21, 20, 22], [304, 298, 15, 6, 26, 23], [55, 276, 17, 8, 25, 22], [437, 225, 13, 14, 21, 25], [154, 213, 5, 15, 20, 25], [385, 226, 13, 14, 22, 26], [443, 252, 12, 12, 22, 31], [296, 315, 5, 4, 34, 27], [83, 159, 6, 1, 34, 31], [30, 310, 6, 5, 35, 26], [14, 242, 2, 2, 40, 30], [474, 251, 19, 12, 22, 23], [331, 223, 21, 14, 21, 22], [492, 322, 9, 2, 28, 23], [478, 304, 15, 5, 26, 22], [254, 298, 18, 6, 22, 24], [292, 274, 20, 9, 21, 24], [383, 265, 19, 10, 22, 25], [35, 276, 20, 8, 22, 28], [400, 314, 10, 4, 31, 27], [94, 319, 12, 3, 30, 29], [72, 325, 4, 2, 37, 29], [35, 325, 5, 2, 37, 30], [278, 263, 16, 11, 25, 21], [408, 239, 18, 13, 24, 20], [246, 274, 5, 10, 25, 21], [59, 241, 9, 13, 24, 20], [426, 264, 7, 11, 27, 21], [139, 255, 5, 12, 30, 21], [421, 275, 6, 9, 32, 22], [100, 267, 6, 10, 33, 22], [232, 304, 5, 6, 36, 25], [436, 284, 6, 7, 36, 25], [289, 251, 21, 12, 21, 21], [159, 213, 25, 14, 19, 20], [272, 298, 17, 6, 25, 21], [14, 276, 21, 8, 23, 20], [387, 304, 21, 5, 21, 23], [209, 298, 24, 6, 19, 23], [233, 298, 21, 6, 21, 26], [185, 298, 24, 6, 19, 27], [462, 304, 16, 5, 26, 28], [427, 304, 19, 5, 24, 29], [458, 153, 8, 2, 34, 29], [480, 322, 12, 2, 31, 30], [310, 251, 20, 12, 28, 20], [288, 223, 22, 14, 27, 19], [66, 298, 4, 7, 28, 25], [148, 267, 5, 10, 27, 23], [508, 12, 4, 11, 31, 20], [131, 242, 6, 13, 30, 19], [232, 275, 8, 9, 35, 22], [343, 263, 10, 11, 35, 21], [406, 298, 10, 6, 38, 25], [175, 276, 11, 8, 38, 24], [345, 131, 22, 22, 20, 22], [340, 106, 23, 25, 18, 21], [202, 284, 9, 7, 33, 22], [425, 298, 9, 6, 32, 21], [247, 251, 21, 12, 20, 23], [231, 224, 19, 14, 18, 22], [19, 161, 20, 18, 22, 26], [54, 212, 11, 15, 21, 31], [157, 319, 9, 3, 33, 29], [119, 196, 2, 1, 32, 31], [118, 322, 6, 3, 36, 30], [52, 323, 6, 2, 34, 31], [352, 223, 20, 14, 20, 24], [408, 194, 22, 16, 19, 23], [126, 299, 6, 6, 34, 25], [460, 283, 6, 8, 35, 24], [326, 283, 7, 8, 27, 24], [154, 266, 8, 10, 27, 23], [39, 241, 10, 13, 20, 25], [19, 212, 12, 15, 19, 24], [154, 298, 4, 7, 24, 32], [433, 275, 5, 9, 23, 32], [130, 325, 3, 2, 24, 32], [121, 138, 1, 3, 23, 32], [121, 141, 1, 2, 27, 32], null, [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [58, 298, 4, 7, 24, 32], [359, 274, 4, 9, 23, 32], [231, 212, 2, 4, 25, 34], null, [155, 242, 2, 2, 24, 32], [121, 138, 1, 3, 23, 32], [106, 325, 3, 2, 25, 32], null, [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [54, 298, 4, 7, 24, 32], [359, 274, 4, 9, 23, 32], [511, 11, 1, 1, 27, 32], null, null, [88, 145, 1, 1, 23, 34], [96, 325, 4, 2, 24, 32], [88, 141, 1, 2, 23, 32], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [0, 267, 7, 10, 25, 33], [59, 254, 9, 12, 24, 32], [465, 322, 3, 3, 27, 33], [114, 196, 5, 1, 27, 32], [7, 267, 7, 10, 25, 33], [474, 263, 9, 11, 24, 33], [469, 155, 11, 20, 20, 31], [419, 136, 13, 22, 19, 30], null, [444, 133, 1, 1, 31, 32], [184, 284, 9, 7, 21, 31], [455, 274, 11, 9, 20, 30], [263, 192, 5, 16, 21, 35], [269, 154, 8, 19, 19, 33], [231, 310, 4, 5, 20, 46], [351, 304, 3, 6, 19, 46], [505, 175, 7, 16, 24, 32], [417, 39, 5, 16, 27, 33], [39, 160, 20, 19, 21, 20], [466, 133, 22, 22, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [475, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [152, 284, 13, 7, 27, 28], [319, 298, 14, 6, 27, 30], [95, 315, 7, 4, 33, 30], [21, 305, 10, 5, 32, 30], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [389, 158, 20, 19, 21, 20], [301, 131, 22, 22, 20, 19], [0, 180, 19, 17, 22, 21], [444, 133, 1, 1, 40, 30], [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [408, 225, 15, 14, 25, 21], [168, 180, 15, 17, 26, 19], [224, 275, 8, 9, 33, 25], [91, 266, 9, 10, 33, 25], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [409, 158, 20, 19, 21, 20], [323, 131, 22, 22, 20, 19], [330, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [398, 226, 10, 14, 29, 21], [291, 191, 11, 17, 29, 19], [169, 266, 7, 10, 34, 23], [405, 264, 7, 11, 35, 23], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [303, 208, 20, 15, 21, 20], [19, 179, 22, 17, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [475, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [152, 284, 13, 7, 27, 28], [319, 298, 14, 6, 27, 30], [95, 315, 7, 4, 33, 30], [21, 305, 10, 5, 32, 30], [213, 197, 20, 15, 21, 20], [63, 179, 22, 17, 20, 19], [424, 252, 19, 12, 22, 21], [444, 133, 1, 1, 40, 30], [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [408, 225, 15, 14, 25, 21], [168, 180, 15, 17, 26, 19], [224, 275, 8, 9, 33, 25], [91, 266, 9, 10, 33, 25], [283, 208, 20, 15, 21, 20], [19, 179, 22, 17, 20, 19], [330, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [398, 226, 10, 14, 29, 21], [291, 191, 11, 17, 29, 19], [169, 266, 7, 10, 34, 23], [405, 264, 7, 11, 35, 23], [299, 153, 22, 20, 21, 23], [277, 131, 24, 22, 20, 22], [289, 298, 15, 6, 26, 23], [55, 276, 17, 8, 25, 22], [437, 225, 13, 14, 21, 25], [154, 213, 5, 15, 20, 25], [372, 226, 13, 14, 22, 26], [443, 252, 12, 12, 22, 31], [279, 237, 8, 14, 35, 27], [0, 228, 9, 14, 34, 29], [492, 263, 8, 11, 35, 26], [368, 265, 5, 11, 39, 28], [197, 266, 7, 10, 25, 33], [500, 263, 8, 11, 25, 33], [405, 252, 19, 12, 22, 23], [310, 223, 21, 14, 21, 22], [492, 322, 9, 2, 28, 23], [478, 304, 15, 5, 26, 22], [254, 298, 18, 6, 22, 24], [292, 274, 20, 9, 21, 24], [383, 265, 19, 10, 22, 25], [35, 276, 20, 8, 22, 28], [186, 276, 10, 8, 31, 27], [72, 276, 12, 8, 30, 28], [320, 304, 4, 6, 37, 29], [153, 291, 5, 7, 37, 29], [278, 263, 16, 11, 25, 21], [408, 239, 18, 13, 24, 20], [246, 274, 5, 10, 25, 21], [59, 241, 9, 13, 24, 20], [426, 264, 7, 11, 27, 21], [139, 255, 5, 12, 30, 21], [421, 275, 6, 9, 32, 22], [100, 267, 6, 10, 33, 22], [232, 304, 5, 6, 36, 25], [436, 284, 6, 7, 36, 25], [268, 251, 21, 12, 21, 21], [263, 223, 25, 14, 19, 20], [272, 298, 17, 6, 25, 21], [14, 276, 21, 8, 23, 20], [387, 304, 21, 5, 21, 23], [209, 298, 24, 6, 19, 23], [233, 298, 21, 6, 21, 26], [185, 298, 24, 6, 19, 27], [446, 304, 16, 5, 26, 28], [408, 304, 19, 5, 24, 29], [410, 314, 10, 4, 32, 29], [474, 53, 12, 4, 31, 30], [310, 251, 20, 12, 28, 20], [288, 223, 22, 14, 27, 19], [66, 298, 4, 7, 28, 25], [148, 267, 5, 10, 27, 23], [508, 12, 4, 11, 31, 20], [131, 242, 6, 13, 30, 19], [232, 275, 8, 9, 35, 22], [343, 263, 10, 11, 35, 21], [406, 298, 10, 6, 38, 25], [175, 276, 11, 8, 38, 24], [367, 131, 22, 22, 20, 22], [363, 106, 23, 25, 18, 21], [202, 284, 9, 7, 33, 22], [425, 298, 9, 6, 32, 21], [247, 251, 21, 12, 20, 23], [231, 224, 19, 14, 18, 22], [19, 161, 20, 18, 22, 26], [54, 212, 11, 15, 21, 31], [139, 319, 9, 3, 33, 29], [319, 310, 4, 5, 31, 29], [390, 314, 10, 4, 32, 30], [438, 314, 9, 4, 31, 32], [454, 32, 20, 27, 20, 24], [486, 0, 22, 29, 19, 23], [126, 299, 6, 6, 34, 25], [460, 283, 6, 8, 35, 24], [326, 283, 7, 8, 27, 24], [154, 266, 8, 10, 27, 23], [39, 241, 10, 13, 20, 25], [19, 212, 12, 15, 19, 24], [263, 192, 5, 16, 21, 35], [269, 154, 8, 19, 19, 33], [231, 310, 4, 5, 20, 46], [351, 304, 3, 6, 19, 46], [505, 175, 7, 16, 24, 32], [417, 39, 5, 16, 27, 33], [378, 265, 5, 11, 39, 35], [301, 237, 7, 14, 38, 33], [510, 161, 2, 4, 40, 37], [369, 314, 3, 5, 38, 37], [27, 284, 4, 8, 39, 38], [490, 318, 4, 4, 39, 43], [405, 247, 3, 5, 41, 35], [441, 123, 4, 10, 41, 33], [450, 264, 5, 11, 39, 35], [301, 237, 7, 14, 38, 33], [439, 184, 3, 8, 40, 37], null, [363, 265, 5, 11, 39, 35], [9, 228, 7, 14, 38, 33], [176, 298, 3, 7, 41, 36], [19, 284, 4, 8, 40, 37], [445, 264, 5, 11, 39, 35], [301, 237, 7, 14, 38, 33], [509, 34, 3, 10, 40, 36], null, [373, 265, 5, 11, 39, 35], [308, 237, 7, 14, 38, 33], [439, 176, 3, 8, 40, 38], [451, 70, 3, 10, 40, 37], [217, 254, 7, 12, 36, 37], [99, 227, 9, 14, 35, 36], [433, 291, 5, 7, 36, 40], [190, 266, 7, 10, 35, 37], [118, 267, 6, 10, 37, 37], [68, 325, 4, 2, 36, 46], [224, 241, 5, 10, 38, 39], [510, 241, 2, 2, 37, 48], [429, 167, 3, 8, 40, 41], [450, 225, 5, 14, 39, 36], [389, 136, 15, 22, 37, 22], [424, 112, 17, 24, 36, 21], [510, 243, 2, 2, 41, 26], [486, 318, 4, 4, 40, 25], [217, 322, 5, 3, 42, 22], [196, 276, 10, 8, 39, 21], [510, 243, 2, 2, 41, 26], [486, 318, 4, 4, 40, 25], [496, 274, 9, 9, 43, 24], [111, 242, 7, 13, 46, 23], [104, 242, 7, 13, 44, 25], [348, 304, 3, 6, 48, 35], [321, 263, 11, 11, 37, 28], [16, 241, 12, 13, 36, 28], [484, 283, 5, 8, 37, 36], [124, 267, 6, 10, 36, 35], [239, 264, 7, 11, 40, 33], [157, 241, 9, 13, 39, 32], [229, 230, 2, 3, 43, 37], null, [252, 304, 5, 6, 42, 33], [210, 254, 7, 12, 41, 32], [229, 230, 2, 3, 43, 37], null, [232, 264, 7, 11, 40, 33], [95, 241, 9, 13, 39, 32], [106, 267, 6, 10, 40, 34], [179, 254, 8, 12, 39, 33], [247, 304, 5, 6, 40, 38], [291, 283, 7, 8, 39, 37], [502, 193, 10, 16, 37, 29], [371, 173, 12, 18, 36, 28], [427, 275, 6, 9, 41, 29], [187, 254, 8, 12, 40, 28], [104, 255, 7, 12, 37, 33], [77, 241, 9, 13, 36, 33], [484, 209, 14, 15, 30, 35], [289, 173, 16, 18, 29, 34], [49, 241, 10, 13, 30, 35], [87, 212, 11, 15, 29, 34], [42, 227, 12, 14, 30, 35], [358, 173, 13, 18, 29, 34], [250, 224, 13, 14, 30, 36], [75, 196, 13, 16, 30, 35], [442, 275, 4, 9, 40, 37], [7, 255, 7, 12, 38, 36], [236, 251, 6, 13, 37, 32], [0, 213, 8, 15, 36, 31], [86, 298, 4, 7, 39, 32], [454, 283, 6, 8, 38, 31], [440, 322, 4, 3, 39, 37], [217, 315, 6, 4, 38, 36], [445, 318, 5, 4, 37, 40], [503, 314, 8, 4, 36, 40], [259, 315, 6, 4, 37, 41], [106, 305, 8, 5, 36, 41], [89, 138, 13, 22, 48, 42], [44, 115, 15, 24, 47, 41], [0, 305, 11, 5, 48, 42], [70, 284, 14, 7, 47, 41], [51, 266, 11, 10, 48, 44], [308, 263, 13, 11, 47, 45], [0, 197, 13, 16, 48, 48], [19, 196, 15, 16, 47, 49], [149, 242, 6, 13, 48, 50], [132, 213, 8, 15, 47, 50], [0, 139, 13, 22, 48, 42], [74, 115, 15, 24, 47, 41], [432, 156, 10, 20, 48, 43], [88, 139, 1, 2, 47, 47], [26, 139, 13, 22, 48, 42], [262, 131, 15, 23, 47, 41], [480, 155, 10, 20, 48, 44], [61, 139, 12, 21, 47, 44], [13, 139, 13, 22, 48, 42], [44, 115, 15, 24, 47, 41], [244, 154, 13, 20, 48, 43], null, [102, 138, 13, 22, 48, 42], [59, 115, 15, 24, 47, 41], [345, 173, 13, 18, 48, 46], [14, 244, 2, 2, 60, 61], [88, 227, 11, 14, 48, 42], [101, 196, 13, 16, 47, 41], [237, 304, 5, 6, 48, 42], [458, 298, 8, 6, 47, 41], [11, 305, 10, 5, 49, 44], [363, 276, 9, 8, 51, 43], [391, 275, 8, 9, 49, 47], [494, 283, 5, 8, 53, 49], [157, 231, 2, 3, 51, 50], [357, 304, 3, 6, 50, 49], [170, 227, 11, 14, 48, 42], [101, 196, 13, 16, 47, 41], [72, 266, 10, 10, 48, 44], null, [201, 227, 10, 14, 48, 42], [49, 196, 13, 16, 47, 41], [164, 276, 11, 8, 48, 45], [165, 284, 10, 7, 50, 47], [159, 227, 11, 14, 48, 42], [88, 196, 13, 16, 47, 41], [28, 241, 11, 13, 48, 43], [444, 133, 1, 1, 50, 49], [77, 227, 11, 14, 48, 42], [62, 196, 13, 16, 47, 41], [465, 263, 9, 11, 48, 45], [444, 133, 1, 1, 55, 48], [38, 254, 11, 12, 47, 43], [498, 209, 13, 15, 46, 42], [337, 274, 11, 9, 47, 43], [14, 254, 13, 12, 46, 42], [62, 266, 10, 10, 47, 44], [84, 284, 11, 7, 46, 48], [383, 275, 8, 9, 48, 46], [372, 276, 9, 8, 47, 48], [108, 299, 6, 6, 49, 47], [414, 275, 7, 9, 48, 48], [402, 272, 3, 3, 51, 48], [172, 310, 5, 5, 49, 48], [366, 153, 13, 20, 47, 42], [404, 136, 15, 22, 46, 41], [389, 131, 12, 5, 47, 42], [333, 298, 14, 6, 46, 41], [16, 227, 13, 14, 47, 45], [34, 196, 15, 16, 46, 45], [31, 212, 12, 15, 47, 47], [421, 210, 13, 15, 46, 48], [204, 266, 7, 10, 47, 49], [82, 298, 4, 7, 51, 53], [450, 275, 4, 9, 48, 50], [508, 263, 4, 10, 47, 50], [454, 59, 19, 24, 47, 42], [403, 86, 21, 26, 46, 41], [76, 160, 14, 19, 52, 42], [445, 109, 21, 25, 46, 41], [244, 131, 18, 23, 47, 43], [88, 139, 1, 2, 46, 47], [488, 133, 17, 22, 47, 44], [269, 173, 20, 18, 46, 49], [352, 153, 14, 20, 48, 46], [321, 153, 17, 20, 47, 47], [499, 83, 13, 23, 47, 42], [386, 106, 16, 25, 46, 41], [479, 314, 8, 4, 47, 42], [395, 298, 11, 6, 46, 41], [325, 274, 12, 9, 47, 44], [294, 263, 14, 11, 46, 44], [90, 160, 12, 19, 48, 46], [212, 180, 14, 17, 47, 48], [383, 177, 9, 18, 50, 47], [305, 173, 14, 18, 48, 48], [363, 304, 3, 6, 50, 48], [248, 284, 3, 7, 50, 49], [79, 319, 3, 4, 35, 34], [120, 134, 2, 4, 28, 34], [262, 304, 5, 6, 34, 33], [344, 304, 4, 6, 27, 33], [157, 228, 2, 3, 35, 35], [401, 131, 1, 3, 29, 35], [121, 144, 1, 1, 39, 35], [121, 144, 1, 1, 26, 35], [462, 322, 3, 3, 35, 35], [157, 228, 2, 3, 28, 35], [177, 310, 5, 5, 34, 34], [255, 310, 4, 5, 27, 34], [157, 228, 2, 3, 35, 35], [401, 131, 1, 3, 29, 35], [121, 144, 1, 1, 39, 35], [121, 144, 1, 1, 26, 35], [133, 325, 3, 2, 35, 36], [229, 236, 2, 2, 28, 36], [460, 318, 5, 4, 34, 35], [474, 318, 4, 4, 27, 35], [229, 236, 2, 2, 35, 36], [401, 134, 1, 2, 29, 36], [121, 144, 1, 1, 39, 35], [121, 144, 1, 1, 26, 35], [429, 175, 3, 1, 35, 37], [439, 155, 2, 1, 28, 37], [222, 322, 5, 3, 34, 36], [404, 322, 4, 3, 27, 36], [439, 155, 2, 1, 35, 37], [121, 143, 1, 1, 29, 37], [121, 144, 1, 1, 39, 36], [121, 144, 1, 1, 26, 36], null, null, [505, 324, 5, 2, 34, 37], [92, 325, 4, 2, 27, 37], null, null, [121, 144, 1, 1, 39, 37], [121, 144, 1, 1, 26, 37], null, null, [10, 325, 5, 2, 34, 37], [84, 325, 4, 2, 27, 37], null, null, [121, 144, 1, 1, 39, 37], [121, 144, 1, 1, 26, 37], null, [341, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 41], null, [217, 310, 5, 5, 29, 38], [121, 143, 1, 1, 32, 42], null, [24, 319, 4, 4, 29, 38], [121, 143, 1, 1, 32, 42], null, [222, 310, 5, 5, 29, 38], [121, 143, 1, 1, 32, 42], [439, 192, 2, 1, 31, 42], [341, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 41], [127, 325, 3, 2, 31, 41], [341, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 41], null, [276, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 42], [383, 298, 12, 6, 27, 33], [502, 298, 7, 6, 29, 33], [499, 106, 11, 3, 27, 39], [153, 276, 11, 8, 27, 34], [121, 143, 1, 1, 36, 40], [121, 143, 1, 1, 27, 40], [332, 304, 4, 6, 30, 27], [478, 283, 6, 8, 29, 25], [357, 310, 3, 5, 31, 28], [302, 304, 5, 6, 30, 27], [466, 298, 8, 6, 38, 48], [0, 277, 9, 8, 38, 47], [13, 197, 6, 16, 32, 54], [171, 197, 8, 16, 31, 55], [126, 197, 10, 16, 42, 54], [226, 180, 12, 17, 41, 54], [380, 195, 18, 16, 31, 41], [85, 179, 20, 17, 30, 41], [380, 240, 13, 13, 27, 31], [233, 209, 15, 15, 26, 30], [446, 275, 4, 9, 40, 28], [112, 267, 6, 10, 39, 27], [335, 310, 4, 5, 27, 28], [107, 285, 6, 7, 26, 27], [31, 284, 39, 7, 22, 66], [251, 274, 41, 9, 21, 65], [445, 86, 6, 17, 32, 53], [392, 177, 8, 18, 31, 53], [115, 138, 6, 17, 34, 53], [400, 177, 8, 18, 33, 53], [505, 133, 7, 18, 35, 52], [10, 161, 9, 19, 34, 52], [186, 197, 7, 16, 35, 51], [353, 191, 9, 17, 34, 51], [140, 213, 7, 15, 35, 51], [136, 197, 9, 16, 34, 51], [329, 237, 7, 14, 35, 51], [213, 212, 9, 15, 34, 51], [356, 237, 6, 14, 35, 52], [108, 213, 8, 15, 34, 52], [118, 242, 7, 13, 34, 53], [220, 227, 9, 14, 33, 53], [125, 242, 6, 13, 34, 53], [263, 237, 8, 14, 33, 53], [111, 255, 6, 12, 33, 53], [184, 241, 8, 13, 32, 53], [419, 264, 7, 11, 31, 52], [77, 254, 9, 12, 30, 52], [195, 254, 8, 12, 30, 51], [181, 227, 10, 14, 29, 50], [175, 241, 9, 13, 29, 51], [65, 212, 11, 15, 28, 50], [280, 191, 11, 17, 27, 51], [332, 173, 13, 18, 26, 51], [343, 191, 10, 17, 28, 52], [256, 174, 12, 18, 27, 52], [439, 193, 8, 17, 30, 53], [429, 176, 10, 18, 29, 53], [495, 238, 15, 13, 42, 51], [455, 224, 17, 14, 41, 51], [114, 197, 12, 16, 42, 51], [198, 180, 14, 17, 41, 51], [333, 191, 10, 17, 42, 50], [244, 174, 12, 18, 41, 50], [447, 193, 8, 17, 42, 49], [475, 175, 10, 18, 41, 49], [247, 192, 8, 17, 42, 49], [495, 175, 10, 18, 41, 49], [255, 192, 8, 17, 42, 49], [485, 175, 10, 18, 41, 49], [114, 160, 8, 18, 42, 50], [0, 161, 10, 19, 41, 50], [504, 57, 8, 19, 42, 51], [379, 153, 10, 20, 41, 51], [458, 134, 8, 19, 42, 51], [490, 155, 10, 20, 41, 51], [432, 136, 9, 19, 42, 51], [458, 155, 11, 20, 41, 51], [500, 155, 10, 20, 42, 50], [474, 32, 12, 21, 41, 50], [257, 154, 12, 20, 42, 49], [403, 39, 14, 21, 41, 49], [102, 160, 12, 19, 42, 49], [338, 153, 14, 20, 41, 49], [319, 173, 13, 18, 42, 49], [442, 156, 15, 19, 41, 49], [489, 224, 15, 14, 42, 50], [343, 208, 17, 15, 41, 50], [426, 239, 15, 13, 42, 51], [472, 224, 17, 14, 41, 51], [45, 325, 5, 2, 32, 68], [505, 191, 7, 2, 31, 69], [45, 325, 5, 2, 32, 68], [505, 191, 7, 2, 31, 69], [58, 323, 6, 2, 34, 68], [174, 319, 8, 3, 33, 68], [321, 315, 5, 4, 37, 66], [115, 155, 7, 5, 36, 66], [510, 151, 2, 5, 40, 62], [312, 304, 4, 6, 39, 62], [510, 151, 2, 5, 40, 61], [120, 128, 2, 6, 41, 61], [510, 151, 2, 5, 40, 60], [120, 128, 2, 6, 41, 60], [510, 156, 2, 5, 39, 61], [120, 115, 2, 7, 40, 60], [510, 156, 2, 5, 39, 61], [120, 115, 2, 7, 40, 60], [360, 310, 3, 5, 37, 61], [257, 304, 5, 6, 36, 61], [510, 156, 2, 5, 37, 60], [508, 291, 4, 7, 36, 59], [396, 322, 4, 3, 32, 60], [429, 309, 6, 5, 31, 59], [396, 322, 4, 3, 31, 60], [223, 315, 6, 4, 30, 60], [490, 324, 5, 2, 29, 62], [223, 315, 6, 4, 29, 61], [480, 324, 5, 2, 27, 66], [21, 323, 7, 2, 26, 67], [45, 325, 5, 2, 28, 67], [14, 323, 7, 2, 27, 68], [45, 325, 5, 2, 30, 68], [505, 191, 7, 2, 29, 69], [58, 323, 6, 2, 46, 68], [174, 319, 8, 3, 45, 68], [510, 165, 2, 4, 55, 60], [312, 304, 4, 6, 54, 59], [27, 299, 3, 6, 51, 61], [34, 298, 4, 7, 51, 61], [286, 315, 5, 4, 47, 63], [488, 298, 7, 6, 46, 62], [50, 325, 5, 2, 45, 64], [247, 315, 6, 4, 45, 63], [282, 322, 5, 3, 45, 63], [124, 322, 6, 3, 44, 64], [151, 315, 6, 4, 44, 62], [168, 305, 7, 5, 43, 62], [369, 319, 6, 3, 43, 65], [471, 314, 8, 4, 42, 65], [28, 323, 6, 2, 43, 68], [174, 319, 8, 3, 42, 68], [28, 323, 6, 2, 43, 68], [174, 319, 8, 3, 42, 68], [28, 323, 6, 2, 44, 68], [174, 319, 8, 3, 43, 68], [46, 323, 6, 2, 46, 68], [0, 315, 8, 4, 45, 67], [202, 322, 5, 3, 48, 66], [489, 309, 6, 5, 48, 65], [381, 314, 3, 5, 51, 63], [16, 220, 3, 7, 52, 62], [387, 314, 3, 5, 52, 62], [16, 213, 3, 7, 53, 61], [351, 310, 3, 5, 54, 59], [173, 298, 3, 7, 55, 58], [231, 216, 2, 4, 55, 60], [340, 304, 4, 6, 54, 59], [117, 255, 6, 12, 32, 58], [117, 228, 8, 14, 31, 57], [115, 325, 3, 2, 35, 58], [142, 322, 5, 3, 34, 57], [80, 325, 4, 2, 34, 60], [100, 322, 6, 3, 33, 59], [64, 325, 4, 2, 34, 62], [339, 319, 6, 3, 33, 61], [55, 325, 5, 2, 33, 64], [270, 319, 7, 3, 32, 63], [30, 325, 5, 2, 33, 66], [228, 319, 7, 3, 32, 65], [64, 323, 6, 2, 32, 68], [455, 314, 8, 4, 31, 67], [224, 251, 6, 13, 32, 57], [400, 211, 8, 15, 31, 56], [115, 325, 3, 2, 35, 57], [277, 322, 5, 3, 34, 56], [416, 322, 4, 3, 34, 59], [291, 319, 6, 3, 33, 59], [64, 325, 4, 2, 34, 62], [34, 323, 6, 2, 33, 62], [30, 325, 5, 2, 33, 64], [0, 323, 7, 2, 32, 64], [495, 324, 5, 2, 33, 66], [0, 323, 7, 2, 32, 66], [64, 323, 6, 2, 32, 68], [206, 319, 8, 3, 31, 68], [143, 242, 6, 13, 34, 57], [116, 213, 8, 15, 33, 56], [133, 325, 3, 2, 35, 57], [142, 322, 5, 3, 34, 56], [356, 322, 4, 3, 35, 59], [199, 315, 6, 4, 34, 58], [64, 325, 4, 2, 35, 62], [339, 319, 6, 3, 34, 61], [25, 325, 5, 2, 35, 64], [339, 319, 6, 3, 34, 63], [495, 324, 5, 2, 35, 66], [228, 319, 7, 3, 34, 65], [76, 323, 6, 2, 34, 68], [16, 315, 8, 4, 33, 67], [322, 237, 7, 14, 35, 56], [430, 194, 9, 16, 34, 55], [509, 54, 3, 3, 35, 56], [455, 318, 5, 4, 34, 55], [366, 314, 3, 5, 36, 57], [417, 55, 5, 5, 35, 57], [40, 319, 4, 4, 36, 60], [477, 309, 6, 5, 35, 59], [56, 319, 4, 4, 37, 62], [459, 309, 6, 5, 36, 61], [331, 315, 5, 4, 37, 64], [235, 315, 6, 4, 36, 64], [336, 315, 5, 4, 37, 66], [0, 299, 7, 6, 36, 65], [203, 254, 7, 12, 35, 55], [211, 227, 9, 14, 34, 54], [429, 175, 3, 1, 35, 55], [88, 323, 5, 2, 34, 54], [462, 322, 3, 3, 35, 56], [410, 318, 5, 4, 34, 55], [85, 319, 3, 4, 36, 58], [420, 318, 5, 4, 35, 58], [424, 322, 4, 3, 36, 61], [175, 315, 6, 4, 35, 60], [435, 318, 5, 4, 37, 62], [235, 315, 6, 4, 36, 62], [352, 322, 4, 3, 38, 64], [441, 309, 6, 5, 37, 63], [412, 264, 7, 11, 35, 55], [166, 241, 9, 13, 34, 54], [118, 325, 3, 2, 35, 55], [142, 322, 5, 3, 34, 54], [471, 322, 3, 3, 35, 56], [207, 322, 5, 3, 34, 56], [372, 314, 3, 5, 36, 57], [417, 55, 5, 5, 35, 57], [82, 319, 3, 4, 37, 60], [267, 310, 4, 5, 36, 59], [227, 310, 4, 5, 37, 61], [197, 304, 5, 6, 36, 60], [91, 319, 3, 4, 39, 62], [222, 304, 5, 6, 38, 61], [211, 266, 7, 10, 35, 55], [86, 254, 9, 12, 34, 54], [119, 178, 3, 1, 36, 55], [232, 322, 5, 3, 35, 54], [510, 173, 2, 2, 37, 56], [20, 325, 5, 2, 35, 56], [474, 322, 3, 3, 35, 57], [511, 7, 1, 4, 34, 57], [252, 322, 5, 3, 35, 59], [157, 310, 5, 5, 35, 58], [306, 315, 5, 4, 36, 60], [197, 304, 5, 6, 36, 59], [470, 318, 4, 4, 38, 61], [222, 304, 5, 6, 38, 60], [433, 264, 6, 11, 35, 55], [208, 241, 8, 13, 34, 54], [88, 143, 1, 2, 38, 55], [346, 315, 5, 4, 35, 54], [60, 325, 4, 2, 35, 56], [267, 322, 5, 3, 34, 56], [109, 325, 3, 2, 35, 58], [473, 80, 1, 3, 34, 58], [28, 319, 4, 4, 35, 59], [453, 309, 6, 5, 34, 59], [291, 310, 4, 5, 36, 60], [444, 133, 1, 1, 36, 64], [354, 310, 3, 5, 38, 61], [46, 291, 5, 7, 37, 60], [183, 266, 7, 10, 34, 56], [68, 254, 9, 12, 33, 55], [108, 212, 2, 1, 37, 56], [70, 323, 6, 2, 34, 55], [292, 322, 5, 3, 34, 57], [214, 319, 7, 3, 33, 57], [88, 325, 4, 2, 34, 59], [510, 241, 2, 2, 33, 60], [412, 322, 4, 3, 35, 60], [471, 309, 6, 5, 34, 59], [239, 310, 4, 5, 36, 60], [444, 133, 1, 1, 36, 64], [363, 310, 3, 5, 38, 61], [46, 291, 5, 7, 37, 60], [130, 267, 6, 10, 34, 56], [171, 254, 8, 12, 33, 55], [121, 143, 1, 1, 36, 56], [333, 319, 6, 3, 34, 55], [15, 325, 5, 2, 34, 57], [256, 319, 7, 3, 33, 57], [452, 322, 4, 3, 34, 58], [88, 139, 1, 2, 33, 60], [20, 319, 4, 4, 34, 59], [62, 310, 5, 5, 34, 59], [247, 310, 4, 5, 35, 60], [42, 310, 5, 5, 35, 60], [384, 314, 3, 5, 37, 61], [257, 304, 5, 6, 36, 61], [218, 266, 6, 10, 33, 55], [155, 254, 8, 12, 32, 54], [124, 325, 3, 2, 35, 55], [193, 315, 6, 4, 33, 54], [25, 325, 5, 2, 33, 56], [473, 80, 1, 3, 32, 56], [448, 322, 4, 3, 33, 58], [94, 322, 6, 3, 32, 58], [4, 319, 4, 4, 34, 59], [88, 139, 1, 2, 33, 61], [494, 318, 4, 4, 35, 60], [197, 304, 5, 6, 34, 59], [91, 319, 3, 4, 36, 61], [340, 304, 4, 6, 36, 60], [240, 275, 6, 9, 31, 54], [224, 264, 8, 11, 30, 53], [510, 245, 2, 2, 35, 54], [229, 315, 6, 4, 32, 53], [344, 322, 4, 3, 32, 54], [357, 319, 6, 3, 31, 54], [485, 324, 5, 2, 31, 56], [7, 323, 7, 2, 30, 56], [0, 325, 5, 2, 31, 58], [501, 322, 7, 2, 30, 58], [327, 322, 5, 3, 31, 59], [510, 241, 2, 2, 30, 60], [360, 322, 4, 3, 32, 60], [429, 309, 6, 5, 31, 59], [136, 267, 6, 10, 30, 53], [163, 254, 8, 12, 29, 52], [436, 322, 4, 3, 32, 53], [211, 315, 6, 4, 31, 52], [344, 322, 4, 3, 31, 54], [357, 319, 6, 3, 30, 54], [485, 324, 5, 2, 30, 56], [7, 323, 7, 2, 29, 56], [40, 325, 5, 2, 30, 58], [501, 322, 7, 2, 29, 58], [182, 322, 5, 3, 30, 59], [88, 139, 1, 2, 29, 60], [360, 322, 4, 3, 31, 60], [429, 309, 6, 5, 30, 59], [176, 266, 7, 10, 29, 54], [95, 254, 9, 12, 28, 53], [139, 325, 3, 2, 33, 54], [301, 315, 5, 4, 32, 53], [152, 322, 5, 3, 31, 54], [495, 309, 6, 5, 30, 54], [367, 237, 5, 3, 30, 56], [88, 139, 1, 2, 29, 56], [485, 324, 5, 2, 29, 58], [7, 323, 7, 2, 28, 58], [500, 324, 5, 2, 29, 60], [501, 322, 7, 2, 28, 60], [212, 322, 5, 3, 29, 61], [46, 315, 7, 4, 28, 61], [68, 241, 9, 13, 27, 55], [76, 212, 11, 15, 26, 54], [368, 322, 4, 3, 32, 55], [326, 315, 5, 4, 32, 54], [388, 322, 4, 3, 31, 57], [265, 315, 6, 4, 30, 56], [257, 322, 5, 3, 29, 59], [249, 319, 7, 3, 28, 59], [297, 322, 5, 3, 28, 61], [249, 319, 7, 3, 27, 61], [136, 322, 6, 3, 27, 63], [190, 319, 8, 3, 26, 63], [5, 325, 5, 2, 27, 66], [116, 315, 7, 4, 26, 65], [192, 241, 8, 13, 28, 56], [203, 212, 10, 15, 27, 55], [100, 325, 3, 2, 33, 56], [440, 318, 5, 4, 32, 55], [380, 322, 4, 3, 32, 57], [303, 319, 6, 3, 31, 57], [336, 322, 4, 3, 31, 59], [327, 319, 6, 3, 30, 59], [197, 322, 5, 3, 30, 61], [53, 315, 7, 4, 29, 61], [356, 315, 5, 4, 29, 63], [109, 315, 7, 4, 28, 63], [375, 208, 5, 3, 28, 66], [123, 315, 7, 4, 27, 66], [7, 242, 7, 13, 30, 57], [222, 212, 9, 15, 29, 56], [459, 322, 3, 3, 34, 57], [351, 315, 5, 4, 33, 56], [340, 322, 4, 3, 33, 59], [321, 319, 6, 3, 32, 59], [197, 322, 5, 3, 32, 61], [284, 319, 7, 3, 31, 61], [408, 322, 4, 3, 32, 63], [321, 319, 6, 3, 31, 63], [147, 322, 5, 3, 31, 65], [235, 319, 7, 3, 30, 65], [64, 323, 6, 2, 30, 68], [206, 319, 8, 3, 29, 68], [149, 228, 8, 14, 44, 56], [302, 191, 11, 17, 42, 54], [157, 322, 5, 3, 44, 56], [98, 305, 8, 5, 42, 54], [502, 318, 4, 4, 46, 57], [24, 310, 6, 5, 45, 57], [72, 319, 4, 4, 47, 60], [477, 309, 6, 5, 46, 59], [291, 315, 5, 4, 47, 62], [422, 309, 7, 5, 46, 61], [162, 322, 5, 3, 47, 65], [39, 315, 7, 4, 46, 64], [309, 319, 6, 3, 46, 67], [146, 305, 8, 5, 45, 66], [466, 274, 11, 9, 46, 55], [380, 253, 14, 12, 44, 53], [167, 322, 5, 3, 46, 55], [14, 299, 7, 6, 44, 53], [44, 319, 4, 4, 48, 56], [292, 304, 5, 6, 48, 55], [47, 310, 5, 5, 49, 57], [42, 310, 5, 5, 49, 57], [32, 319, 4, 4, 51, 59], [132, 299, 6, 6, 50, 58], [57, 310, 5, 5, 52, 59], [282, 304, 5, 6, 52, 59], [387, 319, 3, 3, 54, 61], [339, 310, 4, 5, 54, 60], [483, 263, 9, 11, 45, 56], [54, 227, 12, 14, 43, 54], [177, 322, 5, 3, 45, 56], [175, 305, 7, 5, 43, 54], [76, 319, 3, 4, 47, 57], [87, 310, 5, 5, 46, 56], [259, 310, 4, 5, 48, 58], [272, 304, 5, 6, 47, 58], [271, 310, 4, 5, 49, 60], [95, 285, 6, 7, 48, 59], [275, 310, 4, 5, 50, 61], [267, 304, 5, 6, 50, 61], [88, 319, 3, 4, 51, 63], [324, 304, 4, 6, 51, 62], [238, 180, 6, 12, 46, 55], [191, 227, 10, 14, 43, 54], [468, 322, 3, 3, 46, 55], [88, 315, 7, 4, 43, 54], [478, 318, 4, 4, 46, 56], [430, 318, 5, 4, 45, 56], [425, 318, 5, 4, 46, 58], [7, 299, 7, 6, 45, 57], [122, 310, 5, 5, 46, 60], [366, 309, 7, 5, 45, 60], [405, 318, 5, 4, 47, 62], [373, 309, 7, 5, 46, 61], [390, 318, 5, 4, 47, 63], [380, 309, 7, 5, 46, 63], [134, 255, 5, 12, 45, 54], [271, 237, 8, 14, 43, 53], [121, 325, 3, 2, 46, 54], [221, 319, 7, 3, 43, 53], [372, 322, 4, 3, 46, 55], [339, 319, 6, 3, 45, 55], [281, 315, 5, 4, 45, 57], [137, 315, 7, 4, 44, 57], [271, 315, 5, 4, 45, 59], [39, 315, 7, 4, 44, 59], [262, 322, 5, 3, 45, 62], [60, 315, 7, 4, 44, 61], [76, 325, 4, 2, 46, 64], [112, 322, 6, 3, 45, 64], [129, 255, 5, 12, 45, 54], [133, 228, 8, 14, 43, 53], [103, 325, 3, 2, 46, 54], [205, 315, 6, 4, 43, 53], [400, 318, 5, 4, 45, 55], [394, 309, 7, 5, 44, 54], [415, 318, 5, 4, 45, 56], [102, 315, 7, 4, 44, 56], [450, 318, 5, 4, 45, 58], [39, 315, 7, 4, 44, 58], [272, 322, 5, 3, 45, 61], [60, 315, 7, 4, 44, 60], [287, 322, 5, 3, 45, 63], [46, 315, 7, 4, 44, 63], [123, 255, 6, 12, 44, 54], [125, 228, 8, 14, 43, 53], [121, 325, 3, 2, 46, 54], [297, 319, 6, 3, 43, 53], [372, 322, 4, 3, 46, 55], [175, 315, 6, 4, 45, 54], [372, 322, 4, 3, 46, 57], [351, 319, 6, 3, 45, 56], [307, 322, 5, 3, 45, 59], [228, 319, 7, 3, 44, 58], [381, 319, 6, 3, 44, 61], [182, 319, 8, 3, 43, 60], [106, 322, 6, 3, 44, 63], [82, 305, 8, 5, 43, 62], [0, 242, 7, 13, 43, 55], [154, 197, 9, 16, 42, 53], [508, 322, 4, 2, 45, 55], [130, 315, 7, 4, 43, 53], [364, 322, 4, 3, 46, 56], [130, 322, 6, 3, 45, 56], [192, 322, 5, 3, 45, 58], [242, 319, 7, 3, 44, 58], [322, 322, 5, 3, 45, 60], [228, 319, 7, 3, 44, 60], [375, 319, 6, 3, 44, 63], [24, 315, 8, 4, 43, 62], [315, 319, 6, 3, 43, 65], [74, 305, 8, 5, 42, 64], [343, 237, 7, 14, 43, 56], [238, 192, 9, 17, 42, 54], [420, 322, 4, 3, 44, 56], [408, 309, 7, 5, 42, 54], [281, 315, 5, 4, 45, 57], [415, 309, 7, 5, 44, 56], [271, 315, 5, 4, 45, 59], [60, 315, 7, 4, 44, 59], [383, 173, 6, 4, 44, 62], [487, 314, 8, 4, 43, 62], [74, 315, 7, 4, 43, 64], [420, 314, 9, 4, 42, 64], [263, 319, 7, 3, 43, 67], [429, 314, 9, 4, 42, 67], [315, 237, 7, 14, 43, 56], [371, 191, 9, 17, 42, 54], [420, 322, 4, 3, 44, 56], [408, 309, 7, 5, 42, 54], [400, 322, 4, 3, 46, 57], [157, 315, 6, 4, 45, 56], [311, 315, 5, 4, 45, 59], [32, 315, 7, 4, 44, 59], [241, 315, 6, 4, 44, 62], [447, 314, 8, 4, 43, 62], [74, 315, 7, 4, 43, 64], [420, 314, 9, 4, 42, 64], [263, 319, 7, 3, 43, 67], [429, 314, 9, 4, 42, 67], [336, 237, 7, 14, 44, 56], [313, 191, 10, 17, 42, 54], [317, 322, 5, 3, 44, 56], [58, 305, 8, 5, 42, 54], [16, 319, 4, 4, 46, 57], [169, 315, 6, 4, 45, 57], [302, 322, 5, 3, 46, 60], [67, 315, 7, 4, 45, 59], [241, 315, 6, 4, 45, 62], [447, 314, 8, 4, 44, 62], [253, 315, 6, 4, 45, 64], [495, 314, 8, 4, 44, 64], [263, 319, 7, 3, 44, 67], [429, 314, 9, 4, 43, 67], [8, 213, 8, 15, 44, 55], [442, 175, 11, 18, 42, 53], [345, 319, 6, 3, 44, 55], [40, 305, 9, 5, 42, 53], [432, 322, 4, 3, 46, 56], [163, 315, 6, 4, 45, 56], [332, 322, 4, 3, 47, 58], [169, 315, 6, 4, 46, 58], [311, 310, 4, 5, 47, 60], [0, 310, 6, 5, 46, 60], [21, 299, 6, 6, 46, 62], [450, 298, 8, 6, 45, 62], [18, 310, 6, 5, 46, 65], [442, 298, 8, 6, 45, 65], [447, 210, 8, 15, 46, 54], [464, 175, 11, 18, 44, 52], [112, 325, 3, 2, 46, 54], [36, 310, 6, 5, 44, 52], [505, 151, 5, 4, 47, 55], [120, 299, 6, 6, 47, 54], [482, 318, 4, 4, 48, 57], [447, 309, 6, 5, 47, 57], [202, 310, 5, 5, 48, 59], [481, 298, 7, 6, 47, 59], [465, 309, 6, 5, 48, 62], [405, 284, 7, 7, 47, 61], [192, 310, 5, 5, 49, 64], [391, 284, 7, 7, 48, 63], [147, 213, 7, 15, 47, 53], [453, 175, 11, 18, 44, 51], [477, 322, 3, 3, 47, 53], [401, 309, 7, 5, 44, 51], [498, 318, 4, 4, 48, 54], [483, 309, 6, 5, 47, 53], [76, 319, 3, 4, 49, 57], [417, 55, 5, 5, 48, 56], [158, 298, 4, 7, 49, 58], [418, 284, 6, 7, 48, 58], [360, 304, 3, 6, 50, 61], [258, 291, 5, 7, 49, 60], [354, 304, 3, 6, 51, 62], [283, 291, 5, 7, 50, 62], [141, 228, 8, 14, 47, 53], [268, 191, 12, 17, 44, 51], [444, 322, 4, 3, 47, 53], [434, 298, 8, 6, 44, 51], [48, 319, 4, 4, 48, 54], [87, 310, 5, 5, 48, 54], [392, 322, 4, 3, 49, 57], [477, 309, 6, 5, 48, 56], [307, 304, 5, 6, 49, 58], [191, 304, 6, 6, 48, 58], [343, 310, 4, 5, 50, 61], [412, 284, 6, 7, 49, 60], [470, 318, 4, 4, 51, 63], [222, 304, 5, 6, 51, 62], [455, 263, 10, 11, 47, 53], [423, 225, 14, 14, 44, 51], [247, 322, 5, 3, 47, 53], [66, 305, 8, 5, 44, 51], [242, 322, 5, 3, 48, 54], [144, 315, 7, 4, 47, 53], [0, 319, 4, 4, 50, 55], [6, 310, 6, 5, 49, 55], [0, 319, 4, 4, 51, 57], [212, 304, 5, 6, 50, 57], [64, 319, 4, 4, 52, 59], [444, 133, 1, 1, 52, 63], [327, 310, 4, 5, 53, 59], [308, 291, 5, 7, 53, 58], [29, 266, 11, 10, 46, 54], [441, 239, 14, 13, 44, 52], [237, 322, 5, 3, 46, 54], [474, 298, 7, 6, 44, 52], [44, 319, 4, 4, 48, 55], [292, 304, 5, 6, 48, 54], [47, 310, 5, 5, 49, 56], [42, 310, 5, 5, 49, 56], [32, 319, 4, 4, 51, 58], [102, 299, 6, 6, 50, 57], [287, 310, 4, 5, 52, 59], [136, 325, 3, 2, 52, 63], [510, 169, 2, 4, 55, 60], [509, 298, 3, 6, 55, 59], [73, 159, 10, 1, 27, 38], [106, 319, 12, 3, 26, 37], null, [118, 319, 12, 3, 26, 37], null, [432, 155, 7, 1, 28, 38], [130, 319, 9, 3, 27, 37], null, [439, 155, 2, 1, 43, 31], null, [229, 233, 2, 3, 43, 30], null, [229, 236, 2, 2, 43, 30], null, [231, 220, 2, 4, 43, 30], null, [117, 310, 5, 5, 41, 31], null, [121, 143, 1, 1, 43, 33], null, [73, 139, 15, 20, 39, 20], [441, 134, 17, 22, 38, 19], [474, 57, 30, 26, 26, 17], [422, 32, 32, 28, 25, 16], [248, 209, 15, 15, 41, 18], [59, 160, 17, 19, 40, 16], [200, 241, 8, 13, 43, 17], null, [14, 266, 15, 10, 41, 19], null, [424, 86, 21, 26, 26, 17], [486, 29, 23, 28, 25, 16], [455, 209, 15, 15, 41, 17], [105, 179, 16, 17, 41, 16], [86, 241, 9, 13, 41, 20], [398, 195, 10, 16, 40, 19], [367, 240, 13, 13, 43, 18], null, [424, 86, 21, 26, 26, 17], [486, 29, 23, 28, 25, 16], [434, 210, 13, 15, 43, 17], [137, 180, 16, 17, 41, 16], [86, 241, 9, 13, 41, 20], [398, 195, 10, 16, 40, 19], [332, 263, 11, 11, 41, 19], [384, 322, 4, 3, 49, 28], [424, 86, 21, 26, 26, 17], [486, 29, 23, 28, 25, 16], [22, 115, 22, 24, 32, 12], [427, 60, 24, 26, 31, 11], [466, 109, 22, 24, 32, 12], [451, 83, 24, 26, 31, 11], [353, 263, 10, 11, 38, 19], [27, 254, 11, 12, 38, 19], [0, 115, 22, 24, 32, 12], [316, 106, 24, 25, 31, 12], [353, 263, 10, 11, 38, 19], [27, 254, 11, 12, 38, 19], [488, 109, 22, 24, 32, 12], [403, 60, 24, 26, 31, 11], [375, 211, 13, 15, 41, 12], [183, 180, 15, 17, 40, 11], [394, 253, 11, 12, 38, 18], [393, 240, 12, 13, 38, 18], [251, 238, 12, 13, 40, 15], [29, 227, 13, 14, 39, 15], [470, 209, 14, 15, 32, 21], [121, 180, 16, 17, 31, 20], [402, 112, 22, 24, 32, 12], [475, 83, 24, 26, 31, 11], [353, 263, 10, 11, 38, 19], [27, 254, 11, 12, 38, 19], [408, 210, 13, 15, 40, 12], [323, 191, 10, 17, 42, 11], [277, 319, 7, 3, 31, 46], [49, 305, 9, 5, 30, 45], [441, 133, 3, 1, 31, 48], [172, 322, 5, 3, 30, 47], [40, 323, 6, 2, 32, 46], [463, 314, 8, 4, 31, 45], [287, 237, 7, 14, 31, 45], [362, 191, 9, 17, 30, 44], [230, 251, 6, 13, 32, 46], [179, 197, 7, 16, 31, 45], [0, 255, 7, 12, 31, 45], [184, 213, 9, 14, 30, 44], [441, 112, 4, 11, 34, 46], [242, 251, 5, 13, 33, 45], [508, 0, 3, 12, 33, 47], [362, 237, 5, 14, 32, 47], [60, 319, 4, 4, 31, 46], [90, 299, 6, 6, 30, 45], [438, 275, 4, 9, 34, 45], [142, 267, 6, 10, 33, 44], [294, 237, 7, 14, 31, 45], [145, 197, 9, 16, 30, 44], [137, 242, 6, 13, 32, 46], [163, 197, 8, 16, 31, 45], [439, 264, 6, 11, 32, 46], [216, 241, 8, 13, 31, 45], [509, 44, 3, 10, 32, 47], [233, 197, 5, 12, 31, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [451, 60, 3, 10, 32, 47], [144, 255, 5, 12, 31, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [510, 127, 2, 6, 32, 50], [38, 298, 4, 7, 31, 49], [155, 244, 2, 2, 33, 47], [8, 319, 4, 4, 32, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [121, 145, 1, 1, 33, 50], [52, 319, 4, 4, 31, 49], [157, 234, 2, 3, 32, 51], [283, 310, 4, 5, 31, 50], [157, 234, 2, 3, 32, 53], [506, 318, 4, 4, 31, 52], [401, 134, 1, 2, 33, 55], [380, 191, 3, 4, 32, 54], [429, 158, 3, 9, 32, 47], [149, 255, 5, 12, 31, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [120, 122, 2, 6, 32, 51], [23, 284, 4, 8, 31, 49], [121, 143, 1, 1, 31, 45], [372, 223, 3, 3, 30, 44], [244, 106, 47, 25, 48, 151], [403, 0, 19, 39, 63, 122], [0, 0, 122, 115, 17, 9], [455, 193, 47, 16, 48, 161], [122, 106, 122, 74, 14, 122], [399, 275, 8, 9, 0, 0], [198, 319, 8, 3, 0, 7], [122, 0, 281, 106, 0, 0], [277, 153, 22, 20, 0, 0], [229, 238, 22, 13, 0, 9], [89, 115, 31, 23, 0, 0], [247, 263, 31, 11, 0, 14], [291, 106, 25, 25, 1, 1], [366, 304, 21, 5, 3, 22], [472, 283, 6, 8, 0, 0], [275, 283, 8, 8, 0, 0], [120, 277, 8, 8, 0, 0], [241, 284, 7, 7, 0, 0], [363, 284, 7, 7, 0, 0], [298, 283, 7, 8, 0, 0], [319, 283, 7, 8, 0, 0], [68, 319, 4, 4, 0, 2], [96, 277, 8, 8, 0, 0], [138, 299, 6, 6, 0, 1], [128, 277, 8, 8, 0, 0], [283, 283, 8, 8, 0, 0], [466, 283, 6, 8, 0, 0], [267, 283, 8, 8, 0, 0], [259, 283, 8, 8, 0, 0], [216, 276, 8, 8, 0, 0], [377, 284, 7, 7, 0, 0], [398, 284, 7, 7, 0, 0], [351, 283, 6, 8, 0, 0], [430, 284, 6, 7, 0, 0], [504, 76, 8, 7, 0, 0], [104, 277, 8, 8, 0, 0], [363, 319, 6, 3, 0, 4], [136, 277, 8, 8, 0, 0], [0, 285, 6, 7, 0, 0], [448, 284, 6, 7, 0, 0], [387, 309, 7, 5, 0, 1], [161, 305, 7, 5, 0, 1], [81, 315, 7, 4, 0, 2], [130, 305, 8, 5, 0, 1], [122, 305, 8, 5, 0, 1], [114, 305, 8, 5, 0, 1], [511, 0, 1, 7, 0, 0], [348, 322, 4, 3, 0, 0], [188, 291, 5, 7, 0, 0], [193, 291, 5, 7, 0, 0], [233, 291, 5, 7, 0, 0], [263, 291, 5, 7, 0, 0], [510, 238, 2, 3, 0, 0], [150, 298, 4, 7, 0, 0], [146, 298, 4, 7, 0, 0], [376, 322, 4, 3, 0, 2], [67, 310, 5, 5, 0, 1], [401, 131, 1, 3, 0, 5], [114, 178, 5, 1, 0, 3], [401, 134, 1, 2, 0, 5], [293, 291, 5, 7, 0, 0], [76, 291, 5, 7, 0, 0], [368, 291, 5, 7, 0, 0], [378, 291, 5, 7, 0, 0], [168, 291, 5, 7, 0, 0], [398, 291, 5, 7, 0, 0], [413, 291, 5, 7, 0, 0], [443, 291, 5, 7, 0, 0], [448, 291, 5, 7, 0, 0], [453, 291, 5, 7, 0, 0], [458, 291, 5, 7, 0, 0], [508, 23, 1, 6, 0, 1], [473, 66, 1, 7, 0, 1], [50, 298, 4, 7, 0, 0], [361, 315, 5, 4, 0, 2], [46, 298, 4, 7, 0, 0], [473, 291, 5, 7, 0, 0], [442, 284, 6, 7, 0, 0], [213, 291, 5, 7, 0, 0], [478, 291, 5, 7, 0, 0], [56, 291, 5, 7, 0, 0], [493, 291, 5, 7, 0, 0], [183, 291, 5, 7, 0, 0], [5, 292, 5, 7, 0, 0], [121, 292, 5, 7, 0, 0], [118, 285, 5, 7, 0, 0], [179, 298, 3, 7, 0, 0], [141, 292, 5, 7, 0, 0], [86, 291, 5, 7, 0, 0], [136, 292, 5, 7, 0, 0], [126, 292, 5, 7, 0, 0], [116, 292, 5, 7, 0, 0], [76, 291, 5, 7, 0, 0], [111, 292, 5, 7, 0, 0], [106, 292, 5, 7, 0, 0], [101, 292, 5, 7, 0, 0], [96, 292, 5, 7, 0, 0], [51, 291, 5, 7, 0, 0], [91, 292, 5, 7, 0, 0], [25, 292, 5, 7, 0, 0], [20, 292, 5, 7, 0, 0], [133, 285, 5, 7, 0, 0], [15, 292, 5, 7, 0, 0], [10, 292, 5, 7, 0, 0], [402, 265, 3, 7, 0, 0], [0, 292, 5, 7, 0, 0], [170, 298, 3, 7, 0, 0], [312, 322, 5, 3, 0, 0], [114, 178, 5, 1, 0, 7], [157, 237, 2, 3, 0, 0], [72, 310, 5, 5, 0, 2], [503, 291, 5, 7, 0, 0], [77, 310, 5, 5, 0, 2], [498, 291, 5, 7, 0, 0], [82, 310, 5, 5, 0, 2], [74, 298, 4, 7, 0, 0], [297, 304, 5, 6, 0, 2], [483, 291, 5, 7, 0, 0], [473, 73, 1, 7, 0, 0], [499, 283, 5, 8, 0, 0], [42, 298, 4, 7, 0, 0], [510, 120, 2, 7, 0, 0], [97, 310, 5, 5, 0, 2], [102, 310, 5, 5, 0, 2], [107, 310, 5, 5, 0, 2], [202, 304, 5, 6, 0, 2], [217, 304, 5, 6, 0, 2], [112, 310, 5, 5, 0, 2], [127, 310, 5, 5, 0, 2], [405, 240, 3, 7, 0, 0], [132, 310, 5, 5, 0, 2], [137, 310, 5, 5, 0, 2], [147, 310, 5, 5, 0, 2], [507, 304, 5, 5, 0, 2], [227, 304, 5, 6, 0, 2], [152, 310, 5, 5, 0, 2], [62, 298, 4, 7, 0, 0], [473, 59, 1, 7, 0, 0], [70, 298, 4, 7, 0, 0], [82, 323, 6, 2, 0, 0], [162, 310, 5, 5, 0, 2], [504, 283, 5, 8, 0, 0], [113, 285, 5, 7, 0, 0], [428, 291, 5, 7, 0, 0], [423, 291, 5, 7, 0, 0], [418, 291, 5, 7, 0, 0], [408, 291, 5, 7, 0, 0], [403, 291, 5, 7, 0, 0], [393, 291, 5, 7, 0, 1], [388, 291, 5, 7, 0, 0], [178, 291, 5, 7, 0, 0], [383, 291, 5, 7, 0, 0], [182, 298, 3, 7, 0, 0], [373, 291, 5, 7, 0, 0], [510, 113, 2, 7, 0, 0], [363, 291, 5, 7, 0, 0], [358, 291, 5, 7, 0, 0], [353, 291, 5, 7, 0, 0], [167, 310, 5, 5, 0, 2], [348, 291, 5, 7, 0, 0], [343, 291, 5, 7, 0, 0], [338, 291, 5, 7, 0, 0], [333, 291, 5, 7, 0, 0], [328, 291, 5, 7, 0, 0], [323, 291, 5, 7, 0, 0], [489, 283, 5, 8, 0, 0], [303, 291, 5, 7, 0, 0], [298, 291, 5, 7, 0, 0], [242, 304, 5, 6, 0, 2], [288, 291, 5, 7, 0, 0], [278, 291, 5, 7, 0, 0], [456, 322, 3, 3, 0, 2], [9, 277, 5, 8, 0, 0], [268, 291, 5, 7, 0, 0], [510, 106, 2, 7, 0, 0], [253, 291, 5, 7, 0, 0], [248, 291, 5, 7, 0, 0], [243, 291, 5, 7, 0, 0], [238, 291, 5, 7, 0, 0], [277, 304, 5, 6, 0, 0], [287, 304, 5, 6, 0, 0], [223, 291, 5, 7, 0, 0], [12, 310, 6, 5, 0, 1], [187, 322, 5, 3, 0, 3], [218, 291, 5, 7, 0, 0], [14, 284, 5, 8, 0, 0], [402, 106, 1, 6, 0, 1], [182, 310, 5, 5, 0, 1], [187, 310, 5, 5, 0, 1], [213, 291, 5, 7, 0, 0], [197, 310, 5, 5, 0, 2], [208, 291, 5, 7, 0, 0], [203, 291, 5, 7, 0, 0], [198, 291, 5, 7, 0, 0], [279, 310, 4, 5, 0, 2], [162, 298, 4, 7, 0, 0], [375, 314, 3, 5, 0, 2], [339, 283, 6, 8, 0, 0], [207, 304, 5, 6, 0, 2], [183, 291, 5, 7, 0, 0], [82, 310, 5, 5, 0, 2], [183, 291, 5, 7, 0, 0], [178, 291, 5, 7, 0, 0], [173, 291, 5, 7, 0, 0], [207, 310, 5, 5, 0, 2], [168, 291, 5, 7, 0, 0], [299, 310, 4, 5, 0, 2], [163, 291, 5, 7, 0, 0], [303, 310, 4, 5, 0, 2], [158, 291, 5, 7, 0, 0], [166, 298, 4, 7, 0, 0], [86, 291, 5, 7, 0, 0], [307, 310, 4, 5, 0, 2], [81, 291, 5, 7, 0, 0], [315, 310, 4, 5, 0, 2], [227, 284, 7, 7, 0, 0], [212, 310, 5, 5, 0, 2], [118, 285, 5, 7, 0, 0], [323, 310, 4, 5, 0, 2], [76, 291, 5, 7, 0, 0], [107, 310, 5, 5, 0, 2], [71, 291, 5, 7, 0, 0], [331, 310, 4, 5, 0, 2], [66, 291, 5, 7, 0, 0], [336, 304, 4, 6, 0, 2], [56, 291, 5, 7, 0, 0], [77, 310, 5, 5, 0, 2], [51, 291, 5, 7, 0, 0], [378, 314, 3, 5, 0, 2], [41, 291, 5, 7, 0, 0], [328, 304, 4, 6, 0, 2], [36, 291, 5, 7, 0, 0], [138, 285, 5, 7, 0, 1], [133, 285, 5, 7, 0, 0], [507, 304, 5, 5, 0, 2], [357, 283, 6, 8, 0, 0], [185, 304, 6, 6, 0, 2], [123, 285, 5, 7, 0, 0], [347, 310, 4, 5, 0, 2], [384, 284, 7, 7, 0, 0], [142, 310, 5, 5, 0, 2], [112, 277, 8, 8, 0, 0], [96, 299, 6, 6, 0, 2], [61, 291, 5, 7, 0, 0], [52, 310, 5, 5, 0, 2], [424, 284, 6, 7, 0, 0], [501, 309, 6, 5, 0, 2], [30, 298, 4, 7, 0, 0], [243, 310, 4, 5, 0, 2], [148, 291, 5, 7, 0, 0], [263, 310, 4, 5, 0, 2], [101, 285, 6, 7, 0, 0], [92, 310, 5, 5, 0, 2], [131, 292, 5, 7, 0, 0], [295, 310, 4, 5, 0, 2], [345, 283, 6, 8, 0, 0], [445, 103, 6, 6, 0, 2], [488, 291, 5, 7, 0, 0], [488, 291, 5, 7, 0, 0], [333, 283, 6, 8, 0, 0], [114, 299, 6, 6, 0, 2], [468, 291, 5, 7, 0, 0], [463, 291, 5, 7, 0, 0], [438, 291, 5, 7, 0, 0], [438, 291, 5, 7, 0, 0], [313, 291, 5, 7, 0, 0], [313, 291, 5, 7, 0, 0], [228, 291, 5, 7, 0, 0], [228, 291, 5, 7, 0, 0], [6, 285, 6, 7, 0, 0], [509, 283, 3, 7, 0, 0], [31, 291, 5, 7, 0, 0], [370, 284, 7, 7, 0, 0], [273, 291, 5, 7, 0, 0], [318, 291, 5, 7, 0, 0], [234, 284, 7, 7, 0, 0], [454, 0, 32, 32, 0, 0], [422, 0, 32, 32, 0, 0], [144, 277, 8, 8, 0, 1], [227, 322, 5, 3, 0, 0], [316, 315, 5, 4, 0, 0], [121, 143, 1, 1, 0, 0], [505, 274, 7, 9, 0, 0], [477, 274, 10, 9, 0, 0], [219, 284, 8, 7, 0, 1], [40, 266, 11, 10, 0, 1], [82, 266, 9, 10, 1, 2], [40, 266, 11, 10, 0, 1], [348, 274, 11, 9, 0, 1]].map(r)
-            , $ = [null, [385, 106, 12, 8, 29, 28], [404, 221, 12, 8, 29, 28], [428, 221, 12, 8, 29, 28], [392, 221, 12, 8, 29, 28], [416, 221, 12, 8, 29, 28], [380, 221, 12, 8, 29, 28], [385, 106, 12, 8, 29, 28], [404, 221, 12, 8, 29, 28], [428, 221, 12, 8, 29, 28], [392, 221, 12, 8, 29, 28], [416, 221, 12, 8, 29, 28], [380, 221, 12, 8, 29, 28], [383, 176, 10, 17, 34, 26], [393, 176, 10, 17, 34, 26], [68, 221, 12, 9, 30, 27], [80, 221, 12, 9, 30, 27], [507, 181, 5, 6, 31, 28], [507, 175, 5, 6, 31, 28], [116, 159, 5, 7, 31, 29], [507, 150, 5, 7, 31, 29], [22, 160, 22, 17, 20, 19], [384, 159, 22, 17, 20, 19], [44, 160, 22, 17, 20, 19], [0, 161, 22, 17, 20, 19], [339, 171, 22, 17, 20, 19], [361, 171, 22, 17, 20, 19], [22, 160, 22, 17, 20, 19], [384, 159, 22, 17, 20, 19], [44, 160, 22, 17, 20, 19], [0, 161, 22, 17, 20, 19], [339, 171, 22, 17, 20, 19], [361, 171, 22, 17, 20, 19], [44, 139, 22, 21, 20, 22], [22, 139, 22, 21, 20, 22], [178, 196, 21, 14, 21, 22], [263, 204, 21, 14, 21, 22], [47, 208, 18, 13, 24, 20], [29, 208, 18, 13, 24, 20], [50, 194, 25, 14, 19, 20], [0, 194, 25, 14, 19, 20], [135, 196, 22, 14, 27, 19], [408, 193, 22, 14, 27, 19], [385, 114, 24, 25, 18, 21], [475, 110, 24, 25, 18, 21], [162, 180, 22, 16, 19, 23], [0, 178, 22, 16, 19, 23], [430, 158, 5, 9, 23, 32], [314, 154, 5, 9, 23, 32], [417, 39, 5, 9, 23, 32], [417, 48, 5, 9, 23, 32], [507, 132, 5, 9, 23, 32], [507, 141, 5, 9, 23, 32], [270, 218, 9, 12, 24, 32], [221, 210, 9, 12, 24, 32], [499, 110, 13, 22, 19, 30], [107, 137, 13, 22, 19, 30], [0, 139, 22, 22, 20, 19], [485, 135, 22, 22, 20, 19], [463, 135, 22, 22, 20, 19], [441, 135, 22, 22, 20, 19], [266, 132, 22, 22, 20, 19], [244, 132, 22, 22, 20, 19], [94, 159, 22, 17, 20, 19], [430, 175, 22, 17, 20, 19], [310, 172, 22, 17, 20, 19], [288, 172, 22, 17, 20, 19], [266, 172, 22, 17, 20, 19], [244, 172, 22, 17, 20, 19], [320, 131, 24, 22, 20, 22], [344, 131, 24, 22, 20, 22], [157, 196, 21, 14, 21, 22], [199, 196, 21, 14, 21, 22], [47, 208, 18, 13, 24, 20], [29, 208, 18, 13, 24, 20], [25, 194, 25, 14, 19, 20], [110, 196, 25, 14, 19, 20], [135, 196, 22, 14, 27, 19], [408, 193, 22, 14, 27, 19], [451, 110, 24, 25, 18, 21], [361, 106, 24, 25, 18, 21], [486, 0, 22, 29, 19, 23], [486, 29, 22, 29, 19, 23], [0, 208, 7, 14, 38, 33], [505, 207, 7, 14, 38, 33], [100, 139, 7, 14, 38, 33], [332, 172, 7, 14, 38, 33], [369, 204, 7, 14, 38, 33], [498, 207, 7, 14, 38, 33], [408, 207, 9, 14, 35, 36], [252, 205, 9, 14, 35, 36], [467, 60, 17, 24, 36, 21], [0, 115, 17, 24, 36, 21], [93, 208, 9, 13, 39, 32], [376, 208, 9, 13, 39, 32], [244, 154, 12, 18, 36, 28], [256, 154, 12, 18, 36, 28], [339, 153, 16, 18, 29, 34], [355, 153, 16, 18, 29, 34], [499, 192, 8, 15, 36, 31], [94, 193, 8, 15, 36, 31], [47, 115, 15, 24, 47, 41], [62, 115, 15, 24, 47, 41], [77, 115, 15, 24, 47, 41], [32, 115, 15, 24, 47, 41], [92, 115, 15, 24, 47, 41], [17, 115, 15, 24, 47, 41], [210, 180, 13, 16, 47, 41], [223, 180, 13, 16, 47, 41], [332, 188, 13, 16, 47, 41], [345, 188, 13, 16, 47, 41], [184, 180, 13, 16, 47, 41], [197, 180, 13, 16, 47, 41], [295, 189, 13, 15, 46, 42], [308, 189, 13, 15, 46, 42], [107, 115, 15, 22, 46, 41], [451, 88, 15, 22, 46, 41], [268, 106, 21, 26, 46, 41], [491, 84, 21, 26, 46, 41], [425, 114, 16, 25, 46, 41], [409, 114, 16, 25, 46, 41], [430, 167, 5, 6, 34, 33], [508, 42, 4, 6, 27, 33], [314, 163, 6, 6, 34, 33], [116, 172, 5, 6, 26, 33], [510, 62, 2, 3, 35, 35], [511, 35, 1, 3, 29, 35], [507, 221, 5, 5, 34, 34], [230, 210, 4, 5, 27, 34], [117, 223, 6, 5, 34, 34], [403, 208, 5, 5, 26, 34], [510, 62, 2, 3, 35, 35], [511, 35, 1, 3, 29, 35], [219, 227, 5, 4, 34, 35], [508, 54, 4, 4, 27, 35], [186, 227, 6, 4, 34, 35], [209, 227, 5, 4, 26, 35], [484, 63, 2, 2, 35, 36], [511, 38, 1, 2, 29, 36], [417, 57, 5, 3, 34, 36], [403, 218, 4, 3, 27, 36], [314, 169, 6, 3, 34, 36], [110, 193, 5, 3, 26, 36], [510, 65, 2, 1, 35, 37], [511, 41, 1, 1, 29, 37], [224, 227, 5, 2, 34, 37], [498, 228, 4, 2, 27, 37], [115, 178, 6, 2, 34, 37], [430, 173, 5, 2, 26, 37], [145, 228, 5, 2, 34, 37], [162, 227, 4, 2, 27, 37], [332, 186, 6, 2, 34, 37], [507, 205, 5, 2, 26, 37], [507, 226, 5, 4, 29, 38], [511, 40, 1, 1, 33, 41], [140, 223, 5, 5, 29, 38], [511, 40, 1, 1, 32, 42], [230, 215, 4, 4, 29, 38], [511, 40, 1, 1, 32, 42], [225, 222, 5, 5, 29, 38], [511, 40, 1, 1, 32, 42], [484, 67, 2, 1, 31, 42], [507, 226, 5, 4, 29, 38], [511, 40, 1, 1, 33, 41], [509, 166, 3, 2, 31, 41], [507, 226, 5, 4, 29, 38], [511, 40, 1, 1, 33, 41], [214, 227, 5, 4, 29, 38], [511, 40, 1, 1, 33, 42], [174, 222, 12, 6, 27, 33], [0, 222, 7, 6, 29, 33], [134, 228, 11, 3, 27, 39], [440, 221, 11, 8, 27, 34], [511, 40, 1, 1, 36, 40], [511, 40, 1, 1, 27, 40], [397, 106, 6, 8, 29, 25], [116, 166, 5, 6, 30, 27], [451, 221, 9, 8, 38, 47], [422, 176, 8, 17, 31, 54], [66, 160, 12, 17, 41, 54], [452, 175, 20, 17, 30, 41], [280, 189, 15, 15, 26, 30], [435, 139, 6, 10, 39, 27], [435, 149, 6, 7, 26, 27], [468, 221, 39, 7, 22, 66], [27, 221, 41, 9, 21, 65], [145, 223, 5, 5, 0, 0], [135, 223, 5, 5, 0, 0], [86, 159, 8, 18, 31, 53], [78, 159, 8, 18, 33, 53], [330, 153, 9, 19, 34, 52], [22, 177, 9, 17, 34, 51], [367, 188, 9, 16, 34, 51], [472, 192, 9, 15, 34, 51], [376, 193, 8, 15, 34, 52], [417, 207, 9, 14, 33, 53], [458, 207, 8, 14, 33, 53], [110, 210, 8, 13, 32, 53], [279, 218, 9, 12, 30, 52], [359, 204, 10, 14, 29, 50], [441, 192, 11, 15, 28, 50], [371, 153, 13, 18, 26, 51], [280, 154, 12, 18, 27, 52], [420, 158, 10, 18, 29, 53], [284, 204, 17, 14, 41, 51], [406, 159, 14, 17, 41, 51], [268, 154, 12, 18, 41, 50], [489, 157, 10, 18, 41, 49], [479, 157, 10, 18, 41, 49], [499, 157, 10, 18, 41, 49], [320, 153, 10, 19, 41, 50], [410, 139, 10, 20, 41, 51], [441, 114, 10, 20, 41, 51], [399, 139, 11, 20, 41, 51], [66, 139, 12, 21, 41, 50], [403, 39, 14, 21, 41, 49], [385, 139, 14, 20, 41, 49], [420, 139, 15, 19, 41, 49], [263, 189, 17, 15, 41, 50], [75, 194, 17, 14, 41, 51], [484, 228, 7, 3, 31, 68], [484, 228, 7, 3, 31, 68], [499, 132, 8, 3, 33, 68], [110, 223, 7, 5, 36, 66], [507, 193, 4, 6, 39, 62], [509, 157, 3, 6, 40, 61], [509, 157, 3, 6, 40, 60], [508, 35, 3, 7, 39, 60], [508, 35, 3, 7, 39, 60], [507, 187, 5, 6, 36, 61], [508, 7, 4, 7, 36, 59], [123, 223, 6, 5, 31, 59], [198, 227, 6, 4, 30, 60], [150, 227, 6, 4, 29, 61], [0, 228, 7, 3, 26, 66], [491, 228, 7, 3, 27, 67], [484, 228, 7, 3, 29, 68], [499, 132, 8, 3, 45, 68], [508, 48, 4, 6, 54, 59], [508, 0, 4, 7, 51, 61], [100, 153, 7, 6, 46, 62], [156, 227, 6, 4, 45, 63], [192, 227, 6, 4, 44, 63], [376, 188, 7, 5, 43, 62], [158, 223, 8, 4, 42, 65], [468, 228, 8, 3, 42, 68], [468, 228, 8, 3, 42, 68], [468, 228, 8, 3, 43, 68], [150, 223, 8, 4, 45, 67], [129, 223, 6, 5, 48, 65], [508, 21, 4, 7, 51, 62], [508, 14, 4, 7, 52, 61], [508, 28, 4, 7, 54, 58], [507, 199, 4, 6, 54, 59], [466, 207, 8, 14, 31, 57], [450, 207, 8, 14, 31, 57], [102, 193, 8, 15, 31, 56], [400, 193, 8, 15, 31, 56], [392, 193, 8, 15, 33, 56], [384, 193, 8, 15, 33, 56], [236, 189, 9, 16, 34, 55], [254, 189, 9, 16, 34, 55], [243, 205, 9, 14, 34, 54], [234, 205, 9, 14, 34, 54], [385, 208, 9, 13, 34, 54], [394, 208, 9, 13, 34, 54], [203, 210, 9, 12, 34, 54], [212, 210, 9, 12, 34, 54], [118, 210, 8, 13, 34, 54], [142, 210, 8, 13, 34, 54], [297, 218, 9, 12, 33, 55], [288, 218, 9, 12, 33, 55], [306, 218, 8, 12, 33, 55], [346, 218, 8, 12, 33, 55], [322, 218, 8, 12, 32, 54], [314, 218, 8, 12, 32, 54], [354, 218, 8, 11, 30, 53], [362, 218, 8, 11, 30, 53], [330, 218, 8, 12, 29, 52], [338, 218, 8, 12, 29, 52], [194, 210, 9, 12, 28, 53], [261, 218, 9, 12, 28, 53], [430, 192, 11, 15, 26, 54], [321, 189, 11, 15, 26, 54], [462, 192, 10, 15, 27, 55], [452, 192, 10, 15, 27, 55], [490, 192, 9, 15, 29, 56], [481, 192, 9, 15, 29, 56], [496, 175, 11, 17, 42, 54], [94, 176, 11, 17, 42, 54], [180, 210, 14, 12, 44, 53], [166, 210, 14, 12, 44, 53], [315, 204, 12, 14, 43, 54], [327, 204, 12, 14, 43, 54], [349, 204, 10, 14, 43, 54], [339, 204, 10, 14, 43, 54], [490, 207, 8, 14, 43, 53], [442, 207, 8, 14, 43, 53], [434, 207, 8, 14, 43, 53], [426, 207, 8, 14, 43, 53], [482, 207, 8, 14, 43, 53], [474, 207, 8, 14, 43, 53], [358, 188, 9, 16, 42, 53], [245, 189, 9, 16, 42, 53], [58, 177, 9, 17, 42, 54], [31, 177, 9, 17, 42, 54], [40, 177, 9, 17, 42, 54], [49, 177, 9, 17, 42, 54], [403, 176, 10, 17, 42, 54], [105, 176, 10, 17, 42, 54], [468, 157, 11, 18, 42, 53], [457, 157, 11, 18, 42, 53], [446, 157, 11, 18, 44, 52], [435, 157, 11, 18, 44, 52], [292, 154, 11, 18, 44, 51], [303, 154, 11, 18, 44, 51], [484, 175, 12, 17, 44, 51], [472, 175, 12, 17, 44, 51], [220, 196, 14, 14, 44, 51], [301, 204, 14, 14, 44, 51], [79, 208, 14, 13, 44, 52], [65, 208, 14, 13, 44, 52], [110, 228, 12, 3, 26, 37], [122, 228, 12, 3, 26, 37], [174, 228, 9, 3, 27, 37], [510, 66, 2, 1, 43, 31], [484, 60, 2, 3, 43, 30], [484, 65, 2, 2, 43, 30], [510, 58, 2, 4, 43, 30], [403, 213, 5, 5, 41, 31], [368, 131, 17, 22, 38, 19], [454, 32, 32, 28, 25, 16], [403, 60, 32, 28, 25, 16], [422, 32, 32, 28, 25, 16], [435, 60, 32, 28, 25, 16], [467, 84, 24, 26, 31, 11], [403, 88, 24, 26, 31, 11], [486, 58, 24, 26, 31, 11], [244, 106, 24, 26, 31, 11], [427, 88, 24, 26, 31, 11], [216, 222, 9, 5, 30, 45], [207, 222, 9, 5, 30, 45], [76, 177, 9, 17, 30, 44], [85, 177, 9, 17, 30, 44], [413, 176, 9, 17, 30, 44], [67, 177, 9, 17, 30, 44], [126, 210, 8, 13, 31, 45], [102, 208, 8, 13, 31, 45], [150, 210, 8, 13, 31, 45], [134, 210, 8, 13, 31, 45], [158, 210, 8, 13, 31, 45], [509, 163, 3, 3, 30, 44], [289, 106, 47, 25, 48, 151], [403, 0, 19, 39, 63, 122], [0, 0, 122, 115, 17, 9], [115, 180, 47, 16, 48, 161], [122, 106, 122, 74, 14, 122], [236, 180, 8, 9, 0, 0], [476, 228, 8, 3, 0, 7], [122, 0, 281, 106, 0, 0], [78, 139, 22, 20, 0, 0], [7, 208, 22, 13, 0, 9], [289, 131, 31, 23, 0, 0], [230, 219, 31, 11, 0, 14], [336, 106, 25, 25, 1, 1], [186, 222, 21, 5, 3, 22], [422, 0, 32, 32, 0, 0], [454, 0, 32, 32, 0, 0], [460, 221, 8, 8, 0, 1], [370, 218, 5, 3, 0, 0], [204, 227, 5, 4, 0, 0], [510, 67, 1, 1, 0, 0], [103, 221, 7, 9, 0, 0], [370, 221, 10, 9, 0, 0], [166, 222, 8, 7, 0, 1], [7, 221, 11, 10, 0, 1], [18, 221, 9, 10, 1, 2], [7, 221, 11, 10, 0, 1], [92, 221, 11, 9, 0, 1]].map(p);
+        var x = t("cc")
+            , E = x["pony.png"]
+            , $ = x["pony2.png"]
+            , S = [null, [175, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [121, 143, 1, 1, 38, 28], null, [211, 284, 8, 7, 31, 28], [371, 298, 12, 6, 29, 30], [95, 315, 7, 4, 33, 30], [31, 305, 9, 5, 32, 30], [416, 298, 9, 6, 31, 29], [359, 298, 12, 6, 29, 30], [154, 305, 7, 5, 32, 28], [444, 133, 1, 1, 40, 30], [78, 298, 4, 7, 31, 28], [36, 319, 4, 4, 29, 32], [495, 298, 7, 6, 33, 28], [138, 305, 8, 5, 33, 30], [193, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [8, 315, 8, 4, 31, 28], null, [148, 285, 4, 6, 31, 29], [181, 315, 6, 4, 29, 32], [435, 309, 6, 5, 34, 28], [187, 315, 6, 4, 35, 30], [175, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [121, 143, 1, 1, 38, 28], null, [211, 284, 8, 7, 31, 28], [371, 298, 12, 6, 29, 30], [95, 315, 7, 4, 33, 30], [31, 305, 9, 5, 32, 30], [416, 298, 9, 6, 31, 29], [359, 298, 12, 6, 29, 30], [154, 305, 7, 5, 32, 28], [444, 133, 1, 1, 40, 30], [78, 298, 4, 7, 31, 28], [36, 319, 4, 4, 29, 32], [495, 298, 7, 6, 33, 28], [138, 305, 8, 5, 33, 30], [193, 284, 9, 7, 31, 28], [347, 298, 12, 6, 29, 30], [8, 315, 8, 4, 31, 28], null, [148, 285, 4, 6, 31, 29], [181, 315, 6, 4, 29, 32], [435, 309, 6, 5, 34, 28], [187, 315, 6, 4, 35, 30], [124, 213, 8, 15, 35, 26], [98, 212, 10, 15, 34, 28], [439, 155, 2, 1, 37, 26], null, [279, 237, 8, 14, 35, 27], [108, 228, 9, 14, 34, 29], [492, 263, 8, 11, 35, 26], [368, 265, 5, 11, 39, 28], [206, 276, 10, 8, 31, 27], [84, 276, 12, 8, 30, 28], [251, 283, 8, 8, 31, 27], [305, 283, 7, 8, 30, 28], [320, 304, 4, 6, 37, 29], [143, 285, 5, 7, 37, 29], [251, 310, 4, 5, 32, 28], [507, 309, 5, 5, 31, 29], [121, 143, 1, 1, 35, 28], [444, 133, 1, 1, 33, 29], [12, 319, 4, 4, 32, 29], [395, 318, 5, 4, 31, 30], [235, 310, 4, 5, 32, 29], [128, 285, 5, 7, 31, 29], [451, 80, 3, 3, 33, 29], [319, 310, 4, 5, 31, 29], [428, 322, 4, 3, 32, 31], [465, 318, 5, 4, 31, 32], [193, 197, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [455, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [493, 304, 14, 5, 27, 28], [83, 159, 6, 1, 27, 33], [166, 319, 8, 3, 33, 30], [148, 319, 9, 3, 33, 31], [323, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [455, 251, 19, 12, 22, 21], null, [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [365, 253, 15, 12, 25, 21], [360, 208, 15, 15, 26, 19], [312, 283, 7, 8, 34, 25], [487, 274, 9, 9, 33, 25], [263, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [493, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [49, 254, 10, 12, 29, 21], [193, 212, 10, 15, 30, 19], [407, 275, 7, 9, 34, 23], [162, 266, 7, 10, 35, 23], [193, 197, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [455, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [493, 304, 14, 5, 27, 28], [83, 159, 6, 1, 27, 33], [166, 319, 8, 3, 33, 30], [148, 319, 9, 3, 33, 31], [323, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [455, 251, 19, 12, 22, 21], null, [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [365, 253, 15, 12, 25, 21], [360, 208, 15, 15, 26, 19], [312, 283, 7, 8, 34, 25], [487, 274, 9, 9, 33, 25], [263, 208, 20, 15, 21, 20], [41, 179, 22, 17, 20, 19], [493, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [49, 254, 10, 12, 29, 21], [193, 212, 10, 15, 30, 19], [407, 275, 7, 9, 34, 23], [162, 266, 7, 10, 35, 23], [408, 177, 20, 17, 21, 23], [39, 139, 22, 21, 20, 22], [304, 298, 15, 6, 26, 23], [55, 276, 17, 8, 25, 22], [437, 225, 13, 14, 21, 25], [154, 213, 5, 15, 20, 25], [385, 226, 13, 14, 22, 26], [443, 252, 12, 12, 22, 31], [296, 315, 5, 4, 34, 27], [83, 159, 6, 1, 34, 31], [30, 310, 6, 5, 35, 26], [14, 242, 2, 2, 40, 30], [474, 251, 19, 12, 22, 23], [331, 223, 21, 14, 21, 22], [492, 322, 9, 2, 28, 23], [478, 304, 15, 5, 26, 22], [254, 298, 18, 6, 22, 24], [292, 274, 20, 9, 21, 24], [383, 265, 19, 10, 22, 25], [35, 276, 20, 8, 22, 28], [400, 314, 10, 4, 31, 27], [94, 319, 12, 3, 30, 29], [72, 325, 4, 2, 37, 29], [35, 325, 5, 2, 37, 30], [278, 263, 16, 11, 25, 21], [408, 239, 18, 13, 24, 20], [246, 274, 5, 10, 25, 21], [59, 241, 9, 13, 24, 20], [426, 264, 7, 11, 27, 21], [139, 255, 5, 12, 30, 21], [421, 275, 6, 9, 32, 22], [100, 267, 6, 10, 33, 22], [232, 304, 5, 6, 36, 25], [436, 284, 6, 7, 36, 25], [289, 251, 21, 12, 21, 21], [159, 213, 25, 14, 19, 20], [272, 298, 17, 6, 25, 21], [14, 276, 21, 8, 23, 20], [387, 304, 21, 5, 21, 23], [209, 298, 24, 6, 19, 23], [233, 298, 21, 6, 21, 26], [185, 298, 24, 6, 19, 27], [462, 304, 16, 5, 26, 28], [427, 304, 19, 5, 24, 29], [458, 153, 8, 2, 34, 29], [480, 322, 12, 2, 31, 30], [310, 251, 20, 12, 28, 20], [288, 223, 22, 14, 27, 19], [66, 298, 4, 7, 28, 25], [148, 267, 5, 10, 27, 23], [508, 12, 4, 11, 31, 20], [131, 242, 6, 13, 30, 19], [232, 275, 8, 9, 35, 22], [343, 263, 10, 11, 35, 21], [406, 298, 10, 6, 38, 25], [175, 276, 11, 8, 38, 24], [345, 131, 22, 22, 20, 22], [340, 106, 23, 25, 18, 21], [202, 284, 9, 7, 33, 22], [425, 298, 9, 6, 32, 21], [247, 251, 21, 12, 20, 23], [231, 224, 19, 14, 18, 22], [19, 161, 20, 18, 22, 26], [54, 212, 11, 15, 21, 31], [157, 319, 9, 3, 33, 29], [119, 196, 2, 1, 32, 31], [118, 322, 6, 3, 36, 30], [52, 323, 6, 2, 34, 31], [352, 223, 20, 14, 20, 24], [408, 194, 22, 16, 19, 23], [126, 299, 6, 6, 34, 25], [460, 283, 6, 8, 35, 24], [326, 283, 7, 8, 27, 24], [154, 266, 8, 10, 27, 23], [39, 241, 10, 13, 20, 25], [19, 212, 12, 15, 19, 24], [154, 298, 4, 7, 24, 32], [433, 275, 5, 9, 23, 32], [130, 325, 3, 2, 24, 32], [121, 138, 1, 3, 23, 32], [121, 141, 1, 2, 27, 32], null, [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [58, 298, 4, 7, 24, 32], [359, 274, 4, 9, 23, 32], [231, 212, 2, 4, 25, 34], null, [155, 242, 2, 2, 24, 32], [121, 138, 1, 3, 23, 32], [106, 325, 3, 2, 25, 32], null, [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [54, 298, 4, 7, 24, 32], [359, 274, 4, 9, 23, 32], [511, 11, 1, 1, 27, 32], null, null, [88, 145, 1, 1, 23, 34], [96, 325, 4, 2, 24, 32], [88, 141, 1, 2, 23, 32], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [0, 267, 7, 10, 25, 33], [59, 254, 9, 12, 24, 32], [465, 322, 3, 3, 27, 33], [114, 196, 5, 1, 27, 32], [7, 267, 7, 10, 25, 33], [474, 263, 9, 11, 24, 33], [469, 155, 11, 20, 20, 31], [419, 136, 13, 22, 19, 30], null, [444, 133, 1, 1, 31, 32], [184, 284, 9, 7, 21, 31], [455, 274, 11, 9, 20, 30], [263, 192, 5, 16, 21, 35], [269, 154, 8, 19, 19, 33], [231, 310, 4, 5, 20, 46], [351, 304, 3, 6, 19, 46], [505, 175, 7, 16, 24, 32], [417, 39, 5, 16, 27, 33], [39, 160, 20, 19, 21, 20], [466, 133, 22, 22, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [475, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [152, 284, 13, 7, 27, 28], [319, 298, 14, 6, 27, 30], [95, 315, 7, 4, 33, 30], [21, 305, 10, 5, 32, 30], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [389, 158, 20, 19, 21, 20], [301, 131, 22, 22, 20, 19], [0, 180, 19, 17, 22, 21], [444, 133, 1, 1, 40, 30], [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [408, 225, 15, 14, 25, 21], [168, 180, 15, 17, 26, 19], [224, 275, 8, 9, 33, 25], [91, 266, 9, 10, 33, 25], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [409, 158, 20, 19, 21, 20], [323, 131, 22, 22, 20, 19], [330, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [398, 226, 10, 14, 29, 21], [291, 191, 11, 17, 29, 19], [169, 266, 7, 10, 34, 23], [405, 264, 7, 11, 35, 23], [182, 305, 3, 5, 24, 34], [316, 304, 4, 6, 23, 35], [303, 208, 20, 15, 21, 20], [19, 179, 22, 17, 20, 19], [312, 274, 13, 9, 28, 20], [349, 251, 16, 12, 26, 19], [475, 238, 20, 13, 21, 22], [504, 224, 8, 14, 20, 22], [152, 284, 13, 7, 27, 28], [319, 298, 14, 6, 27, 30], [95, 315, 7, 4, 33, 30], [21, 305, 10, 5, 32, 30], [213, 197, 20, 15, 21, 20], [63, 179, 22, 17, 20, 19], [424, 252, 19, 12, 22, 21], [444, 133, 1, 1, 40, 30], [388, 211, 12, 15, 21, 20], [153, 180, 15, 17, 20, 19], [408, 225, 15, 14, 25, 21], [168, 180, 15, 17, 26, 19], [224, 275, 8, 9, 33, 25], [91, 266, 9, 10, 33, 25], [283, 208, 20, 15, 21, 20], [19, 179, 22, 17, 20, 19], [330, 251, 19, 12, 22, 22], null, [509, 23, 3, 11, 21, 24], [350, 237, 6, 14, 20, 22], [66, 227, 11, 14, 23, 20], [43, 212, 11, 15, 24, 19], [398, 226, 10, 14, 29, 21], [291, 191, 11, 17, 29, 19], [169, 266, 7, 10, 34, 23], [405, 264, 7, 11, 35, 23], [299, 153, 22, 20, 21, 23], [277, 131, 24, 22, 20, 22], [289, 298, 15, 6, 26, 23], [55, 276, 17, 8, 25, 22], [437, 225, 13, 14, 21, 25], [154, 213, 5, 15, 20, 25], [372, 226, 13, 14, 22, 26], [443, 252, 12, 12, 22, 31], [279, 237, 8, 14, 35, 27], [0, 228, 9, 14, 34, 29], [492, 263, 8, 11, 35, 26], [368, 265, 5, 11, 39, 28], [197, 266, 7, 10, 25, 33], [500, 263, 8, 11, 25, 33], [405, 252, 19, 12, 22, 23], [310, 223, 21, 14, 21, 22], [492, 322, 9, 2, 28, 23], [478, 304, 15, 5, 26, 22], [254, 298, 18, 6, 22, 24], [292, 274, 20, 9, 21, 24], [383, 265, 19, 10, 22, 25], [35, 276, 20, 8, 22, 28], [186, 276, 10, 8, 31, 27], [72, 276, 12, 8, 30, 28], [320, 304, 4, 6, 37, 29], [153, 291, 5, 7, 37, 29], [278, 263, 16, 11, 25, 21], [408, 239, 18, 13, 24, 20], [246, 274, 5, 10, 25, 21], [59, 241, 9, 13, 24, 20], [426, 264, 7, 11, 27, 21], [139, 255, 5, 12, 30, 21], [421, 275, 6, 9, 32, 22], [100, 267, 6, 10, 33, 22], [232, 304, 5, 6, 36, 25], [436, 284, 6, 7, 36, 25], [268, 251, 21, 12, 21, 21], [263, 223, 25, 14, 19, 20], [272, 298, 17, 6, 25, 21], [14, 276, 21, 8, 23, 20], [387, 304, 21, 5, 21, 23], [209, 298, 24, 6, 19, 23], [233, 298, 21, 6, 21, 26], [185, 298, 24, 6, 19, 27], [446, 304, 16, 5, 26, 28], [408, 304, 19, 5, 24, 29], [410, 314, 10, 4, 32, 29], [474, 53, 12, 4, 31, 30], [310, 251, 20, 12, 28, 20], [288, 223, 22, 14, 27, 19], [66, 298, 4, 7, 28, 25], [148, 267, 5, 10, 27, 23], [508, 12, 4, 11, 31, 20], [131, 242, 6, 13, 30, 19], [232, 275, 8, 9, 35, 22], [343, 263, 10, 11, 35, 21], [406, 298, 10, 6, 38, 25], [175, 276, 11, 8, 38, 24], [367, 131, 22, 22, 20, 22], [363, 106, 23, 25, 18, 21], [202, 284, 9, 7, 33, 22], [425, 298, 9, 6, 32, 21], [247, 251, 21, 12, 20, 23], [231, 224, 19, 14, 18, 22], [19, 161, 20, 18, 22, 26], [54, 212, 11, 15, 21, 31], [139, 319, 9, 3, 33, 29], [319, 310, 4, 5, 31, 29], [390, 314, 10, 4, 32, 30], [438, 314, 9, 4, 31, 32], [454, 32, 20, 27, 20, 24], [486, 0, 22, 29, 19, 23], [126, 299, 6, 6, 34, 25], [460, 283, 6, 8, 35, 24], [326, 283, 7, 8, 27, 24], [154, 266, 8, 10, 27, 23], [39, 241, 10, 13, 20, 25], [19, 212, 12, 15, 19, 24], [263, 192, 5, 16, 21, 35], [269, 154, 8, 19, 19, 33], [231, 310, 4, 5, 20, 46], [351, 304, 3, 6, 19, 46], [505, 175, 7, 16, 24, 32], [417, 39, 5, 16, 27, 33], [378, 265, 5, 11, 39, 35], [301, 237, 7, 14, 38, 33], [510, 161, 2, 4, 40, 37], [369, 314, 3, 5, 38, 37], [27, 284, 4, 8, 39, 38], [490, 318, 4, 4, 39, 43], [405, 247, 3, 5, 41, 35], [441, 123, 4, 10, 41, 33], [450, 264, 5, 11, 39, 35], [301, 237, 7, 14, 38, 33], [439, 184, 3, 8, 40, 37], null, [363, 265, 5, 11, 39, 35], [9, 228, 7, 14, 38, 33], [176, 298, 3, 7, 41, 36], [19, 284, 4, 8, 40, 37], [445, 264, 5, 11, 39, 35], [301, 237, 7, 14, 38, 33], [509, 34, 3, 10, 40, 36], null, [373, 265, 5, 11, 39, 35], [308, 237, 7, 14, 38, 33], [439, 176, 3, 8, 40, 38], [451, 70, 3, 10, 40, 37], [217, 254, 7, 12, 36, 37], [99, 227, 9, 14, 35, 36], [433, 291, 5, 7, 36, 40], [190, 266, 7, 10, 35, 37], [118, 267, 6, 10, 37, 37], [68, 325, 4, 2, 36, 46], [224, 241, 5, 10, 38, 39], [510, 241, 2, 2, 37, 48], [429, 167, 3, 8, 40, 41], [450, 225, 5, 14, 39, 36], [389, 136, 15, 22, 37, 22], [424, 112, 17, 24, 36, 21], [510, 243, 2, 2, 41, 26], [486, 318, 4, 4, 40, 25], [217, 322, 5, 3, 42, 22], [196, 276, 10, 8, 39, 21], [510, 243, 2, 2, 41, 26], [486, 318, 4, 4, 40, 25], [496, 274, 9, 9, 43, 24], [111, 242, 7, 13, 46, 23], [104, 242, 7, 13, 44, 25], [348, 304, 3, 6, 48, 35], [321, 263, 11, 11, 37, 28], [16, 241, 12, 13, 36, 28], [484, 283, 5, 8, 37, 36], [124, 267, 6, 10, 36, 35], [239, 264, 7, 11, 40, 33], [157, 241, 9, 13, 39, 32], [229, 230, 2, 3, 43, 37], null, [252, 304, 5, 6, 42, 33], [210, 254, 7, 12, 41, 32], [229, 230, 2, 3, 43, 37], null, [232, 264, 7, 11, 40, 33], [95, 241, 9, 13, 39, 32], [106, 267, 6, 10, 40, 34], [179, 254, 8, 12, 39, 33], [247, 304, 5, 6, 40, 38], [291, 283, 7, 8, 39, 37], [502, 193, 10, 16, 37, 29], [371, 173, 12, 18, 36, 28], [427, 275, 6, 9, 41, 29], [187, 254, 8, 12, 40, 28], [104, 255, 7, 12, 37, 33], [77, 241, 9, 13, 36, 33], [484, 209, 14, 15, 30, 35], [289, 173, 16, 18, 29, 34], [49, 241, 10, 13, 30, 35], [87, 212, 11, 15, 29, 34], [42, 227, 12, 14, 30, 35], [358, 173, 13, 18, 29, 34], [250, 224, 13, 14, 30, 36], [75, 196, 13, 16, 30, 35], [442, 275, 4, 9, 40, 37], [7, 255, 7, 12, 38, 36], [236, 251, 6, 13, 37, 32], [0, 213, 8, 15, 36, 31], [86, 298, 4, 7, 39, 32], [454, 283, 6, 8, 38, 31], [440, 322, 4, 3, 39, 37], [217, 315, 6, 4, 38, 36], [445, 318, 5, 4, 37, 40], [503, 314, 8, 4, 36, 40], [259, 315, 6, 4, 37, 41], [106, 305, 8, 5, 36, 41], [89, 138, 13, 22, 48, 42], [44, 115, 15, 24, 47, 41], [0, 305, 11, 5, 48, 42], [70, 284, 14, 7, 47, 41], [51, 266, 11, 10, 48, 44], [308, 263, 13, 11, 47, 45], [0, 197, 13, 16, 48, 48], [19, 196, 15, 16, 47, 49], [149, 242, 6, 13, 48, 50], [132, 213, 8, 15, 47, 50], [0, 139, 13, 22, 48, 42], [74, 115, 15, 24, 47, 41], [432, 156, 10, 20, 48, 43], [88, 139, 1, 2, 47, 47], [26, 139, 13, 22, 48, 42], [262, 131, 15, 23, 47, 41], [480, 155, 10, 20, 48, 44], [61, 139, 12, 21, 47, 44], [13, 139, 13, 22, 48, 42], [44, 115, 15, 24, 47, 41], [244, 154, 13, 20, 48, 43], null, [102, 138, 13, 22, 48, 42], [59, 115, 15, 24, 47, 41], [345, 173, 13, 18, 48, 46], [14, 244, 2, 2, 60, 61], [88, 227, 11, 14, 48, 42], [101, 196, 13, 16, 47, 41], [237, 304, 5, 6, 48, 42], [458, 298, 8, 6, 47, 41], [11, 305, 10, 5, 49, 44], [363, 276, 9, 8, 51, 43], [391, 275, 8, 9, 49, 47], [494, 283, 5, 8, 53, 49], [157, 231, 2, 3, 51, 50], [357, 304, 3, 6, 50, 49], [170, 227, 11, 14, 48, 42], [101, 196, 13, 16, 47, 41], [72, 266, 10, 10, 48, 44], null, [201, 227, 10, 14, 48, 42], [49, 196, 13, 16, 47, 41], [164, 276, 11, 8, 48, 45], [165, 284, 10, 7, 50, 47], [159, 227, 11, 14, 48, 42], [88, 196, 13, 16, 47, 41], [28, 241, 11, 13, 48, 43], [444, 133, 1, 1, 50, 49], [77, 227, 11, 14, 48, 42], [62, 196, 13, 16, 47, 41], [465, 263, 9, 11, 48, 45], [444, 133, 1, 1, 55, 48], [38, 254, 11, 12, 47, 43], [498, 209, 13, 15, 46, 42], [337, 274, 11, 9, 47, 43], [14, 254, 13, 12, 46, 42], [62, 266, 10, 10, 47, 44], [84, 284, 11, 7, 46, 48], [383, 275, 8, 9, 48, 46], [372, 276, 9, 8, 47, 48], [108, 299, 6, 6, 49, 47], [414, 275, 7, 9, 48, 48], [402, 272, 3, 3, 51, 48], [172, 310, 5, 5, 49, 48], [366, 153, 13, 20, 47, 42], [404, 136, 15, 22, 46, 41], [389, 131, 12, 5, 47, 42], [333, 298, 14, 6, 46, 41], [16, 227, 13, 14, 47, 45], [34, 196, 15, 16, 46, 45], [31, 212, 12, 15, 47, 47], [421, 210, 13, 15, 46, 48], [204, 266, 7, 10, 47, 49], [82, 298, 4, 7, 51, 53], [450, 275, 4, 9, 48, 50], [508, 263, 4, 10, 47, 50], [454, 59, 19, 24, 47, 42], [403, 86, 21, 26, 46, 41], [76, 160, 14, 19, 52, 42], [445, 109, 21, 25, 46, 41], [244, 131, 18, 23, 47, 43], [88, 139, 1, 2, 46, 47], [488, 133, 17, 22, 47, 44], [269, 173, 20, 18, 46, 49], [352, 153, 14, 20, 48, 46], [321, 153, 17, 20, 47, 47], [499, 83, 13, 23, 47, 42], [386, 106, 16, 25, 46, 41], [479, 314, 8, 4, 47, 42], [395, 298, 11, 6, 46, 41], [325, 274, 12, 9, 47, 44], [294, 263, 14, 11, 46, 44], [90, 160, 12, 19, 48, 46], [212, 180, 14, 17, 47, 48], [383, 177, 9, 18, 50, 47], [305, 173, 14, 18, 48, 48], [363, 304, 3, 6, 50, 48], [248, 284, 3, 7, 50, 49], [79, 319, 3, 4, 35, 34], [120, 134, 2, 4, 28, 34], [262, 304, 5, 6, 34, 33], [344, 304, 4, 6, 27, 33], [157, 228, 2, 3, 35, 35], [401, 131, 1, 3, 29, 35], [121, 144, 1, 1, 39, 35], [121, 144, 1, 1, 26, 35], [462, 322, 3, 3, 35, 35], [157, 228, 2, 3, 28, 35], [177, 310, 5, 5, 34, 34], [255, 310, 4, 5, 27, 34], [157, 228, 2, 3, 35, 35], [401, 131, 1, 3, 29, 35], [121, 144, 1, 1, 39, 35], [121, 144, 1, 1, 26, 35], [133, 325, 3, 2, 35, 36], [229, 236, 2, 2, 28, 36], [460, 318, 5, 4, 34, 35], [474, 318, 4, 4, 27, 35], [229, 236, 2, 2, 35, 36], [401, 134, 1, 2, 29, 36], [121, 144, 1, 1, 39, 35], [121, 144, 1, 1, 26, 35], [429, 175, 3, 1, 35, 37], [439, 155, 2, 1, 28, 37], [222, 322, 5, 3, 34, 36], [404, 322, 4, 3, 27, 36], [439, 155, 2, 1, 35, 37], [121, 143, 1, 1, 29, 37], [121, 144, 1, 1, 39, 36], [121, 144, 1, 1, 26, 36], null, null, [505, 324, 5, 2, 34, 37], [92, 325, 4, 2, 27, 37], null, null, [121, 144, 1, 1, 39, 37], [121, 144, 1, 1, 26, 37], null, null, [10, 325, 5, 2, 34, 37], [84, 325, 4, 2, 27, 37], null, null, [121, 144, 1, 1, 39, 37], [121, 144, 1, 1, 26, 37], null, [341, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 41], null, [217, 310, 5, 5, 29, 38], [121, 143, 1, 1, 32, 42], null, [24, 319, 4, 4, 29, 38], [121, 143, 1, 1, 32, 42], null, [222, 310, 5, 5, 29, 38], [121, 143, 1, 1, 32, 42], [439, 192, 2, 1, 31, 42], [341, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 41], [127, 325, 3, 2, 31, 41], [341, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 41], null, [276, 315, 5, 4, 29, 38], [121, 143, 1, 1, 33, 42], [383, 298, 12, 6, 27, 33], [502, 298, 7, 6, 29, 33], [499, 106, 11, 3, 27, 39], [153, 276, 11, 8, 27, 34], [121, 143, 1, 1, 36, 40], [121, 143, 1, 1, 27, 40], [332, 304, 4, 6, 30, 27], [478, 283, 6, 8, 29, 25], [357, 310, 3, 5, 31, 28], [302, 304, 5, 6, 30, 27], [466, 298, 8, 6, 38, 48], [0, 277, 9, 8, 38, 47], [13, 197, 6, 16, 32, 54], [171, 197, 8, 16, 31, 55], [126, 197, 10, 16, 42, 54], [226, 180, 12, 17, 41, 54], [380, 195, 18, 16, 31, 41], [85, 179, 20, 17, 30, 41], [380, 240, 13, 13, 27, 31], [233, 209, 15, 15, 26, 30], [446, 275, 4, 9, 40, 28], [112, 267, 6, 10, 39, 27], [335, 310, 4, 5, 27, 28], [107, 285, 6, 7, 26, 27], [31, 284, 39, 7, 22, 66], [251, 274, 41, 9, 21, 65], [445, 86, 6, 17, 32, 53], [392, 177, 8, 18, 31, 53], [115, 138, 6, 17, 34, 53], [400, 177, 8, 18, 33, 53], [505, 133, 7, 18, 35, 52], [10, 161, 9, 19, 34, 52], [186, 197, 7, 16, 35, 51], [353, 191, 9, 17, 34, 51], [140, 213, 7, 15, 35, 51], [136, 197, 9, 16, 34, 51], [329, 237, 7, 14, 35, 51], [213, 212, 9, 15, 34, 51], [356, 237, 6, 14, 35, 52], [108, 213, 8, 15, 34, 52], [118, 242, 7, 13, 34, 53], [220, 227, 9, 14, 33, 53], [125, 242, 6, 13, 34, 53], [263, 237, 8, 14, 33, 53], [111, 255, 6, 12, 33, 53], [184, 241, 8, 13, 32, 53], [419, 264, 7, 11, 31, 52], [77, 254, 9, 12, 30, 52], [195, 254, 8, 12, 30, 51], [181, 227, 10, 14, 29, 50], [175, 241, 9, 13, 29, 51], [65, 212, 11, 15, 28, 50], [280, 191, 11, 17, 27, 51], [332, 173, 13, 18, 26, 51], [343, 191, 10, 17, 28, 52], [256, 174, 12, 18, 27, 52], [439, 193, 8, 17, 30, 53], [429, 176, 10, 18, 29, 53], [495, 238, 15, 13, 42, 51], [455, 224, 17, 14, 41, 51], [114, 197, 12, 16, 42, 51], [198, 180, 14, 17, 41, 51], [333, 191, 10, 17, 42, 50], [244, 174, 12, 18, 41, 50], [447, 193, 8, 17, 42, 49], [475, 175, 10, 18, 41, 49], [247, 192, 8, 17, 42, 49], [495, 175, 10, 18, 41, 49], [255, 192, 8, 17, 42, 49], [485, 175, 10, 18, 41, 49], [114, 160, 8, 18, 42, 50], [0, 161, 10, 19, 41, 50], [504, 57, 8, 19, 42, 51], [379, 153, 10, 20, 41, 51], [458, 134, 8, 19, 42, 51], [490, 155, 10, 20, 41, 51], [432, 136, 9, 19, 42, 51], [458, 155, 11, 20, 41, 51], [500, 155, 10, 20, 42, 50], [474, 32, 12, 21, 41, 50], [257, 154, 12, 20, 42, 49], [403, 39, 14, 21, 41, 49], [102, 160, 12, 19, 42, 49], [338, 153, 14, 20, 41, 49], [319, 173, 13, 18, 42, 49], [442, 156, 15, 19, 41, 49], [489, 224, 15, 14, 42, 50], [343, 208, 17, 15, 41, 50], [426, 239, 15, 13, 42, 51], [472, 224, 17, 14, 41, 51], [45, 325, 5, 2, 32, 68], [505, 191, 7, 2, 31, 69], [45, 325, 5, 2, 32, 68], [505, 191, 7, 2, 31, 69], [58, 323, 6, 2, 34, 68], [174, 319, 8, 3, 33, 68], [321, 315, 5, 4, 37, 66], [115, 155, 7, 5, 36, 66], [510, 151, 2, 5, 40, 62], [312, 304, 4, 6, 39, 62], [510, 151, 2, 5, 40, 61], [120, 128, 2, 6, 41, 61], [510, 151, 2, 5, 40, 60], [120, 128, 2, 6, 41, 60], [510, 156, 2, 5, 39, 61], [120, 115, 2, 7, 40, 60], [510, 156, 2, 5, 39, 61], [120, 115, 2, 7, 40, 60], [360, 310, 3, 5, 37, 61], [257, 304, 5, 6, 36, 61], [510, 156, 2, 5, 37, 60], [508, 291, 4, 7, 36, 59], [396, 322, 4, 3, 32, 60], [429, 309, 6, 5, 31, 59], [396, 322, 4, 3, 31, 60], [223, 315, 6, 4, 30, 60], [490, 324, 5, 2, 29, 62], [223, 315, 6, 4, 29, 61], [480, 324, 5, 2, 27, 66], [21, 323, 7, 2, 26, 67], [45, 325, 5, 2, 28, 67], [14, 323, 7, 2, 27, 68], [45, 325, 5, 2, 30, 68], [505, 191, 7, 2, 29, 69], [58, 323, 6, 2, 46, 68], [174, 319, 8, 3, 45, 68], [510, 165, 2, 4, 55, 60], [312, 304, 4, 6, 54, 59], [27, 299, 3, 6, 51, 61], [34, 298, 4, 7, 51, 61], [286, 315, 5, 4, 47, 63], [488, 298, 7, 6, 46, 62], [50, 325, 5, 2, 45, 64], [247, 315, 6, 4, 45, 63], [282, 322, 5, 3, 45, 63], [124, 322, 6, 3, 44, 64], [151, 315, 6, 4, 44, 62], [168, 305, 7, 5, 43, 62], [369, 319, 6, 3, 43, 65], [471, 314, 8, 4, 42, 65], [28, 323, 6, 2, 43, 68], [174, 319, 8, 3, 42, 68], [28, 323, 6, 2, 43, 68], [174, 319, 8, 3, 42, 68], [28, 323, 6, 2, 44, 68], [174, 319, 8, 3, 43, 68], [46, 323, 6, 2, 46, 68], [0, 315, 8, 4, 45, 67], [202, 322, 5, 3, 48, 66], [489, 309, 6, 5, 48, 65], [381, 314, 3, 5, 51, 63], [16, 220, 3, 7, 52, 62], [387, 314, 3, 5, 52, 62], [16, 213, 3, 7, 53, 61], [351, 310, 3, 5, 54, 59], [173, 298, 3, 7, 55, 58], [231, 216, 2, 4, 55, 60], [340, 304, 4, 6, 54, 59], [117, 255, 6, 12, 32, 58], [117, 228, 8, 14, 31, 57], [115, 325, 3, 2, 35, 58], [142, 322, 5, 3, 34, 57], [80, 325, 4, 2, 34, 60], [100, 322, 6, 3, 33, 59], [64, 325, 4, 2, 34, 62], [339, 319, 6, 3, 33, 61], [55, 325, 5, 2, 33, 64], [270, 319, 7, 3, 32, 63], [30, 325, 5, 2, 33, 66], [228, 319, 7, 3, 32, 65], [64, 323, 6, 2, 32, 68], [455, 314, 8, 4, 31, 67], [224, 251, 6, 13, 32, 57], [400, 211, 8, 15, 31, 56], [115, 325, 3, 2, 35, 57], [277, 322, 5, 3, 34, 56], [416, 322, 4, 3, 34, 59], [291, 319, 6, 3, 33, 59], [64, 325, 4, 2, 34, 62], [34, 323, 6, 2, 33, 62], [30, 325, 5, 2, 33, 64], [0, 323, 7, 2, 32, 64], [495, 324, 5, 2, 33, 66], [0, 323, 7, 2, 32, 66], [64, 323, 6, 2, 32, 68], [206, 319, 8, 3, 31, 68], [143, 242, 6, 13, 34, 57], [116, 213, 8, 15, 33, 56], [133, 325, 3, 2, 35, 57], [142, 322, 5, 3, 34, 56], [356, 322, 4, 3, 35, 59], [199, 315, 6, 4, 34, 58], [64, 325, 4, 2, 35, 62], [339, 319, 6, 3, 34, 61], [25, 325, 5, 2, 35, 64], [339, 319, 6, 3, 34, 63], [495, 324, 5, 2, 35, 66], [228, 319, 7, 3, 34, 65], [76, 323, 6, 2, 34, 68], [16, 315, 8, 4, 33, 67], [322, 237, 7, 14, 35, 56], [430, 194, 9, 16, 34, 55], [509, 54, 3, 3, 35, 56], [455, 318, 5, 4, 34, 55], [366, 314, 3, 5, 36, 57], [417, 55, 5, 5, 35, 57], [40, 319, 4, 4, 36, 60], [477, 309, 6, 5, 35, 59], [56, 319, 4, 4, 37, 62], [459, 309, 6, 5, 36, 61], [331, 315, 5, 4, 37, 64], [235, 315, 6, 4, 36, 64], [336, 315, 5, 4, 37, 66], [0, 299, 7, 6, 36, 65], [203, 254, 7, 12, 35, 55], [211, 227, 9, 14, 34, 54], [429, 175, 3, 1, 35, 55], [88, 323, 5, 2, 34, 54], [462, 322, 3, 3, 35, 56], [410, 318, 5, 4, 34, 55], [85, 319, 3, 4, 36, 58], [420, 318, 5, 4, 35, 58], [424, 322, 4, 3, 36, 61], [175, 315, 6, 4, 35, 60], [435, 318, 5, 4, 37, 62], [235, 315, 6, 4, 36, 62], [352, 322, 4, 3, 38, 64], [441, 309, 6, 5, 37, 63], [412, 264, 7, 11, 35, 55], [166, 241, 9, 13, 34, 54], [118, 325, 3, 2, 35, 55], [142, 322, 5, 3, 34, 54], [471, 322, 3, 3, 35, 56], [207, 322, 5, 3, 34, 56], [372, 314, 3, 5, 36, 57], [417, 55, 5, 5, 35, 57], [82, 319, 3, 4, 37, 60], [267, 310, 4, 5, 36, 59], [227, 310, 4, 5, 37, 61], [197, 304, 5, 6, 36, 60], [91, 319, 3, 4, 39, 62], [222, 304, 5, 6, 38, 61], [211, 266, 7, 10, 35, 55], [86, 254, 9, 12, 34, 54], [119, 178, 3, 1, 36, 55], [232, 322, 5, 3, 35, 54], [510, 173, 2, 2, 37, 56], [20, 325, 5, 2, 35, 56], [474, 322, 3, 3, 35, 57], [511, 7, 1, 4, 34, 57], [252, 322, 5, 3, 35, 59], [157, 310, 5, 5, 35, 58], [306, 315, 5, 4, 36, 60], [197, 304, 5, 6, 36, 59], [470, 318, 4, 4, 38, 61], [222, 304, 5, 6, 38, 60], [433, 264, 6, 11, 35, 55], [208, 241, 8, 13, 34, 54], [88, 143, 1, 2, 38, 55], [346, 315, 5, 4, 35, 54], [60, 325, 4, 2, 35, 56], [267, 322, 5, 3, 34, 56], [109, 325, 3, 2, 35, 58], [473, 80, 1, 3, 34, 58], [28, 319, 4, 4, 35, 59], [453, 309, 6, 5, 34, 59], [291, 310, 4, 5, 36, 60], [444, 133, 1, 1, 36, 64], [354, 310, 3, 5, 38, 61], [46, 291, 5, 7, 37, 60], [183, 266, 7, 10, 34, 56], [68, 254, 9, 12, 33, 55], [108, 212, 2, 1, 37, 56], [70, 323, 6, 2, 34, 55], [292, 322, 5, 3, 34, 57], [214, 319, 7, 3, 33, 57], [88, 325, 4, 2, 34, 59], [510, 241, 2, 2, 33, 60], [412, 322, 4, 3, 35, 60], [471, 309, 6, 5, 34, 59], [239, 310, 4, 5, 36, 60], [444, 133, 1, 1, 36, 64], [363, 310, 3, 5, 38, 61], [46, 291, 5, 7, 37, 60], [130, 267, 6, 10, 34, 56], [171, 254, 8, 12, 33, 55], [121, 143, 1, 1, 36, 56], [333, 319, 6, 3, 34, 55], [15, 325, 5, 2, 34, 57], [256, 319, 7, 3, 33, 57], [452, 322, 4, 3, 34, 58], [88, 139, 1, 2, 33, 60], [20, 319, 4, 4, 34, 59], [62, 310, 5, 5, 34, 59], [247, 310, 4, 5, 35, 60], [42, 310, 5, 5, 35, 60], [384, 314, 3, 5, 37, 61], [257, 304, 5, 6, 36, 61], [218, 266, 6, 10, 33, 55], [155, 254, 8, 12, 32, 54], [124, 325, 3, 2, 35, 55], [193, 315, 6, 4, 33, 54], [25, 325, 5, 2, 33, 56], [473, 80, 1, 3, 32, 56], [448, 322, 4, 3, 33, 58], [94, 322, 6, 3, 32, 58], [4, 319, 4, 4, 34, 59], [88, 139, 1, 2, 33, 61], [494, 318, 4, 4, 35, 60], [197, 304, 5, 6, 34, 59], [91, 319, 3, 4, 36, 61], [340, 304, 4, 6, 36, 60], [240, 275, 6, 9, 31, 54], [224, 264, 8, 11, 30, 53], [510, 245, 2, 2, 35, 54], [229, 315, 6, 4, 32, 53], [344, 322, 4, 3, 32, 54], [357, 319, 6, 3, 31, 54], [485, 324, 5, 2, 31, 56], [7, 323, 7, 2, 30, 56], [0, 325, 5, 2, 31, 58], [501, 322, 7, 2, 30, 58], [327, 322, 5, 3, 31, 59], [510, 241, 2, 2, 30, 60], [360, 322, 4, 3, 32, 60], [429, 309, 6, 5, 31, 59], [136, 267, 6, 10, 30, 53], [163, 254, 8, 12, 29, 52], [436, 322, 4, 3, 32, 53], [211, 315, 6, 4, 31, 52], [344, 322, 4, 3, 31, 54], [357, 319, 6, 3, 30, 54], [485, 324, 5, 2, 30, 56], [7, 323, 7, 2, 29, 56], [40, 325, 5, 2, 30, 58], [501, 322, 7, 2, 29, 58], [182, 322, 5, 3, 30, 59], [88, 139, 1, 2, 29, 60], [360, 322, 4, 3, 31, 60], [429, 309, 6, 5, 30, 59], [176, 266, 7, 10, 29, 54], [95, 254, 9, 12, 28, 53], [139, 325, 3, 2, 33, 54], [301, 315, 5, 4, 32, 53], [152, 322, 5, 3, 31, 54], [495, 309, 6, 5, 30, 54], [367, 237, 5, 3, 30, 56], [88, 139, 1, 2, 29, 56], [485, 324, 5, 2, 29, 58], [7, 323, 7, 2, 28, 58], [500, 324, 5, 2, 29, 60], [501, 322, 7, 2, 28, 60], [212, 322, 5, 3, 29, 61], [46, 315, 7, 4, 28, 61], [68, 241, 9, 13, 27, 55], [76, 212, 11, 15, 26, 54], [368, 322, 4, 3, 32, 55], [326, 315, 5, 4, 32, 54], [388, 322, 4, 3, 31, 57], [265, 315, 6, 4, 30, 56], [257, 322, 5, 3, 29, 59], [249, 319, 7, 3, 28, 59], [297, 322, 5, 3, 28, 61], [249, 319, 7, 3, 27, 61], [136, 322, 6, 3, 27, 63], [190, 319, 8, 3, 26, 63], [5, 325, 5, 2, 27, 66], [116, 315, 7, 4, 26, 65], [192, 241, 8, 13, 28, 56], [203, 212, 10, 15, 27, 55], [100, 325, 3, 2, 33, 56], [440, 318, 5, 4, 32, 55], [380, 322, 4, 3, 32, 57], [303, 319, 6, 3, 31, 57], [336, 322, 4, 3, 31, 59], [327, 319, 6, 3, 30, 59], [197, 322, 5, 3, 30, 61], [53, 315, 7, 4, 29, 61], [356, 315, 5, 4, 29, 63], [109, 315, 7, 4, 28, 63], [375, 208, 5, 3, 28, 66], [123, 315, 7, 4, 27, 66], [7, 242, 7, 13, 30, 57], [222, 212, 9, 15, 29, 56], [459, 322, 3, 3, 34, 57], [351, 315, 5, 4, 33, 56], [340, 322, 4, 3, 33, 59], [321, 319, 6, 3, 32, 59], [197, 322, 5, 3, 32, 61], [284, 319, 7, 3, 31, 61], [408, 322, 4, 3, 32, 63], [321, 319, 6, 3, 31, 63], [147, 322, 5, 3, 31, 65], [235, 319, 7, 3, 30, 65], [64, 323, 6, 2, 30, 68], [206, 319, 8, 3, 29, 68], [149, 228, 8, 14, 44, 56], [302, 191, 11, 17, 42, 54], [157, 322, 5, 3, 44, 56], [98, 305, 8, 5, 42, 54], [502, 318, 4, 4, 46, 57], [24, 310, 6, 5, 45, 57], [72, 319, 4, 4, 47, 60], [477, 309, 6, 5, 46, 59], [291, 315, 5, 4, 47, 62], [422, 309, 7, 5, 46, 61], [162, 322, 5, 3, 47, 65], [39, 315, 7, 4, 46, 64], [309, 319, 6, 3, 46, 67], [146, 305, 8, 5, 45, 66], [466, 274, 11, 9, 46, 55], [380, 253, 14, 12, 44, 53], [167, 322, 5, 3, 46, 55], [14, 299, 7, 6, 44, 53], [44, 319, 4, 4, 48, 56], [292, 304, 5, 6, 48, 55], [47, 310, 5, 5, 49, 57], [42, 310, 5, 5, 49, 57], [32, 319, 4, 4, 51, 59], [132, 299, 6, 6, 50, 58], [57, 310, 5, 5, 52, 59], [282, 304, 5, 6, 52, 59], [387, 319, 3, 3, 54, 61], [339, 310, 4, 5, 54, 60], [483, 263, 9, 11, 45, 56], [54, 227, 12, 14, 43, 54], [177, 322, 5, 3, 45, 56], [175, 305, 7, 5, 43, 54], [76, 319, 3, 4, 47, 57], [87, 310, 5, 5, 46, 56], [259, 310, 4, 5, 48, 58], [272, 304, 5, 6, 47, 58], [271, 310, 4, 5, 49, 60], [95, 285, 6, 7, 48, 59], [275, 310, 4, 5, 50, 61], [267, 304, 5, 6, 50, 61], [88, 319, 3, 4, 51, 63], [324, 304, 4, 6, 51, 62], [238, 180, 6, 12, 46, 55], [191, 227, 10, 14, 43, 54], [468, 322, 3, 3, 46, 55], [88, 315, 7, 4, 43, 54], [478, 318, 4, 4, 46, 56], [430, 318, 5, 4, 45, 56], [425, 318, 5, 4, 46, 58], [7, 299, 7, 6, 45, 57], [122, 310, 5, 5, 46, 60], [366, 309, 7, 5, 45, 60], [405, 318, 5, 4, 47, 62], [373, 309, 7, 5, 46, 61], [390, 318, 5, 4, 47, 63], [380, 309, 7, 5, 46, 63], [134, 255, 5, 12, 45, 54], [271, 237, 8, 14, 43, 53], [121, 325, 3, 2, 46, 54], [221, 319, 7, 3, 43, 53], [372, 322, 4, 3, 46, 55], [339, 319, 6, 3, 45, 55], [281, 315, 5, 4, 45, 57], [137, 315, 7, 4, 44, 57], [271, 315, 5, 4, 45, 59], [39, 315, 7, 4, 44, 59], [262, 322, 5, 3, 45, 62], [60, 315, 7, 4, 44, 61], [76, 325, 4, 2, 46, 64], [112, 322, 6, 3, 45, 64], [129, 255, 5, 12, 45, 54], [133, 228, 8, 14, 43, 53], [103, 325, 3, 2, 46, 54], [205, 315, 6, 4, 43, 53], [400, 318, 5, 4, 45, 55], [394, 309, 7, 5, 44, 54], [415, 318, 5, 4, 45, 56], [102, 315, 7, 4, 44, 56], [450, 318, 5, 4, 45, 58], [39, 315, 7, 4, 44, 58], [272, 322, 5, 3, 45, 61], [60, 315, 7, 4, 44, 60], [287, 322, 5, 3, 45, 63], [46, 315, 7, 4, 44, 63], [123, 255, 6, 12, 44, 54], [125, 228, 8, 14, 43, 53], [121, 325, 3, 2, 46, 54], [297, 319, 6, 3, 43, 53], [372, 322, 4, 3, 46, 55], [175, 315, 6, 4, 45, 54], [372, 322, 4, 3, 46, 57], [351, 319, 6, 3, 45, 56], [307, 322, 5, 3, 45, 59], [228, 319, 7, 3, 44, 58], [381, 319, 6, 3, 44, 61], [182, 319, 8, 3, 43, 60], [106, 322, 6, 3, 44, 63], [82, 305, 8, 5, 43, 62], [0, 242, 7, 13, 43, 55], [154, 197, 9, 16, 42, 53], [508, 322, 4, 2, 45, 55], [130, 315, 7, 4, 43, 53], [364, 322, 4, 3, 46, 56], [130, 322, 6, 3, 45, 56], [192, 322, 5, 3, 45, 58], [242, 319, 7, 3, 44, 58], [322, 322, 5, 3, 45, 60], [228, 319, 7, 3, 44, 60], [375, 319, 6, 3, 44, 63], [24, 315, 8, 4, 43, 62], [315, 319, 6, 3, 43, 65], [74, 305, 8, 5, 42, 64], [343, 237, 7, 14, 43, 56], [238, 192, 9, 17, 42, 54], [420, 322, 4, 3, 44, 56], [408, 309, 7, 5, 42, 54], [281, 315, 5, 4, 45, 57], [415, 309, 7, 5, 44, 56], [271, 315, 5, 4, 45, 59], [60, 315, 7, 4, 44, 59], [383, 173, 6, 4, 44, 62], [487, 314, 8, 4, 43, 62], [74, 315, 7, 4, 43, 64], [420, 314, 9, 4, 42, 64], [263, 319, 7, 3, 43, 67], [429, 314, 9, 4, 42, 67], [315, 237, 7, 14, 43, 56], [371, 191, 9, 17, 42, 54], [420, 322, 4, 3, 44, 56], [408, 309, 7, 5, 42, 54], [400, 322, 4, 3, 46, 57], [157, 315, 6, 4, 45, 56], [311, 315, 5, 4, 45, 59], [32, 315, 7, 4, 44, 59], [241, 315, 6, 4, 44, 62], [447, 314, 8, 4, 43, 62], [74, 315, 7, 4, 43, 64], [420, 314, 9, 4, 42, 64], [263, 319, 7, 3, 43, 67], [429, 314, 9, 4, 42, 67], [336, 237, 7, 14, 44, 56], [313, 191, 10, 17, 42, 54], [317, 322, 5, 3, 44, 56], [58, 305, 8, 5, 42, 54], [16, 319, 4, 4, 46, 57], [169, 315, 6, 4, 45, 57], [302, 322, 5, 3, 46, 60], [67, 315, 7, 4, 45, 59], [241, 315, 6, 4, 45, 62], [447, 314, 8, 4, 44, 62], [253, 315, 6, 4, 45, 64], [495, 314, 8, 4, 44, 64], [263, 319, 7, 3, 44, 67], [429, 314, 9, 4, 43, 67], [8, 213, 8, 15, 44, 55], [442, 175, 11, 18, 42, 53], [345, 319, 6, 3, 44, 55], [40, 305, 9, 5, 42, 53], [432, 322, 4, 3, 46, 56], [163, 315, 6, 4, 45, 56], [332, 322, 4, 3, 47, 58], [169, 315, 6, 4, 46, 58], [311, 310, 4, 5, 47, 60], [0, 310, 6, 5, 46, 60], [21, 299, 6, 6, 46, 62], [450, 298, 8, 6, 45, 62], [18, 310, 6, 5, 46, 65], [442, 298, 8, 6, 45, 65], [447, 210, 8, 15, 46, 54], [464, 175, 11, 18, 44, 52], [112, 325, 3, 2, 46, 54], [36, 310, 6, 5, 44, 52], [505, 151, 5, 4, 47, 55], [120, 299, 6, 6, 47, 54], [482, 318, 4, 4, 48, 57], [447, 309, 6, 5, 47, 57], [202, 310, 5, 5, 48, 59], [481, 298, 7, 6, 47, 59], [465, 309, 6, 5, 48, 62], [405, 284, 7, 7, 47, 61], [192, 310, 5, 5, 49, 64], [391, 284, 7, 7, 48, 63], [147, 213, 7, 15, 47, 53], [453, 175, 11, 18, 44, 51], [477, 322, 3, 3, 47, 53], [401, 309, 7, 5, 44, 51], [498, 318, 4, 4, 48, 54], [483, 309, 6, 5, 47, 53], [76, 319, 3, 4, 49, 57], [417, 55, 5, 5, 48, 56], [158, 298, 4, 7, 49, 58], [418, 284, 6, 7, 48, 58], [360, 304, 3, 6, 50, 61], [258, 291, 5, 7, 49, 60], [354, 304, 3, 6, 51, 62], [283, 291, 5, 7, 50, 62], [141, 228, 8, 14, 47, 53], [268, 191, 12, 17, 44, 51], [444, 322, 4, 3, 47, 53], [434, 298, 8, 6, 44, 51], [48, 319, 4, 4, 48, 54], [87, 310, 5, 5, 48, 54], [392, 322, 4, 3, 49, 57], [477, 309, 6, 5, 48, 56], [307, 304, 5, 6, 49, 58], [191, 304, 6, 6, 48, 58], [343, 310, 4, 5, 50, 61], [412, 284, 6, 7, 49, 60], [470, 318, 4, 4, 51, 63], [222, 304, 5, 6, 51, 62], [455, 263, 10, 11, 47, 53], [423, 225, 14, 14, 44, 51], [247, 322, 5, 3, 47, 53], [66, 305, 8, 5, 44, 51], [242, 322, 5, 3, 48, 54], [144, 315, 7, 4, 47, 53], [0, 319, 4, 4, 50, 55], [6, 310, 6, 5, 49, 55], [0, 319, 4, 4, 51, 57], [212, 304, 5, 6, 50, 57], [64, 319, 4, 4, 52, 59], [444, 133, 1, 1, 52, 63], [327, 310, 4, 5, 53, 59], [308, 291, 5, 7, 53, 58], [29, 266, 11, 10, 46, 54], [441, 239, 14, 13, 44, 52], [237, 322, 5, 3, 46, 54], [474, 298, 7, 6, 44, 52], [44, 319, 4, 4, 48, 55], [292, 304, 5, 6, 48, 54], [47, 310, 5, 5, 49, 56], [42, 310, 5, 5, 49, 56], [32, 319, 4, 4, 51, 58], [102, 299, 6, 6, 50, 57], [287, 310, 4, 5, 52, 59], [136, 325, 3, 2, 52, 63], [510, 169, 2, 4, 55, 60], [509, 298, 3, 6, 55, 59], [73, 159, 10, 1, 27, 38], [106, 319, 12, 3, 26, 37], null, [118, 319, 12, 3, 26, 37], null, [432, 155, 7, 1, 28, 38], [130, 319, 9, 3, 27, 37], null, [439, 155, 2, 1, 43, 31], null, [229, 233, 2, 3, 43, 30], null, [229, 236, 2, 2, 43, 30], null, [231, 220, 2, 4, 43, 30], null, [117, 310, 5, 5, 41, 31], null, [121, 143, 1, 1, 43, 33], null, [73, 139, 15, 20, 39, 20], [441, 134, 17, 22, 38, 19], [474, 57, 30, 26, 26, 17], [422, 32, 32, 28, 25, 16], [248, 209, 15, 15, 41, 18], [59, 160, 17, 19, 40, 16], [200, 241, 8, 13, 43, 17], null, [14, 266, 15, 10, 41, 19], null, [424, 86, 21, 26, 26, 17], [486, 29, 23, 28, 25, 16], [455, 209, 15, 15, 41, 17], [105, 179, 16, 17, 41, 16], [86, 241, 9, 13, 41, 20], [398, 195, 10, 16, 40, 19], [367, 240, 13, 13, 43, 18], null, [424, 86, 21, 26, 26, 17], [486, 29, 23, 28, 25, 16], [434, 210, 13, 15, 43, 17], [137, 180, 16, 17, 41, 16], [86, 241, 9, 13, 41, 20], [398, 195, 10, 16, 40, 19], [332, 263, 11, 11, 41, 19], [384, 322, 4, 3, 49, 28], [424, 86, 21, 26, 26, 17], [486, 29, 23, 28, 25, 16], [22, 115, 22, 24, 32, 12], [427, 60, 24, 26, 31, 11], [466, 109, 22, 24, 32, 12], [451, 83, 24, 26, 31, 11], [353, 263, 10, 11, 38, 19], [27, 254, 11, 12, 38, 19], [0, 115, 22, 24, 32, 12], [316, 106, 24, 25, 31, 12], [353, 263, 10, 11, 38, 19], [27, 254, 11, 12, 38, 19], [488, 109, 22, 24, 32, 12], [403, 60, 24, 26, 31, 11], [375, 211, 13, 15, 41, 12], [183, 180, 15, 17, 40, 11], [394, 253, 11, 12, 38, 18], [393, 240, 12, 13, 38, 18], [251, 238, 12, 13, 40, 15], [29, 227, 13, 14, 39, 15], [470, 209, 14, 15, 32, 21], [121, 180, 16, 17, 31, 20], [402, 112, 22, 24, 32, 12], [475, 83, 24, 26, 31, 11], [353, 263, 10, 11, 38, 19], [27, 254, 11, 12, 38, 19], [408, 210, 13, 15, 40, 12], [323, 191, 10, 17, 42, 11], [277, 319, 7, 3, 31, 46], [49, 305, 9, 5, 30, 45], [441, 133, 3, 1, 31, 48], [172, 322, 5, 3, 30, 47], [40, 323, 6, 2, 32, 46], [463, 314, 8, 4, 31, 45], [287, 237, 7, 14, 31, 45], [362, 191, 9, 17, 30, 44], [230, 251, 6, 13, 32, 46], [179, 197, 7, 16, 31, 45], [0, 255, 7, 12, 31, 45], [184, 213, 9, 14, 30, 44], [441, 112, 4, 11, 34, 46], [242, 251, 5, 13, 33, 45], [508, 0, 3, 12, 33, 47], [362, 237, 5, 14, 32, 47], [60, 319, 4, 4, 31, 46], [90, 299, 6, 6, 30, 45], [438, 275, 4, 9, 34, 45], [142, 267, 6, 10, 33, 44], [294, 237, 7, 14, 31, 45], [145, 197, 9, 16, 30, 44], [137, 242, 6, 13, 32, 46], [163, 197, 8, 16, 31, 45], [439, 264, 6, 11, 32, 46], [216, 241, 8, 13, 31, 45], [509, 44, 3, 10, 32, 47], [233, 197, 5, 12, 31, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [451, 60, 3, 10, 32, 47], [144, 255, 5, 12, 31, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [510, 127, 2, 6, 32, 50], [38, 298, 4, 7, 31, 49], [155, 244, 2, 2, 33, 47], [8, 319, 4, 4, 32, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [121, 145, 1, 1, 33, 50], [52, 319, 4, 4, 31, 49], [157, 234, 2, 3, 32, 51], [283, 310, 4, 5, 31, 50], [157, 234, 2, 3, 32, 53], [506, 318, 4, 4, 31, 52], [401, 134, 1, 2, 33, 55], [380, 191, 3, 4, 32, 54], [429, 158, 3, 9, 32, 47], [149, 255, 5, 12, 31, 46], [229, 227, 2, 3, 36, 46], [90, 305, 8, 5, 31, 45], [120, 122, 2, 6, 32, 51], [23, 284, 4, 8, 31, 49], [121, 143, 1, 1, 31, 45], [372, 223, 3, 3, 30, 44], [244, 106, 47, 25, 48, 151], [403, 0, 19, 39, 63, 122], [0, 0, 122, 115, 17, 9], [455, 193, 47, 16, 48, 161], [122, 106, 122, 74, 14, 122], [399, 275, 8, 9, 0, 0], [198, 319, 8, 3, 0, 7], [122, 0, 281, 106, 0, 0], [277, 153, 22, 20, 0, 0], [229, 238, 22, 13, 0, 9], [89, 115, 31, 23, 0, 0], [247, 263, 31, 11, 0, 14], [291, 106, 25, 25, 1, 1], [366, 304, 21, 5, 3, 22], [472, 283, 6, 8, 0, 0], [275, 283, 8, 8, 0, 0], [120, 277, 8, 8, 0, 0], [241, 284, 7, 7, 0, 0], [363, 284, 7, 7, 0, 0], [298, 283, 7, 8, 0, 0], [319, 283, 7, 8, 0, 0], [68, 319, 4, 4, 0, 2], [96, 277, 8, 8, 0, 0], [138, 299, 6, 6, 0, 1], [128, 277, 8, 8, 0, 0], [283, 283, 8, 8, 0, 0], [466, 283, 6, 8, 0, 0], [267, 283, 8, 8, 0, 0], [259, 283, 8, 8, 0, 0], [216, 276, 8, 8, 0, 0], [377, 284, 7, 7, 0, 0], [398, 284, 7, 7, 0, 0], [351, 283, 6, 8, 0, 0], [430, 284, 6, 7, 0, 0], [504, 76, 8, 7, 0, 0], [104, 277, 8, 8, 0, 0], [363, 319, 6, 3, 0, 4], [136, 277, 8, 8, 0, 0], [0, 285, 6, 7, 0, 0], [448, 284, 6, 7, 0, 0], [387, 309, 7, 5, 0, 1], [161, 305, 7, 5, 0, 1], [81, 315, 7, 4, 0, 2], [130, 305, 8, 5, 0, 1], [122, 305, 8, 5, 0, 1], [114, 305, 8, 5, 0, 1], [511, 0, 1, 7, 0, 0], [348, 322, 4, 3, 0, 0], [188, 291, 5, 7, 0, 0], [193, 291, 5, 7, 0, 0], [233, 291, 5, 7, 0, 0], [263, 291, 5, 7, 0, 0], [510, 238, 2, 3, 0, 0], [150, 298, 4, 7, 0, 0], [146, 298, 4, 7, 0, 0], [376, 322, 4, 3, 0, 2], [67, 310, 5, 5, 0, 1], [401, 131, 1, 3, 0, 5], [114, 178, 5, 1, 0, 3], [401, 134, 1, 2, 0, 5], [293, 291, 5, 7, 0, 0], [76, 291, 5, 7, 0, 0], [368, 291, 5, 7, 0, 0], [378, 291, 5, 7, 0, 0], [168, 291, 5, 7, 0, 0], [398, 291, 5, 7, 0, 0], [413, 291, 5, 7, 0, 0], [443, 291, 5, 7, 0, 0], [448, 291, 5, 7, 0, 0], [453, 291, 5, 7, 0, 0], [458, 291, 5, 7, 0, 0], [508, 23, 1, 6, 0, 1], [473, 66, 1, 7, 0, 1], [50, 298, 4, 7, 0, 0], [361, 315, 5, 4, 0, 2], [46, 298, 4, 7, 0, 0], [473, 291, 5, 7, 0, 0], [442, 284, 6, 7, 0, 0], [213, 291, 5, 7, 0, 0], [478, 291, 5, 7, 0, 0], [56, 291, 5, 7, 0, 0], [493, 291, 5, 7, 0, 0], [183, 291, 5, 7, 0, 0], [5, 292, 5, 7, 0, 0], [121, 292, 5, 7, 0, 0], [118, 285, 5, 7, 0, 0], [179, 298, 3, 7, 0, 0], [141, 292, 5, 7, 0, 0], [86, 291, 5, 7, 0, 0], [136, 292, 5, 7, 0, 0], [126, 292, 5, 7, 0, 0], [116, 292, 5, 7, 0, 0], [76, 291, 5, 7, 0, 0], [111, 292, 5, 7, 0, 0], [106, 292, 5, 7, 0, 0], [101, 292, 5, 7, 0, 0], [96, 292, 5, 7, 0, 0], [51, 291, 5, 7, 0, 0], [91, 292, 5, 7, 0, 0], [25, 292, 5, 7, 0, 0], [20, 292, 5, 7, 0, 0], [133, 285, 5, 7, 0, 0], [15, 292, 5, 7, 0, 0], [10, 292, 5, 7, 0, 0], [402, 265, 3, 7, 0, 0], [0, 292, 5, 7, 0, 0], [170, 298, 3, 7, 0, 0], [312, 322, 5, 3, 0, 0], [114, 178, 5, 1, 0, 7], [157, 237, 2, 3, 0, 0], [72, 310, 5, 5, 0, 2], [503, 291, 5, 7, 0, 0], [77, 310, 5, 5, 0, 2], [498, 291, 5, 7, 0, 0], [82, 310, 5, 5, 0, 2], [74, 298, 4, 7, 0, 0], [297, 304, 5, 6, 0, 2], [483, 291, 5, 7, 0, 0], [473, 73, 1, 7, 0, 0], [499, 283, 5, 8, 0, 0], [42, 298, 4, 7, 0, 0], [510, 120, 2, 7, 0, 0], [97, 310, 5, 5, 0, 2], [102, 310, 5, 5, 0, 2], [107, 310, 5, 5, 0, 2], [202, 304, 5, 6, 0, 2], [217, 304, 5, 6, 0, 2], [112, 310, 5, 5, 0, 2], [127, 310, 5, 5, 0, 2], [405, 240, 3, 7, 0, 0], [132, 310, 5, 5, 0, 2], [137, 310, 5, 5, 0, 2], [147, 310, 5, 5, 0, 2], [507, 304, 5, 5, 0, 2], [227, 304, 5, 6, 0, 2], [152, 310, 5, 5, 0, 2], [62, 298, 4, 7, 0, 0], [473, 59, 1, 7, 0, 0], [70, 298, 4, 7, 0, 0], [82, 323, 6, 2, 0, 0], [162, 310, 5, 5, 0, 2], [504, 283, 5, 8, 0, 0], [113, 285, 5, 7, 0, 0], [428, 291, 5, 7, 0, 0], [423, 291, 5, 7, 0, 0], [418, 291, 5, 7, 0, 0], [408, 291, 5, 7, 0, 0], [403, 291, 5, 7, 0, 0], [393, 291, 5, 7, 0, 1], [388, 291, 5, 7, 0, 0], [178, 291, 5, 7, 0, 0], [383, 291, 5, 7, 0, 0], [182, 298, 3, 7, 0, 0], [373, 291, 5, 7, 0, 0], [510, 113, 2, 7, 0, 0], [363, 291, 5, 7, 0, 0], [358, 291, 5, 7, 0, 0], [353, 291, 5, 7, 0, 0], [167, 310, 5, 5, 0, 2], [348, 291, 5, 7, 0, 0], [343, 291, 5, 7, 0, 0], [338, 291, 5, 7, 0, 0], [333, 291, 5, 7, 0, 0], [328, 291, 5, 7, 0, 0], [323, 291, 5, 7, 0, 0], [489, 283, 5, 8, 0, 0], [303, 291, 5, 7, 0, 0], [298, 291, 5, 7, 0, 0], [242, 304, 5, 6, 0, 2], [288, 291, 5, 7, 0, 0], [278, 291, 5, 7, 0, 0], [456, 322, 3, 3, 0, 2], [9, 277, 5, 8, 0, 0], [268, 291, 5, 7, 0, 0], [510, 106, 2, 7, 0, 0], [253, 291, 5, 7, 0, 0], [248, 291, 5, 7, 0, 0], [243, 291, 5, 7, 0, 0], [238, 291, 5, 7, 0, 0], [277, 304, 5, 6, 0, 0], [287, 304, 5, 6, 0, 0], [223, 291, 5, 7, 0, 0], [12, 310, 6, 5, 0, 1], [187, 322, 5, 3, 0, 3], [218, 291, 5, 7, 0, 0], [14, 284, 5, 8, 0, 0], [402, 106, 1, 6, 0, 1], [182, 310, 5, 5, 0, 1], [187, 310, 5, 5, 0, 1], [213, 291, 5, 7, 0, 0], [197, 310, 5, 5, 0, 2], [208, 291, 5, 7, 0, 0], [203, 291, 5, 7, 0, 0], [198, 291, 5, 7, 0, 0], [279, 310, 4, 5, 0, 2], [162, 298, 4, 7, 0, 0], [375, 314, 3, 5, 0, 2], [339, 283, 6, 8, 0, 0], [207, 304, 5, 6, 0, 2], [183, 291, 5, 7, 0, 0], [82, 310, 5, 5, 0, 2], [183, 291, 5, 7, 0, 0], [178, 291, 5, 7, 0, 0], [173, 291, 5, 7, 0, 0], [207, 310, 5, 5, 0, 2], [168, 291, 5, 7, 0, 0], [299, 310, 4, 5, 0, 2], [163, 291, 5, 7, 0, 0], [303, 310, 4, 5, 0, 2], [158, 291, 5, 7, 0, 0], [166, 298, 4, 7, 0, 0], [86, 291, 5, 7, 0, 0], [307, 310, 4, 5, 0, 2], [81, 291, 5, 7, 0, 0], [315, 310, 4, 5, 0, 2], [227, 284, 7, 7, 0, 0], [212, 310, 5, 5, 0, 2], [118, 285, 5, 7, 0, 0], [323, 310, 4, 5, 0, 2], [76, 291, 5, 7, 0, 0], [107, 310, 5, 5, 0, 2], [71, 291, 5, 7, 0, 0], [331, 310, 4, 5, 0, 2], [66, 291, 5, 7, 0, 0], [336, 304, 4, 6, 0, 2], [56, 291, 5, 7, 0, 0], [77, 310, 5, 5, 0, 2], [51, 291, 5, 7, 0, 0], [378, 314, 3, 5, 0, 2], [41, 291, 5, 7, 0, 0], [328, 304, 4, 6, 0, 2], [36, 291, 5, 7, 0, 0], [138, 285, 5, 7, 0, 1], [133, 285, 5, 7, 0, 0], [507, 304, 5, 5, 0, 2], [357, 283, 6, 8, 0, 0], [185, 304, 6, 6, 0, 2], [123, 285, 5, 7, 0, 0], [347, 310, 4, 5, 0, 2], [384, 284, 7, 7, 0, 0], [142, 310, 5, 5, 0, 2], [112, 277, 8, 8, 0, 0], [96, 299, 6, 6, 0, 2], [61, 291, 5, 7, 0, 0], [52, 310, 5, 5, 0, 2], [424, 284, 6, 7, 0, 0], [501, 309, 6, 5, 0, 2], [30, 298, 4, 7, 0, 0], [243, 310, 4, 5, 0, 2], [148, 291, 5, 7, 0, 0], [263, 310, 4, 5, 0, 2], [101, 285, 6, 7, 0, 0], [92, 310, 5, 5, 0, 2], [131, 292, 5, 7, 0, 0], [295, 310, 4, 5, 0, 2], [345, 283, 6, 8, 0, 0], [445, 103, 6, 6, 0, 2], [488, 291, 5, 7, 0, 0], [488, 291, 5, 7, 0, 0], [333, 283, 6, 8, 0, 0], [114, 299, 6, 6, 0, 2], [468, 291, 5, 7, 0, 0], [463, 291, 5, 7, 0, 0], [438, 291, 5, 7, 0, 0], [438, 291, 5, 7, 0, 0], [313, 291, 5, 7, 0, 0], [313, 291, 5, 7, 0, 0], [228, 291, 5, 7, 0, 0], [228, 291, 5, 7, 0, 0], [6, 285, 6, 7, 0, 0], [509, 283, 3, 7, 0, 0], [31, 291, 5, 7, 0, 0], [370, 284, 7, 7, 0, 0], [273, 291, 5, 7, 0, 0], [318, 291, 5, 7, 0, 0], [234, 284, 7, 7, 0, 0], [454, 0, 32, 32, 0, 0], [422, 0, 32, 32, 0, 0], [144, 277, 8, 8, 0, 1], [227, 322, 5, 3, 0, 0], [316, 315, 5, 4, 0, 0], [121, 143, 1, 1, 0, 0], [505, 274, 7, 9, 0, 0], [477, 274, 10, 9, 0, 0], [219, 284, 8, 7, 0, 1], [40, 266, 11, 10, 0, 1], [82, 266, 9, 10, 1, 2], [40, 266, 11, 10, 0, 1], [348, 274, 11, 9, 0, 1]].map(r)
+            , T = [null, [416, 221, 12, 8, 29, 28], [404, 221, 12, 8, 29, 28], [392, 221, 12, 8, 29, 28], [380, 221, 12, 8, 29, 28], [385, 106, 12, 8, 29, 28], [428, 221, 12, 8, 29, 28], [416, 221, 12, 8, 29, 28], [404, 221, 12, 8, 29, 28], [392, 221, 12, 8, 29, 28], [380, 221, 12, 8, 29, 28], [385, 106, 12, 8, 29, 28], [428, 221, 12, 8, 29, 28], [105, 176, 10, 17, 34, 26], [403, 176, 10, 17, 34, 26], [68, 221, 12, 9, 30, 27], [80, 221, 12, 9, 30, 27], [507, 187, 5, 6, 31, 28], [116, 166, 5, 6, 31, 28], [116, 159, 5, 7, 31, 29], [507, 150, 5, 7, 31, 29], [94, 159, 22, 17, 20, 19], [266, 172, 22, 17, 20, 19], [244, 172, 22, 17, 20, 19], [384, 159, 22, 17, 20, 19], [22, 160, 22, 17, 20, 19], [44, 160, 22, 17, 20, 19], [94, 159, 22, 17, 20, 19], [266, 172, 22, 17, 20, 19], [244, 172, 22, 17, 20, 19], [384, 159, 22, 17, 20, 19], [22, 160, 22, 17, 20, 19], [44, 160, 22, 17, 20, 19], [22, 139, 22, 21, 20, 22], [44, 139, 22, 21, 20, 22], [263, 204, 21, 14, 21, 22], [157, 196, 21, 14, 21, 22], [47, 208, 18, 13, 24, 20], [29, 208, 18, 13, 24, 20], [110, 196, 25, 14, 19, 20], [50, 194, 25, 14, 19, 20], [408, 193, 22, 14, 27, 19], [135, 196, 22, 14, 27, 19], [451, 110, 24, 25, 18, 21], [475, 110, 24, 25, 18, 21], [0, 178, 22, 16, 19, 23], [162, 180, 22, 16, 19, 23], [417, 39, 5, 9, 23, 32], [417, 48, 5, 9, 23, 32], [507, 132, 5, 9, 23, 32], [507, 141, 5, 9, 23, 32], [314, 154, 5, 9, 23, 32], [430, 158, 5, 9, 23, 32], [261, 218, 9, 12, 24, 32], [194, 210, 9, 12, 24, 32], [499, 110, 13, 22, 19, 30], [107, 137, 13, 22, 19, 30], [244, 132, 22, 22, 20, 19], [0, 139, 22, 22, 20, 19], [485, 135, 22, 22, 20, 19], [463, 135, 22, 22, 20, 19], [441, 135, 22, 22, 20, 19], [266, 132, 22, 22, 20, 19], [361, 171, 22, 17, 20, 19], [0, 161, 22, 17, 20, 19], [339, 171, 22, 17, 20, 19], [430, 175, 22, 17, 20, 19], [310, 172, 22, 17, 20, 19], [288, 172, 22, 17, 20, 19], [320, 131, 24, 22, 20, 22], [344, 131, 24, 22, 20, 22], [199, 196, 21, 14, 21, 22], [178, 196, 21, 14, 21, 22], [47, 208, 18, 13, 24, 20], [29, 208, 18, 13, 24, 20], [25, 194, 25, 14, 19, 20], [0, 194, 25, 14, 19, 20], [408, 193, 22, 14, 27, 19], [135, 196, 22, 14, 27, 19], [361, 106, 24, 25, 18, 21], [385, 114, 24, 25, 18, 21], [486, 0, 22, 29, 19, 23], [486, 29, 22, 29, 19, 23], [505, 207, 7, 14, 38, 33], [100, 139, 7, 14, 38, 33], [332, 172, 7, 14, 38, 33], [369, 204, 7, 14, 38, 33], [498, 207, 7, 14, 38, 33], [0, 208, 7, 14, 38, 33], [243, 205, 9, 14, 35, 36], [417, 207, 9, 14, 35, 36], [0, 115, 17, 24, 36, 21], [467, 60, 17, 24, 36, 21], [376, 208, 9, 13, 39, 32], [93, 208, 9, 13, 39, 32], [268, 154, 12, 18, 36, 28], [256, 154, 12, 18, 36, 28], [355, 153, 16, 18, 29, 34], [339, 153, 16, 18, 29, 34], [384, 193, 8, 15, 36, 31], [499, 192, 8, 15, 36, 31], [77, 115, 15, 24, 47, 41], [62, 115, 15, 24, 47, 41], [92, 115, 15, 24, 47, 41], [47, 115, 15, 24, 47, 41], [32, 115, 15, 24, 47, 41], [17, 115, 15, 24, 47, 41], [210, 180, 13, 16, 47, 41], [197, 180, 13, 16, 47, 41], [345, 188, 13, 16, 47, 41], [184, 180, 13, 16, 47, 41], [223, 180, 13, 16, 47, 41], [332, 188, 13, 16, 47, 41], [308, 189, 13, 15, 46, 42], [295, 189, 13, 15, 46, 42], [107, 115, 15, 22, 46, 41], [451, 88, 15, 22, 46, 41], [491, 84, 21, 26, 46, 41], [268, 106, 21, 26, 46, 41], [425, 114, 16, 25, 46, 41], [409, 114, 16, 25, 46, 41], [507, 181, 5, 6, 34, 33], [508, 48, 4, 6, 27, 33], [314, 163, 6, 6, 34, 33], [116, 172, 5, 6, 26, 33], [510, 62, 2, 3, 35, 35], [511, 35, 1, 3, 29, 35], [135, 223, 5, 5, 34, 34], [230, 210, 4, 5, 27, 34], [123, 223, 6, 5, 34, 34], [140, 223, 5, 5, 26, 34], [510, 62, 2, 3, 35, 35], [511, 35, 1, 3, 29, 35], [219, 227, 5, 4, 34, 35], [230, 215, 4, 4, 27, 35], [192, 227, 6, 4, 34, 35], [204, 227, 5, 4, 26, 35], [484, 65, 2, 2, 35, 36], [511, 38, 1, 2, 29, 36], [370, 218, 5, 3, 34, 36], [403, 218, 4, 3, 27, 36], [314, 169, 6, 3, 34, 36], [417, 57, 5, 3, 26, 36], [510, 65, 2, 1, 35, 37], [511, 41, 1, 1, 29, 37], [145, 228, 5, 2, 34, 37], [498, 228, 4, 2, 27, 37], [332, 186, 6, 2, 34, 37], [224, 227, 5, 2, 26, 37], [507, 205, 5, 2, 34, 37], [162, 227, 4, 2, 27, 37], [115, 178, 6, 2, 34, 37], [430, 173, 5, 2, 26, 37], [209, 227, 5, 4, 29, 38], [511, 40, 1, 1, 33, 41], [403, 213, 5, 5, 29, 38], [511, 40, 1, 1, 32, 42], [508, 54, 4, 4, 29, 38], [511, 40, 1, 1, 32, 42], [145, 223, 5, 5, 29, 38], [511, 40, 1, 1, 32, 42], [484, 67, 2, 1, 31, 42], [209, 227, 5, 4, 29, 38], [511, 40, 1, 1, 33, 41], [509, 166, 3, 2, 31, 41], [209, 227, 5, 4, 29, 38], [511, 40, 1, 1, 33, 41], [214, 227, 5, 4, 29, 38], [511, 40, 1, 1, 33, 42], [174, 222, 12, 6, 27, 33], [100, 153, 7, 6, 29, 33], [134, 228, 11, 3, 27, 39], [440, 221, 11, 8, 27, 34], [511, 40, 1, 1, 36, 40], [511, 40, 1, 1, 27, 40], [397, 106, 6, 8, 29, 25], [507, 175, 5, 6, 30, 27], [451, 221, 9, 8, 38, 47], [422, 176, 8, 17, 31, 54], [472, 175, 12, 17, 41, 54], [452, 175, 20, 17, 30, 41], [280, 189, 15, 15, 26, 30], [435, 139, 6, 10, 39, 27], [435, 149, 6, 7, 26, 27], [468, 221, 39, 7, 22, 66], [27, 221, 41, 9, 21, 65], [225, 222, 5, 5, 0, 0], [507, 221, 5, 5, 0, 0], [86, 159, 8, 18, 31, 53], [78, 159, 8, 18, 33, 53], [330, 153, 9, 19, 34, 52], [40, 177, 9, 17, 34, 51], [236, 189, 9, 16, 34, 51], [490, 192, 9, 15, 34, 51], [102, 193, 8, 15, 34, 52], [234, 205, 9, 14, 33, 53], [474, 207, 8, 14, 33, 53], [126, 210, 8, 13, 32, 53], [270, 218, 9, 12, 30, 52], [359, 204, 10, 14, 29, 50], [430, 192, 11, 15, 28, 50], [371, 153, 13, 18, 26, 51], [280, 154, 12, 18, 27, 52], [489, 157, 10, 18, 29, 53], [284, 204, 17, 14, 41, 51], [406, 159, 14, 17, 41, 51], [244, 154, 12, 18, 41, 50], [499, 157, 10, 18, 41, 49], [479, 157, 10, 18, 41, 49], [420, 158, 10, 18, 41, 49], [320, 153, 10, 19, 41, 50], [410, 139, 10, 20, 41, 51], [441, 114, 10, 20, 41, 51], [399, 139, 11, 20, 41, 51], [66, 139, 12, 21, 41, 50], [403, 39, 14, 21, 41, 49], [385, 139, 14, 20, 41, 49], [420, 139, 15, 19, 41, 49], [263, 189, 17, 15, 41, 50], [75, 194, 17, 14, 41, 51], [484, 228, 7, 3, 31, 68], [484, 228, 7, 3, 31, 68], [476, 228, 8, 3, 33, 68], [110, 223, 7, 5, 36, 66], [507, 193, 4, 6, 39, 62], [509, 157, 3, 6, 40, 61], [509, 157, 3, 6, 40, 60], [508, 35, 3, 7, 39, 60], [508, 35, 3, 7, 39, 60], [430, 167, 5, 6, 36, 61], [508, 21, 4, 7, 36, 59], [117, 223, 6, 5, 31, 59], [186, 227, 6, 4, 30, 60], [156, 227, 6, 4, 29, 61], [491, 228, 7, 3, 26, 66], [0, 228, 7, 3, 27, 67], [484, 228, 7, 3, 29, 68], [476, 228, 8, 3, 45, 68], [507, 199, 4, 6, 54, 59], [508, 7, 4, 7, 51, 61], [0, 222, 7, 6, 46, 62], [150, 227, 6, 4, 45, 63], [198, 227, 6, 4, 44, 63], [376, 188, 7, 5, 43, 62], [158, 223, 8, 4, 42, 65], [499, 132, 8, 3, 42, 68], [499, 132, 8, 3, 42, 68], [499, 132, 8, 3, 43, 68], [150, 223, 8, 4, 45, 67], [129, 223, 6, 5, 48, 65], [508, 28, 4, 7, 51, 62], [508, 14, 4, 7, 52, 61], [508, 0, 4, 7, 54, 58], [508, 42, 4, 6, 54, 59], [426, 207, 8, 14, 31, 57], [490, 207, 8, 14, 31, 57], [400, 193, 8, 15, 31, 56], [94, 193, 8, 15, 31, 56], [376, 193, 8, 15, 33, 56], [392, 193, 8, 15, 33, 56], [367, 188, 9, 16, 34, 55], [245, 189, 9, 16, 34, 55], [408, 207, 9, 14, 34, 54], [252, 205, 9, 14, 34, 54], [385, 208, 9, 13, 34, 54], [394, 208, 9, 13, 34, 54], [203, 210, 9, 12, 34, 54], [212, 210, 9, 12, 34, 54], [110, 210, 8, 13, 34, 54], [134, 210, 8, 13, 34, 54], [297, 218, 9, 12, 33, 55], [288, 218, 9, 12, 33, 55], [306, 218, 8, 12, 33, 55], [346, 218, 8, 12, 33, 55], [322, 218, 8, 12, 32, 54], [314, 218, 8, 12, 32, 54], [354, 218, 8, 11, 30, 53], [362, 218, 8, 11, 30, 53], [330, 218, 8, 12, 29, 52], [338, 218, 8, 12, 29, 52], [221, 210, 9, 12, 28, 53], [279, 218, 9, 12, 28, 53], [441, 192, 11, 15, 26, 54], [321, 189, 11, 15, 26, 54], [462, 192, 10, 15, 27, 55], [452, 192, 10, 15, 27, 55], [472, 192, 9, 15, 29, 56], [481, 192, 9, 15, 29, 56], [496, 175, 11, 17, 42, 54], [94, 176, 11, 17, 42, 54], [180, 210, 14, 12, 44, 53], [166, 210, 14, 12, 44, 53], [327, 204, 12, 14, 43, 54], [315, 204, 12, 14, 43, 54], [349, 204, 10, 14, 43, 54], [339, 204, 10, 14, 43, 54], [482, 207, 8, 14, 43, 53], [466, 207, 8, 14, 43, 53], [458, 207, 8, 14, 43, 53], [450, 207, 8, 14, 43, 53], [442, 207, 8, 14, 43, 53], [434, 207, 8, 14, 43, 53], [358, 188, 9, 16, 42, 53], [254, 189, 9, 16, 42, 53], [413, 176, 9, 17, 42, 54], [76, 177, 9, 17, 42, 54], [58, 177, 9, 17, 42, 54], [67, 177, 9, 17, 42, 54], [383, 176, 10, 17, 42, 54], [393, 176, 10, 17, 42, 54], [435, 157, 11, 18, 42, 53], [446, 157, 11, 18, 42, 53], [457, 157, 11, 18, 44, 52], [468, 157, 11, 18, 44, 52], [303, 154, 11, 18, 44, 51], [292, 154, 11, 18, 44, 51], [484, 175, 12, 17, 44, 51], [66, 160, 12, 17, 44, 51], [220, 196, 14, 14, 44, 51], [301, 204, 14, 14, 44, 51], [65, 208, 14, 13, 44, 52], [79, 208, 14, 13, 44, 52], [441, 134, 10, 1, 27, 38], [122, 228, 12, 3, 26, 37], [110, 228, 12, 3, 26, 37], [162, 229, 7, 1, 28, 38], [174, 228, 9, 3, 27, 37], [510, 66, 2, 1, 43, 31], [484, 60, 2, 3, 43, 30], [484, 63, 2, 2, 43, 30], [510, 58, 2, 4, 43, 30], [403, 208, 5, 5, 41, 31], [368, 131, 17, 22, 38, 19], [422, 32, 32, 28, 25, 16], [435, 60, 32, 28, 25, 16], [403, 60, 32, 28, 25, 16], [454, 32, 32, 28, 25, 16], [486, 58, 24, 26, 31, 11], [403, 88, 24, 26, 31, 11], [427, 88, 24, 26, 31, 11], [244, 106, 24, 26, 31, 11], [467, 84, 24, 26, 31, 11], [207, 222, 9, 5, 30, 45], [216, 222, 9, 5, 30, 45], [22, 177, 9, 17, 30, 44], [31, 177, 9, 17, 30, 44], [85, 177, 9, 17, 30, 44], [49, 177, 9, 17, 30, 44], [118, 210, 8, 13, 31, 45], [158, 210, 8, 13, 31, 45], [150, 210, 8, 13, 31, 45], [102, 208, 8, 13, 31, 45], [142, 210, 8, 13, 31, 45], [509, 163, 3, 3, 30, 44], [289, 106, 47, 25, 48, 151], [403, 0, 19, 39, 63, 122], [0, 0, 122, 115, 17, 9], [115, 180, 47, 16, 48, 161], [122, 106, 122, 74, 14, 122], [236, 180, 8, 9, 0, 0], [468, 228, 8, 3, 0, 7], [122, 0, 281, 106, 0, 0], [78, 139, 22, 20, 0, 0], [7, 208, 22, 13, 0, 9], [289, 131, 31, 23, 0, 0], [230, 219, 31, 11, 0, 14], [336, 106, 25, 25, 1, 1], [186, 222, 21, 5, 3, 22], [422, 0, 32, 32, 0, 0], [454, 0, 32, 32, 0, 0], [460, 221, 8, 8, 0, 1], [110, 193, 5, 3, 0, 0], [507, 226, 5, 4, 0, 0], [510, 67, 1, 1, 0, 0], [103, 221, 7, 9, 0, 0], [370, 221, 10, 9, 0, 0], [166, 222, 8, 7, 0, 1], [7, 221, 11, 10, 0, 1], [18, 221, 9, 10, 1, 2], [7, 221, 11, 10, 0, 1], [92, 221, 11, 9, 0, 1]].map(p);
         return e.ponyFrontManes = [null, [[o(1, 2)], [, o(3, 4), o(5, 6), o(7, 8)], [o(9, 10), o(11, 12)], [, o(13, 14), o(15, 16)], [o(17, 18), o(19, 20)], [, , o(21, 22), o(23, 24)]], [[o(25, 26)], [, o(27, 28), o(29, 30), o(31, 32)], [o(33, 34), o(35, 36)], [, o(37, 38), o(39, 40)], [o(41, 42), o(43, 44)], [, , o(45, 46), o(47, 48)]], [[o(49, 50)], [o(51, 52), , , o(53, 54), o(55, 56)]], [[o(57, 58)], [, , , o(59, 60), o(61, 62)]], [], [[o(63, 64)], [, , , o(65, 66), o(67, 68)]], [], [[o(69, 70)], [, , , o(71, 72), o(73, 74)]], []],
             e.ponyTopManes = [null, [[o(75, 76)], [o(77, 78), o(79, 80), o(81, 82), o(83, 84)], [o(85, 86), o(87, 88)], [o(89, 90), o(91, 92), o(93, 94)], [o(95, 96), o(97, 98)], [o(99, 100), o(101, 102), o(103, 104), o(105, 106)]], [[o(107, 108)], [o(109, 110), o(111, 112), o(113, 114), o(115, 116)], [o(117, 118), o(119, 120)], [o(121, 122), o(123, 124), o(125, 126)], [o(127, 128), o(129, 130)], [o(131, 132), o(133, 134), o(135, 136), o(137, 138)]], [[o(139, 140)], [o(141, 142), o(143, 144), o(145, 146), o(147, 148), o(149, 150)]], [[o(151, 152)], [o(153, 154), o(155, 156), o(157, 158), o(159, 160), o(161, 162)]], [[o(163, 164)], [o(165, 166), o(167, 168), o(169, 170), o(171, 172)]], [[o(173, 174)], [o(175, 176), o(177, 178), o(179, 180), o(181, 182), o(183, 184)]], [[o(185, 186)], [o(187, 188), o(189, 190), o(191, 192), o(193, 194)]], [[o(195, 196)], [o(197, 198), o(199, 200), o(201, 202), o(203, 204), o(205, 206)]], [[o(207, 208)], [o(209, 210), o(211, 212), o(213, 214)]]],
             e.ponyBehindManes = [null, [[o(215, 216)], [, o(217, 218), o(219, 220), , o(221, 222)], [o(223, 224), o(225, 226)], [o(227, 228), o(229, 230), , o(231, 232)], [o(233, 234), o(235, 236)], [o(237, 238), o(239, 240), , , o(241, 242)]], [], [[o(243, 244)], [, , o(245, 246), , , o(247, 248)]], [], [], [], [], [], [[o(249, 250)], [, o(251, 252), o(253, 254), o(255, 256), o(257, 258), o(259, 260)]]],
@@ -12372,7 +12389,7 @@ var modules = function (System) {
             e.ponyEyeLeft = [null, c(603, 605, 607, 609), c(611, 613, 615, 617), c(619, 621, 623, 625), c(627, 629, 631, 633), c(635, 637, 639, 641), c(643, 645, 647, 649)],
             e.ponyEyeRight = [null, c(604, 606, 608, 610), c(612, 614, 616, 618), c(620, 622, 624, 626), c(628, 630, 632, 634), c(636, 638, 640, 642), c(644, 646, 648, 650)],
             e.ponyNoses = [l(651, 652, 653), l(654, 655, 656), l(657, 658, 659), l(660, 661, 662), l(663, 664, 665), l(666, 667, 668), l(669, 670, 671)],
-            e.ponyFreckles = [null, E[674], E[675], E[676], E[677]],
+            e.ponyFreckles = [null, S[674], S[675], S[676], S[677]],
             e.ponyHorns = [null, [[o(678, 679)]], [[o(680, 681)]]],
             e.ponyWings = [null, [[o(682, 683)]]],
             e.ponyLegFrontStand = [o(684, 685)],
@@ -12394,88 +12411,88 @@ var modules = function (System) {
             e.ponyHeadAccessories = [null, [[o(1326, 1327)]], [[o(1328, 1329)], [o(1330, 1331), o(1332, 1333), o(1334, 1335), o(1336, 1337)], [o(1338, 1339), o(1340, 1341), o(1342, 1343), o(1344, 1345)], [o(1346, 1347), o(1348, 1349), o(1350, 1351), o(1352, 1353)]], [[o(1354, 1355)], [o(1356, 1357), o(1358, 1359)], [o(1360, 1361), o(1362, 1363), o(1364, 1365)], [o(1366, 1367), o(1368, 1369), o(1370, 1371), o(1372, 1373)], [o(1374, 1375), o(1376, 1377), o(1378, 1379)]]],
             e.ponyNeckAccessories = [null, [[o(1380, 1381)], [o(1382, 1383), o(1384, 1385)]], [[o(1386, 1387)], [o(1388, 1389), o(1390, 1391)], [o(1392, 1393), o(1394, 1395), o(1396, 1397), o(1398, 1399)], [o(1400, 1401), o(1402, 1403)]], [[o(1404, 1405)], [o(1406, 1407), o(1408, 1409)], [o(1410, 1411), o(1412, 1413), o(1414, 1415)], [o(1416, 1417), o(1418, 1419), o(1420, 1421), o(1422, 1423), o(1424, 1425), o(1426, 1427)], [o(1428, 1429), o(1430, 1431), o(1432, 1433)]]],
             e.ponyFacialHair = [null, [[o(1434, 1435)]]],
-            e.butterfly = [E[1721], E[1722], E[1723], E[1724]],
-            e.ponyEyeshadow = E[672],
-            e.ponyEyeshadowShine = E[673],
+            e.butterfly = [S[1721], S[1722], S[1723], S[1724]],
+            e.ponyEyeshadow = S[672],
+            e.ponyEyeshadowShine = S[673],
             e.ponyBody = o(688, 689),
             e.ponyHead = o(690, 691),
             e.ponyEar = o(692, 693),
             e.ponyEar2 = o(694, 695),
-            e.ponyShadow = E[696],
-            e.ponySelection = E[697],
+            e.ponyShadow = S[696],
+            e.ponySelection = S[697],
             e.tree = f(1436, 1437, 1438, 1439, 1440),
             e.apple = s(1441, 1442),
             e.cloud = u(1443),
             e.pumpkin = s(1444, 1445),
             e.rock = s(1446, 1447),
             e.sign = s(1448, 1449),
-            e.bubble = E[1712],
-            e.bubble2 = E[1713],
-            e.heartemote = E[1714],
-            e.nipple = E[1715],
-            e.nipple2 = E[1716],
-            e.pixel = E[1717],
-            e.pizzaemote = E[1718],
-            e.pumpkinemote = E[1719],
-            e.rockemote = E[1720],
-            e.ponFrontManes = [null, [$[1], $[2], $[3], $[4], $[5], $[6]], [$[7], $[8], $[9], $[10], $[11], $[12]], [$[13], $[14]], [$[15], $[16]], [], [$[17], $[18]], [], [$[19], $[20]], []],
-            e.ponTopManes = [null, [$[21], $[22], $[23], $[24], $[25], $[26]], [$[27], $[28], $[29], $[30], $[31], $[32]], [$[33], $[34]], [$[35], $[36]], [$[37], $[38]], [$[39], $[40]], [$[41], $[42]], [$[43], $[44]], [$[45], $[46]]],
-            e.ponBehindManes = [null, [$[47], $[48], $[49], $[50], $[51], $[52]], [], [$[53], $[54]], [], [], [], [], [], [$[55], $[56]]],
-            e.ponManes = [null, [$[57], $[58], $[59], $[60], $[61], $[62]], [$[63], $[64], $[65], $[66], $[67], $[68]], [$[69], $[70]], [$[71], $[72]], [$[73], $[74]], [$[75], $[76]], [$[77], $[78]], [$[79], $[80]], [$[81], $[82]]],
-            e.ponBackFrontManes = [null, [$[83], $[84], $[85], $[86], $[87], $[88]], [], [$[89], $[90]], [], [], [], []],
-            e.ponBackBehindManes = [null, [], [$[91], $[92]], [], [$[93], $[94]], [$[95], $[96]], [$[97], $[98]], [$[99], $[100]]],
-            e.ponBackManes = [null, [$[83], $[84], $[85], $[86], $[87], $[88]], [$[91], $[92]], [$[89], $[90]], [$[93], $[94]], [$[95], $[96]], [$[97], $[98]], [$[99], $[100]]],
-            e.ponTails = [null, [$[101], $[102], $[103], $[104], $[105], $[106]], [$[107], $[108], $[109], $[110], $[111], $[112]], [$[113], $[114]], [$[115], $[116]], [$[117], $[118]], [$[119], $[120]]],
-            e.ponEyeLeft = [null, g(121, 123, 125), g(127, 129, 131), g(133, 135, 137), g(139, 141, 143), g(145, 147, 0), g(149, 151, 0)],
-            e.ponEyeRight = [null, g(122, 124, 126), g(128, 130, 132), g(134, 136, 138), g(140, 142, 144), g(146, 148, 0), g(150, 152, 0)],
-            e.ponNoses = [m(0, 153, 154), m(0, 155, 156), m(0, 157, 158), m(0, 159, 160), m(161, 162, 163), m(164, 165, 166), m(0, 167, 168)],
-            e.ponFreckles = [null, $[171], $[172], $[173], $[174]],
-            e.ponHorns = [null, [$[175]], [$[176]]],
-            e.ponWings = [null, [$[177]]],
-            e.ponLegFrontStand = [$[178]],
-            e.ponLegBackStand = [$[179]],
-            e.ponLegFrontTrot = [$[188], $[189], $[190], $[191], $[192], $[193], $[194], $[195], $[196], $[197], $[198], $[199], $[200], $[201], $[202], $[203]],
-            e.ponLegBackTrot = [$[204], $[205], $[206], $[207], $[208], $[209], $[210], $[211], $[212], $[213], $[214], $[215], $[216], $[217], $[218], $[219]],
-            e.ponFetlocksFrontStand = [$[220]],
-            e.ponFetlocksFrontTrot = [$[221], $[222], $[223], $[224], $[225], $[226], $[227], $[228], $[229], $[230], $[231], $[232], $[233], $[234], $[235], $[236]],
-            e.ponFetlocksBackStand = [$[237]],
-            e.ponFetlocksBackTrot = [$[238], $[239], $[240], $[241], $[242], $[243], $[244], $[245], $[246], $[247], $[248], $[249], $[250], $[251], $[252], $[253]],
-            e.ponFrontLegAccessoriesStand = [[null, [$[254], $[255]]]],
-            e.ponFrontLegAccessoriesTrot = [[null, [$[256], $[257]]], [null, [$[258], $[259]]], [null, [$[260], $[261]]], [null, [$[262], $[263]]], [null, [$[264], $[265]]], [null, [$[266], $[267]]], [null, [$[268], $[269]]], [null, [$[270], $[271]]], [null, [$[272], $[273]]], [null, [$[274], $[275]]], [null, [$[276], $[277]]], [null, [$[278], $[279]]], [null, [$[280], $[281]]], [null, [$[282], $[283]]], [null, [$[284], $[285]]], [null, [$[286], $[287]]]],
-            e.ponBackLegAccessoriesStand = [[null, [$[288], $[289]]]],
-            e.ponBackLegAccessoriesTrot = [[null, [$[290], $[291]]], [null, [$[292], $[293]]], [null, [$[294], $[295]]], [null, [$[296], $[297]]], [null, [$[298], $[299]]], [null, [$[300], $[301]]], [null, [$[302], $[303]]], [null, [$[304], $[305]]], [null, [$[306], $[307]]], [null, [$[308], $[309]]], [null, [$[310], $[311]]], [null, [$[312], $[313]]], [null, [$[314], $[315]]], [null, [$[316], $[317]]], [null, [$[318], $[319]]], [null, [$[320], $[321]]]],
-            e.ponFaceAccessories = [null, [$[322]], [$[323]], [$[324]]],
-            e.ponEarAccessories = [null, [$[325]], [$[326]], [$[327]], [$[328]], [$[329]]],
-            e.ponHeadAccessories = [null, [$[330]], [$[331], $[332], $[333], $[334]], [$[335], $[336], $[337], $[338], $[339]]],
-            e.ponNeckAccessories = [null, [$[340], $[341]], [$[342], $[343], $[344], $[345]], [$[346], $[347], $[348], $[349], $[350]]],
-            e.ponFacialHair = [null, [$[351]]],
-            e.ponEyeshadow = $[169],
-            e.ponEyeshadowShine = $[170],
-            e.ponBody = $[180],
-            e.ponHead = $[181],
-            e.ponEar = $[182],
-            e.ponEar2 = $[183],
-            e.ponShadow = $[184],
-            e.ponSelection = $[185],
-            e.ponCM = $[186],
-            e.ponCMFlip = $[187],
-            e.tree2 = y(352, 353, 354, 355, 356, [0, 1648566271, 1176305919, 2978502143, 3686626303, 2093650687, 2440584959, 1800616447, 3036666623, 3029561599, 2087013887, 1890942719, 1648236543, 1328153087, 542583551, 1553622527, 1066096127, 2328465407, 828261375, 1166170623, 3607295, 745882111, 1099582975]),
-            e.apple_2 = v(357, 358, [0, 738592255, 2097348863, 4202988031, 3523608831, 3523806463]),
-            e.cloud_2 = d(359),
-            e.pumpkin_2 = v(360, 361, [0, 1217814527, 5904127, 2318663935, 4171326463, 4292055551, 4102701567, 3613926399, 3227390719, 2722895103, 4275213823]),
-            e.rock_2 = v(362, 363, [0, 2020893439, 3418335487, 2593489919, 2980879103, 1667060479]),
-            e.sign_2 = v(364, 365, [0, 2303012607, 3988029695, 2875473919, 3464778495, 572662527, 75]),
-            e.bubble_2 = h(366, [0, 4294967295]),
-            e.bubble2_2 = h(367, [0, 255, 4294967295]),
-            e.heartemote_2 = h(368, [0, 3875537151, 3254780159, 2902458623]),
-            e.nipple_2 = h(369, [4294967295, 0]),
-            e.nipple2_2 = h(370, [4294967295, 255, 0]),
-            e.pixel_2 = h(371, [4294967295]),
-            e.pizzaemote_2 = h(372, [2354323967, 0, 4158365183, 3548861951, 3956117759, 3523872255, 2751726079, 3770116607]),
-            e.pumpkinemote_2 = h(373, [0, 864834559, 5838335, 2368405759, 4085792767, 3479444991, 4291463167]),
-            e.rockemote_2 = h(374, [0, 2020893439, 3418335487, 2593489919, 2980879103]),
-            e.butterfly2 = b([375, 376, 377, 378], [0, 2151972607, 4068601343]),
-            e.tileSheet = _["tiles.png"],
+            e.bubble = S[1712],
+            e.bubble2 = S[1713],
+            e.heartemote = S[1714],
+            e.nipple = S[1715],
+            e.nipple2 = S[1716],
+            e.pixel = S[1717],
+            e.pizzaemote = S[1718],
+            e.pumpkinemote = S[1719],
+            e.rockemote = S[1720],
+            e.ponFrontManes = [null, [h(1), h(2), h(3), h(4), h(5), h(6)], [h(7), h(8), h(9), h(10), h(11), h(12)], [h(13), h(14)], [h(15), h(16)], [], [h(17), h(18)], [], [h(19), h(20)], []],
+            e.ponTopManes = [null, [h(21), h(22), h(23), h(24), h(25), h(26)], [h(27), h(28), h(29), h(30), h(31), h(32)], [h(33), h(34)], [h(35), h(36)], [h(37), h(38)], [h(39), h(40)], [h(41), h(42)], [h(43), h(44)], [h(45), h(46)]],
+            e.ponBehindManes = [null, [h(47), h(48), h(49), h(50), h(51), h(52)], [], [h(53), h(54)], [], [], [], [], [], [h(55), h(56)]],
+            e.ponManes = [null, [h(57), h(58), h(59), h(60), h(61), h(62)], [h(63), h(64), h(65), h(66), h(67), h(68)], [h(69), h(70)], [h(71), h(72)], [h(73), h(74)], [h(75), h(76)], [h(77), h(78)], [h(79), h(80)], [h(81), h(82)]],
+            e.ponBackFrontManes = [null, [h(83), h(84), h(85), h(86), h(87), h(88)], [], [h(89), h(90)], [], [], [], []],
+            e.ponBackBehindManes = [null, [], [h(91), h(92)], [], [h(93), h(94)], [h(95), h(96)], [h(97), h(98)], [h(99), h(100)]],
+            e.ponBackManes = [null, [h(83), h(84), h(85), h(86), h(87), h(88)], [h(91), h(92)], [h(89), h(90)], [h(93), h(94)], [h(95), h(96)], [h(97), h(98)], [h(99), h(100)]],
+            e.ponTails = [null, [h(101), h(102), h(103), h(104), h(105), h(106)], [h(107), h(108), h(109), h(110), h(111), h(112)], [h(113), h(114)], [h(115), h(116)], [h(117), h(118)], [h(119), h(120)]],
+            e.ponEyeLeft = [null, b(121, 123, 125), b(127, 129, 131), b(133, 135, 137), b(139, 141, 143), b(145, 147, 0), b(149, 151, 0)],
+            e.ponEyeRight = [null, b(122, 124, 126), b(128, 130, 132), b(134, 136, 138), b(140, 142, 144), b(146, 148, 0), b(150, 152, 0)],
+            e.ponNoses = [y(0, 153, 154), y(0, 155, 156), y(0, 157, 158), y(0, 159, 160), y(161, 162, 163), y(164, 165, 166), y(0, 167, 168)],
+            e.ponFreckles = [null, T[171], T[172], T[173], T[174]],
+            e.ponHorns = [null, [h(175)], [h(176)]],
+            e.ponWings = [null, [h(177)]],
+            e.ponLegFrontStand = [T[178]],
+            e.ponLegBackStand = [T[179]],
+            e.ponLegFrontTrot = [T[188], T[189], T[190], T[191], T[192], T[193], T[194], T[195], T[196], T[197], T[198], T[199], T[200], T[201], T[202], T[203]],
+            e.ponLegBackTrot = [T[204], T[205], T[206], T[207], T[208], T[209], T[210], T[211], T[212], T[213], T[214], T[215], T[216], T[217], T[218], T[219]],
+            e.ponFetlocksFrontStand = [T[220]],
+            e.ponFetlocksFrontTrot = [T[221], T[222], T[223], T[224], T[225], T[226], T[227], T[228], T[229], T[230], T[231], T[232], T[233], T[234], T[235], T[236]],
+            e.ponFetlocksBackStand = [T[237]],
+            e.ponFetlocksBackTrot = [T[238], T[239], T[240], T[241], T[242], T[243], T[244], T[245], T[246], T[247], T[248], T[249], T[250], T[251], T[252], T[253]],
+            e.ponFrontLegAccessoriesStand = [[null, [h(254), h(255)]]],
+            e.ponFrontLegAccessoriesTrot = [[null, [h(256), h(257)]], [null, [h(258), h(259)]], [null, [h(260), h(261)]], [null, [h(262), h(263)]], [null, [h(264), h(265)]], [null, [h(266), h(267)]], [null, [h(268), h(269)]], [null, [h(270), h(271)]], [null, [h(272), h(273)]], [null, [h(274), h(275)]], [null, [h(276), h(277)]], [null, [h(278), h(279)]], [null, [h(280), h(281)]], [null, [h(282), h(283)]], [null, [h(284), h(285)]], [null, [h(286), h(287)]]],
+            e.ponBackLegAccessoriesStand = [[null, [h(288), h(289)]]],
+            e.ponBackLegAccessoriesTrot = [[null, [h(290), h(291)]], [null, [h(292), h(293)]], [null, [h(294), h(295)]], [null, [h(296), h(297)]], [null, [h(298), h(299)]], [null, [h(300), h(301)]], [null, [h(302), h(303)]], [null, [h(304), h(305)]], [null, [h(306), h(307)]], [null, [h(308), h(309)]], [null, [h(310), h(311)]], [null, [h(312), h(313)]], [null, [h(314), h(315)]], [null, [h(316), h(317)]], [null, [h(318), h(319)]], [null, [h(320), h(321)]]],
+            e.ponFaceAccessories = [null, [v(323, 322, [0, 4294967153])], [h(324)], [v(326, 325, [0, 4294967153])]],
+            e.ponEarAccessories = [null, [h(327)], [h(328)], [h(329)], [h(330)], [h(331)]],
+            e.ponHeadAccessories = [null, [h(332)], [h(333), h(334), h(335), h(336)], [h(337), h(338), h(339), h(340), h(341)]],
+            e.ponNeckAccessories = [null, [h(342), h(343)], [h(344), h(345), h(346), h(347)], [h(348), h(349), h(350), h(351), h(352)]],
+            e.ponFacialHair = [null, [h(353)]],
+            e.ponEyeshadow = T[169],
+            e.ponEyeshadowShine = T[170],
+            e.ponBody = T[180],
+            e.ponHead = T[181],
+            e.ponEar = T[182],
+            e.ponEar2 = T[183],
+            e.ponShadow = T[184],
+            e.ponSelection = T[185],
+            e.ponCM = T[186],
+            e.ponCMFlip = T[187],
+            e.tree2 = _(354, 355, 356, 357, 358, [0, 1648566271, 1176305919, 2978502143, 3686626303, 2093650687, 2440584959, 1800616447, 3036666623, 3029561599, 2087013887, 1890942719, 1648236543, 1328153087, 542583551, 1553622527, 1066096127, 2328465407, 828261375, 1166170623, 3607295, 745882111, 1099582975]),
+            e.apple_2 = g(359, 360, [0, 738592255, 2097348863, 4202988031, 3523608831, 3523806463]),
+            e.cloud_2 = m(361),
+            e.pumpkin_2 = g(362, 363, [0, 1217814527, 5904127, 2318663935, 4171326463, 4292055551, 4102701567, 3613926399, 3227390719, 2722895103, 4275213823]),
+            e.rock_2 = g(364, 365, [0, 2020893439, 3418335487, 2593489919, 2980879103, 1667060479]),
+            e.sign_2 = g(366, 367, [0, 2303012607, 3988029695, 2875473919, 3464778495, 572662527, 75]),
+            e.bubble_2 = d(368, [0, 4294967295]),
+            e.bubble2_2 = d(369, [0, 255, 4294967295]),
+            e.heartemote_2 = d(370, [0, 3875537151, 3254780159, 2902458623]),
+            e.nipple_2 = d(371, [4294967295, 0]),
+            e.nipple2_2 = d(372, [4294967295, 255, 0]),
+            e.pixel_2 = d(373, [4294967295]),
+            e.pizzaemote_2 = d(374, [2354323967, 0, 4158365183, 3548861951, 3956117759, 3523872255, 2751726079, 3770116607]),
+            e.pumpkinemote_2 = d(375, [0, 864834559, 5838335, 2368405759, 4085792767, 3479444991, 4291463167]),
+            e.rockemote_2 = d(376, [0, 2020893439, 3418335487, 2593489919, 2980879103]),
+            e.butterfly2 = w([377, 378, 379, 380], [0, 2151972607, 4068601343]),
+            e.tileSheet = x["tiles.png"],
             e.tileSprite = {
                 x: 0,
                 y: 0,
@@ -12485,11 +12502,11 @@ var modules = function (System) {
                 oy: 0
             },
             e.spriteSheets = [{
-                src: w,
-                sprites: E
+                src: E,
+                sprites: S
             }, {
-                src: x,
-                sprites: $
+                src: $,
+                sprites: T
             }, {
                 src: e.tileSheet,
                 sprites: [e.tileSprite]
@@ -12497,7 +12514,7 @@ var modules = function (System) {
             e.font = [[0, 1450], [9786, 1451], [9787, 1452], [9829, 1453], [9830, 1454], [9827, 1455], [9824, 1456], [8226, 1457], [9688, 1458], [9675, 1459], [9689, 1460], [9794, 1461], [9792, 1462], [9834, 1463], [9835, 1464], [9788, 1465], [9658, 1466], [9668, 1467], [8597, 1468], [8252, 1469], [182, 1470], [167, 1471], [9644, 1472], [8616, 1473], [8593, 1474], [8595, 1475], [8594, 1476], [8592, 1477], [8735, 1478], [8596, 1479], [9650, 1480], [9660, 1481], [33, 1482], [34, 1483], [35, 1484], [36, 1485], [37, 1486], [38, 1487], [39, 1488], [40, 1489], [41, 1490], [42, 1491], [43, 1492], [44, 1493], [45, 1494], [46, 1495], [47, 1496], [48, 1497], [49, 1498], [50, 1499], [51, 1500], [52, 1501], [53, 1502], [54, 1503], [55, 1504], [56, 1505], [57, 1506], [58, 1507], [59, 1508], [60, 1509], [61, 1510], [62, 1511], [63, 1512], [64, 1513], [65, 1514], [66, 1515], [67, 1516], [68, 1517], [69, 1518], [70, 1519], [71, 1520], [72, 1521], [73, 1522], [74, 1523], [75, 1524], [76, 1525], [77, 1526], [78, 1527], [79, 1528], [80, 1529], [81, 1530], [82, 1531], [83, 1532], [84, 1533], [85, 1534], [86, 1535], [87, 1536], [88, 1537], [89, 1538], [90, 1539], [91, 1540], [92, 1541], [93, 1542], [94, 1543], [95, 1544], [96, 1545], [97, 1546], [98, 1547], [99, 1548], [100, 1549], [101, 1550], [102, 1551], [103, 1552], [104, 1553], [105, 1554], [106, 1555], [107, 1556], [108, 1557], [109, 1558], [110, 1559], [111, 1560], [112, 1561], [113, 1562], [114, 1563], [115, 1564], [116, 1565], [117, 1566], [118, 1567], [119, 1568], [120, 1569], [121, 1570], [122, 1571], [123, 1572], [124, 1573], [125, 1574], [126, 1575], [8962, 1576], [199, 1577], [252, 1578], [233, 1579], [226, 1580], [228, 1581], [224, 1582], [229, 1583], [231, 1584], [234, 1585], [235, 1586], [232, 1587], [239, 1588], [238, 1589], [236, 1590], [196, 1591], [197, 1592], [201, 1593], [230, 1594], [198, 1595], [244, 1596], [246, 1597], [242, 1598], [251, 1599], [249, 1600], [255, 1601], [214, 1602], [220, 1603], [248, 1604], [163, 1605], [216, 1606], [215, 1607], [402, 1608], [225, 1609], [237, 1610], [243, 1611], [250, 1612], [241, 1613], [209, 1614], [170, 1615], [186, 1616], [191, 1617], [174, 1618], [172, 1619], [189, 1620], [188, 1621], [161, 1622], [171, 1623], [187, 1624], [1040, 1625], [1072, 1626], [1041, 1627], [1073, 1628], [1042, 1629], [1074, 1630], [1043, 1631], [1075, 1632], [1044, 1633], [1076, 1634], [1045, 1635], [1077, 1636], [1025, 1637], [1105, 1638], [1046, 1639], [1078, 1640], [1047, 1641], [1079, 1642], [1048, 1643], [1080, 1644], [1049, 1645], [1081, 1646], [1050, 1647], [1082, 1648], [1051, 1649], [1083, 1650], [1052, 1651], [1084, 1652], [1053, 1653], [1085, 1654], [1054, 1655], [1086, 1656], [1055, 1657], [1087, 1658], [1056, 1659], [1088, 1660], [1057, 1661], [1089, 1662], [1058, 1663], [1090, 1664], [1059, 1665], [1091, 1666], [1060, 1667], [1092, 1668], [1061, 1669], [1093, 1670], [1062, 1671], [1094, 1672], [1063, 1673], [1095, 1674], [1064, 1675], [1096, 1676], [1065, 1677], [1097, 1678], [1066, 1679], [1098, 1680], [1067, 1681], [1099, 1682], [1068, 1683], [1100, 1684], [1069, 1685], [1101, 1686], [1070, 1687], [1102, 1688], [1071, 1689], [1103, 1690], [260, 1691], [261, 1692], [262, 1693], [263, 1694], [280, 1695], [281, 1696], [323, 1697], [324, 1698], [346, 1699], [347, 1700], [377, 1701], [378, 1702], [379, 1703], [380, 1704], [321, 1705], [322, 1706], [211, 1707], [12484, 1708], [362, 1709], [363, 1710], [12471, 1711]].map(function (t) {
                 return {
                     code: t[0],
-                    sprite: E[t[1]]
+                    sprite: S[t[1]]
                 }
             }),
             n.exports
@@ -12788,7 +12805,11 @@ var modules = function (System) {
 
         function y(t, e, n, r, i, o) {
             var a = n && _.at(e, n.type);
-            a && t.drawSprite(_.at(a, n.pattern), o, n.palette, r, i)
+            if (a) {
+                var s = _.at(a, n.pattern);
+                s && (t.drawSprite(s.color, o, n.palette, r, i),
+                    t.drawSprite(s.extra, null, n.extraPalette, r, i))
+            }
         }
 
         var b = t("21")
@@ -12872,7 +12893,7 @@ var modules = function (System) {
             n.exports
     });
     System.registerDynamic("cf", [], !0, function (t, e, n) {
-        return n.exports = '<h1>About</h1><div class="row"><div class="col-md-6"><p class="lead">A game of ponies building a town\n</p><h2>Keyboard shortcuts</h2><ul><li><b>movement</b><ul><li>use <kbd><i class="fa fa-arrow-up"></i></kbd> <kbd><i class="fa fa-arrow-left"></i></kbd> <kbd><i class="fa fa-arrow-down"></i></kbd> <kbd><i class="fa fa-arrow-right"></i></kbd>\nor <kbd class="b">W</kbd> <kbd class="b">A</kbd> <kbd class="b">S</kbd> <kbd class="b">D</kbd> to move</li><li>hold <kbd class="b">shift</kbd> to walk slowly</li></ul></li><li><b>chat</b><ul><li><kbd class="b">enter</kbd> to open chat box and send a message</li><li><kbd class="b">esc</kbd> to cancel the message</li></ul></li><li><b>zoom (1x, 2x, 3x, 4x)</b> - <kbd class="b">P</kbd></li><li><b>hide all text</b> - <kbd class="b">F2</kbd></li><li><b>fullscreen</b> - <kbd class="b">F11</kbd></li><li>hold <kbd class="b">shift</kbd> to be able to click on ground and items behind other players</li></ul><h2>Emotes</h2><p>You can use emotes in chat by typings their name surrounded by colons <samp>:apple:</samp>\nor by using unicode characters assigned to them. Available emotes:\n</p><ul><li>:face: - ツ</li><li>:derp: - シ</li><li>:heart: - ❤</li><li>:rock: - ⽯</li><li>:apple: - 🍎</li><li>:pizza: - 🍕</li><li>:pumpkin: - 🎃</li></ul><h2>Technology</h2><p>The entire game is written in <a href="http://www.typescriptlang.org/">TypeScript</a>,\na typed superset of JavaScript that compiles to plain JavaScript.\nServer side code is running on <a href="https://nodejs.org/en/">Node.js</a> server with WebSockets for communication.\nUser interface is built using <a href="https://angularjs.org/">Angular.js</a> framework and \nthe game itself is using WebGL for rendering graphics.\n</p><h2>The Team</h2><h3 id="agamnentzar">Agamnentzar</h3>\n<p><a href="http://agamnentzar.deviantart.com/">deviantart</a> | <a href="http://agamnentzar.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Designer</li>\n<li>Programmer</li>\n<li>Artist</li>\n</ul>\n<h3 id="shino">Shino</h3>\n<p><a href="http://shinodage.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<h3 id="chirachan">ChiraChan</h3>\n<p><a href="http://chiramii-chan.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<h3 id="velenor">Velenor</h3>\n<p><a href="http://velenor.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<h3 id="disastral">Disastral</h3>\n<p><a href="http://askdisastral.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<h3 id="cyberpon3">CyberPon3</h3>\n<p><a href="http://cyberpon3.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Programmer</li>\n</ul>\n<h2>Other contributors</h2><p><strong>OtakuAP</strong> - <a href="http://otakuap.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<p><strong>Velvet-Frost</strong> - <a href="http://velvet-frost.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Jet7Wave</strong> - <a href="http://jetwave.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Meno</strong> - <a href="http://menojar.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Lalieri</strong> - <a href="http://lalieri.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n</div><div class="col-md-6"><h2>Changelog</h2><h4 id="v0-15-1">v0.15.1</h4>\n<ul>\n<li>Fixed errors when leaving and joining the game</li>\n<li>Fixed selection ring not showing up</li>\n<li>Fixed non-flipped buttmark being drawn incorrectly</li>\n<li>Fixed color parsing issue with empty colors</li>\n<li>Fixed locking colors for accessories</li>\n</ul>\n<h4 id="v0-15-0">v0.15.0</h4>\n<ul>\n<li>Added socks</li>\n<li>Added server name in settings dropdown</li>\n<li>Added associated social site account list on account page</li>\n<li>Added saving of last used zoom level</li>\n<li>Removed security check causing page styles to not load on some setups</li>\n<li>Improved performance of rendering engine</li>\n<li>Fixed redirecting to home page when reloading account page</li>\n<li>Fixed game screen blinking randomly</li>\n</ul>\n<h4 id="v0-14-5">v0.14.5</h4>\n<ul>\n<li>Fixed wrapping long names on character selection box</li>\n</ul>\n<h4 id="v0-14-4">v0.14.4</h4>\n<ul>\n<li>Added duplicate character option to character creator</li>\n<li>Added better error handling for DDOS protection errors</li>\n<li>Added option to share social accounts on pony selection box</li>\n<li>Added automatic closing of pony selection box when selected pony leaves the game</li>\n<li>Enabled swear filter by default on safe server</li>\n<li>Removed security check causing page to not load on some setups</li>\n<li>Fixed game crashing when changing scale if given resolution is not suported</li>\n<li>Fixed caching issues with main page</li>\n</ul>\n<h4 id="v0-14-3">v0.14.3</h4>\n<ul>\n<li>Fixed color picker hiding when selecting a color</li>\n<li>Fixed color picker input not selecting text when focused on firefox</li>\n<li>Fixed performance issue when selecting colors in character creator</li>\n<li>Fixed being redirected to home page from character creator on refresh</li>\n</ul>\n<h4 id="v0-14-2">v0.14.2</h4>\n<ul>\n<li>Added client script version check when joining to the game</li>\n</ul>\n<h4 id="v0-14-1">v0.14.1</h4>\n<ul>\n<li>Hotfixes</li>\n</ul>\n<h4 id="v0-14-0">v0.14.0</h4>\n<ul>\n<li>Added selecting other players (hold <kbd>shift</kbd> to be able to click on ground and items behind other players)</li>\n<li>Added option for ignoring other players</li>\n<li>Fixed about page inaccuracies</li>\n<li>Fixed gamepad controls</li>\n</ul>\n<h4 id="v0-13-2">v0.13.2</h4>\n<ul>\n<li>Added slow walking with <kbd>shift</kbd> key</li>\n<li>Adjusted day-night cycle length and night darkness intensity</li>\n<li>Adjusted dead zone for gamepads</li>\n<li>Improved networking performance</li>\n<li>Fixed disconnect issues on mobile devices</li>\n</ul>\n<h4 id="v0-13-1">v0.13.1</h4>\n<ul>\n<li>Fixed multiple servers not connecting properly</li>\n</ul>\n<h4 id="v0-13-0">v0.13.0</h4>\n<ul>\n<li>Added touch and gamepad controls</li>\n<li>Added day-night cycle</li>\n<li>Added game time clock</li>\n<li>Added option to leave game without having to reload the page</li>\n<li>Added support for multiple servers</li>\n<li>Fixed horn outlines</li>\n<li>Fixed zoom repeating when holding zoom key</li>\n<li>Fixed getting logged out when closing browser</li>\n</ul>\n<h4 id="v0-12-1">v0.12.1</h4>\n<ul>\n<li>Added back lighting test shortcut <kbd>T</kbd></li>\n<li>Added keyboard shortcut <kbd>F2</kbd> for hiding all text messages</li>\n<li>Fixed issue with setting color and opennes independently for left and right eye</li>\n<li>Fixed issue with incorrect pony name text placement</li>\n<li>Fixed being able to spawn inside a tree</li>\n</ul>\n<h4 id="v0-12-0">v0.12.0</h4>\n<ul>\n<li>Added trees</li>\n<li>Added pumpkins</li>\n<li>Added eyeshadow</li>\n<li>Added hats</li>\n<li>Added tie</li>\n<li>Added reading glasses</li>\n<li>Added flower ear accessory</li>\n<li>Added new face markings</li>\n<li>Added new emotes</li>\n<li>Changed map design</li>\n<li>Fixed head accessories placement without hair</li>\n<li>Fixed not being able to set 6th color on 2nd mane</li>\n</ul>\n<h4 id="v0-11-4">v0.11.4</h4>\n<ul>\n<li>Added new scarf pattern</li>\n<li>Improved rendering performance</li>\n<li>Fixed not being able to see name of a pony when they are saying something</li>\n<li>Fixed issues with server restart</li>\n<li>Fixed fetlocks in trot animation</li>\n<li>Fixed issues with font and emote spacing</li>\n</ul>\n<h4 id="v0-11-3">v0.11.3</h4>\n<ul>\n<li>Added scarf accessory</li>\n<li>Added option for hiding all chat messages with russian text</li>\n<li>Added list of rules and in-development notice</li>\n<li>Fixed some issues with chat messages</li>\n<li>Fixed multiple issues with manes</li>\n<li>Fixed issue with fetlocks</li>\n</ul>\n<h4 id="v0-11-2">v0.11.2</h4>\n<ul>\n<li>Added announcements support</li>\n<li>Added hide background switch for pony creator</li>\n<li>Removed stones from the spawning area</li>\n</ul>\n<h4 id="v0-11-1">v0.11.1</h4>\n<ul>\n<li>Added polish characters to pixel font</li>\n<li>Fixed sign-in with facebook</li>\n<li>Fixed cancelling character edit</li>\n<li>Fixed clouds</li>\n<li>Fixed spelling mistake</li>\n<li>Fixed buttmark position</li>\n</ul>\n<h4 id="v0-11-0">v0.11.0</h4>\n<ul>\n<li>Added cyrillic characters to pixel font</li>\n<li>Added logos</li>\n<li>Added optional swear filter</li>\n<li>Added more mane styles</li>\n<li>Reworked sign-in and account system</li>\n<li>Improved networking performance</li>\n</ul>\n<h4 id="v0-10-1">v0.10.1</h4>\n<ul>\n<li>Fixed connection resetting every 10 seconds when not in game</li>\n</ul>\n<h4 id="v0-10-0">v0.10.0</h4>\n<ul>\n<li>Added back butterflies</li>\n<li>Improved networking performance</li>\n<li>Fixed not initialized errors</li>\n<li>Fixed deleting character not updating character list</li>\n<li>Fixed cursor and camera offset errors on screens with high pixel density</li>\n<li>Fixed styling issue in chat box</li>\n</ul>\n<h4 id="v0-9-8">v0.9.8</h4>\n<ul>\n<li>Improved connection performance</li>\n<li>Fixed issues with chat box focus on Safari and Edge</li>\n</ul>\n<h4 id="v0-9-7">v0.9.7</h4>\n<ul>\n<li>Added chat buttons</li>\n<li>Improved connection performance</li>\n<li>Fixed automatically signing in after signing up for new account</li>\n<li>Fixed character name not saving if joining the game from home screen</li>\n</ul>\n<h4 id="v0-9-6">v0.9.6</h4>\n<ul>\n<li>Added logging off after 15 minutes of no activity</li>\n<li>Improved performance of joining to the game</li>\n<li>Fixed multiple issues with character creator on IE11</li>\n</ul>\n<h4 id="v0-9-5">v0.9.5</h4>\n<ul>\n<li>Fixed non-flippable buttmarks</li>\n<li>Fixed some rate limiting issues</li>\n</ul>\n<h4 id="v0-9-4">v0.9.4</h4>\n<ul>\n<li>Removed ability to log into the same character multiple times</li>\n<li>Added back rocks</li>\n<li>Added displaying of WegGL initialization error</li>\n</ul>\n<h4 id="v0-9-3">v0.9.3</h4>\n<ul>\n<li>Removed rocks</li>\n</ul>\n<h4 id="v0-9-2">v0.9.2</h4>\n<ul>\n<li>Removed butterflies</li>\n<li>Removed debug code</li>\n</ul>\n<h4 id="v0-9-1">v0.9.1</h4>\n<ul>\n<li>Fixed issue with rendering when value is out of range</li>\n</ul>\n<h4 id="v0-9-0">v0.9.0</h4>\n<ul>\n<li>Added shading to trot animation</li>\n<li>Added new mane styles</li>\n<li>Added mane color patterns</li>\n<li>Added option for non-flippable butt marks</li>\n<li>Added account system</li>\n<li>Added saving characters on server side</li>\n<li>Fixed eye colors switching sides  when turning left and right</li>\n<li>Fixed performance issues with rendering</li>\n<li>Fixed shader code not working on some low end devices</li>\n<li>Fixed errors when character has invalid values set for sprite types</li>\n<li>Fixed being able to use transparency for character colors</li>\n<li>Fixed chat not limiting characters properly</li>\n</ul>\n<h4 id="v0-8-0">v0.8.0</h4>\n<ul>\n<li>Added character customization in game</li>\n<li>Added eye blinking</li>\n<li>Added character selection on home screen</li>\n</ul>\n<h4 id="v0-7-0">v0.7.0</h4>\n<ul>\n<li>Removed spawn command</li>\n<li>Added character creation prototype</li>\n</ul>\n<h4 id="v0-6-1">v0.6.1</h4>\n<ul>\n<li>Fixed mouse not working in the game</li>\n</ul>\n<h4 id="v0-6-0">v0.6.0</h4>\n<ul>\n<li>Added AFK indicator</li>\n<li>Updated styles</li>\n<li>Fixed wrong cursor position on retina displays and zommed in pages</li>\n<li>Fixed emoticon parsing</li>\n<li>Fixed issue on mobile devices</li>\n</ul>\n<h4 id="v0-5-0">v0.5.0</h4>\n<ul>\n<li>Added butterfies</li>\n<li>Added apples</li>\n<li>Added apple emote to chat</li>\n<li>Fixed login form not displaying on mobile safari</li>\n</ul>\n</div></div>',
+        return n.exports = '<h1>About</h1><div class="row"><div class="col-md-6"><p class="lead">A game of ponies building a town\n</p><h2>Keyboard shortcuts</h2><ul><li><b>movement</b><ul><li>use <kbd><i class="fa fa-arrow-up"></i></kbd> <kbd><i class="fa fa-arrow-left"></i></kbd> <kbd><i class="fa fa-arrow-down"></i></kbd> <kbd><i class="fa fa-arrow-right"></i></kbd>\nor <kbd class="b">W</kbd> <kbd class="b">A</kbd> <kbd class="b">S</kbd> <kbd class="b">D</kbd> to move</li><li>hold <kbd class="b">shift</kbd> to walk slowly</li></ul></li><li><b>chat</b><ul><li><kbd class="b">enter</kbd> to open chat box and send a message</li><li><kbd class="b">esc</kbd> to cancel the message</li></ul></li><li><b>zoom (1x, 2x, 3x, 4x)</b> - <kbd class="b">P</kbd></li><li><b>hide all text</b> - <kbd class="b">F2</kbd></li><li><b>fullscreen</b> - <kbd class="b">F11</kbd></li><li>hold <kbd class="b">shift</kbd> to be able to click on ground and items behind other players</li></ul><h2>Emotes</h2><p>You can use emotes in chat by typings their name surrounded by colons <samp>:apple:</samp>\nor by using unicode characters assigned to them. Available emotes:\n</p><ul><li>:face: - ツ</li><li>:derp: - シ</li><li>:heart: - ❤</li><li>:rock: - ⽯</li><li>:apple: - 🍎</li><li>:pizza: - 🍕</li><li>:pumpkin: - 🎃</li></ul><h2>Technology</h2><p>The entire game is written in <a href="http://www.typescriptlang.org/">TypeScript</a>,\na typed superset of JavaScript that compiles to plain JavaScript.\nServer side code is running on <a href="https://nodejs.org/en/">Node.js</a> server with WebSockets for communication.\nUser interface is built using <a href="https://angularjs.org/">Angular.js</a> framework and \nthe game itself is using WebGL for rendering graphics.\n</p><h2>The Team</h2><h3 id="agamnentzar">Agamnentzar</h3>\n<p><a href="http://agamnentzar.deviantart.com/">deviantart</a> | <a href="http://agamnentzar.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Designer</li>\n<li>Programmer</li>\n<li>Artist</li>\n</ul>\n<h3 id="shino">Shino</h3>\n<p><a href="http://shinodage.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<h3 id="chirachan">ChiraChan</h3>\n<p><a href="http://chiramii-chan.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<h3 id="velenor">Velenor</h3>\n<p><a href="http://velenor.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<h3 id="disastral">Disastral</h3>\n<p><a href="http://askdisastral.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<h3 id="cyberpon3">CyberPon3</h3>\n<p><a href="http://cyberpon3.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Programmer</li>\n</ul>\n<h2>Other contributors</h2><p><strong>OtakuAP</strong> - <a href="http://otakuap.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<p><strong>Velvet-Frost</strong> - <a href="http://velvet-frost.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Jet7Wave</strong> - <a href="http://jetwave.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Meno</strong> - <a href="http://menojar.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Lalieri</strong> - <a href="http://lalieri.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Goodly</strong> - <a href="http://goodlyay.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n</div><div class="col-md-6"><h2>Changelog</h2><h4 id="v0-15-2">v0.15.2</h4>\n<ul>\n<li>Fixed deleting ponies</li>\n<li>Fixed clouds overlapping</li>\n<li>Fixed glass in glasses not rendering properly</li>\n</ul>\n<h4 id="v0-15-1">v0.15.1</h4>\n<ul>\n<li>Fixed errors when leaving and joining the game</li>\n<li>Fixed selection ring not showing up</li>\n<li>Fixed non-flipped buttmark being drawn incorrectly</li>\n<li>Fixed color parsing issue with empty colors</li>\n<li>Fixed locking colors for accessories</li>\n</ul>\n<h4 id="v0-15-0">v0.15.0</h4>\n<ul>\n<li>Added socks</li>\n<li>Added server name in settings dropdown</li>\n<li>Added associated social site account list on account page</li>\n<li>Added saving of last used zoom level</li>\n<li>Removed security check causing page styles to not load on some setups</li>\n<li>Improved performance of rendering engine</li>\n<li>Increased max number of ponies to 20</li>\n<li>Fixed redirecting to home page when reloading account page</li>\n<li>Fixed game screen blinking randomly</li>\n</ul>\n<h4 id="v0-14-5">v0.14.5</h4>\n<ul>\n<li>Fixed wrapping long names on character selection box</li>\n</ul>\n<h4 id="v0-14-4">v0.14.4</h4>\n<ul>\n<li>Added duplicate character option to character creator</li>\n<li>Added better error handling for DDOS protection errors</li>\n<li>Added option to share social accounts on pony selection box</li>\n<li>Added automatic closing of pony selection box when selected pony leaves the game</li>\n<li>Enabled swear filter by default on safe server</li>\n<li>Removed security check causing page to not load on some setups</li>\n<li>Fixed game crashing when changing scale if given resolution is not suported</li>\n<li>Fixed caching issues with main page</li>\n</ul>\n<h4 id="v0-14-3">v0.14.3</h4>\n<ul>\n<li>Fixed color picker hiding when selecting a color</li>\n<li>Fixed color picker input not selecting text when focused on firefox</li>\n<li>Fixed performance issue when selecting colors in character creator</li>\n<li>Fixed being redirected to home page from character creator on refresh</li>\n</ul>\n<h4 id="v0-14-2">v0.14.2</h4>\n<ul>\n<li>Added client script version check when joining to the game</li>\n</ul>\n<h4 id="v0-14-1">v0.14.1</h4>\n<ul>\n<li>Hotfixes</li>\n</ul>\n<h4 id="v0-14-0">v0.14.0</h4>\n<ul>\n<li>Added selecting other players (hold <kbd>shift</kbd> to be able to click on ground and items behind other players)</li>\n<li>Added option for ignoring other players</li>\n<li>Fixed about page inaccuracies</li>\n<li>Fixed gamepad controls</li>\n</ul>\n<h4 id="v0-13-2">v0.13.2</h4>\n<ul>\n<li>Added slow walking with <kbd>shift</kbd> key</li>\n<li>Adjusted day-night cycle length and night darkness intensity</li>\n<li>Adjusted dead zone for gamepads</li>\n<li>Improved networking performance</li>\n<li>Fixed disconnect issues on mobile devices</li>\n</ul>\n<h4 id="v0-13-1">v0.13.1</h4>\n<ul>\n<li>Fixed multiple servers not connecting properly</li>\n</ul>\n<h4 id="v0-13-0">v0.13.0</h4>\n<ul>\n<li>Added touch and gamepad controls</li>\n<li>Added day-night cycle</li>\n<li>Added game time clock</li>\n<li>Added option to leave game without having to reload the page</li>\n<li>Added support for multiple servers</li>\n<li>Fixed horn outlines</li>\n<li>Fixed zoom repeating when holding zoom key</li>\n<li>Fixed getting logged out when closing browser</li>\n</ul>\n<h4 id="v0-12-1">v0.12.1</h4>\n<ul>\n<li>Added back lighting test shortcut <kbd>T</kbd></li>\n<li>Added keyboard shortcut <kbd>F2</kbd> for hiding all text messages</li>\n<li>Fixed issue with setting color and opennes independently for left and right eye</li>\n<li>Fixed issue with incorrect pony name text placement</li>\n<li>Fixed being able to spawn inside a tree</li>\n</ul>\n<h4 id="v0-12-0">v0.12.0</h4>\n<ul>\n<li>Added trees</li>\n<li>Added pumpkins</li>\n<li>Added eyeshadow</li>\n<li>Added hats</li>\n<li>Added tie</li>\n<li>Added reading glasses</li>\n<li>Added flower ear accessory</li>\n<li>Added new face markings</li>\n<li>Added new emotes</li>\n<li>Changed map design</li>\n<li>Fixed head accessories placement without hair</li>\n<li>Fixed not being able to set 6th color on 2nd mane</li>\n</ul>\n<h4 id="v0-11-4">v0.11.4</h4>\n<ul>\n<li>Added new scarf pattern</li>\n<li>Improved rendering performance</li>\n<li>Fixed not being able to see name of a pony when they are saying something</li>\n<li>Fixed issues with server restart</li>\n<li>Fixed fetlocks in trot animation</li>\n<li>Fixed issues with font and emote spacing</li>\n</ul>\n<h4 id="v0-11-3">v0.11.3</h4>\n<ul>\n<li>Added scarf accessory</li>\n<li>Added option for hiding all chat messages with russian text</li>\n<li>Added list of rules and in-development notice</li>\n<li>Fixed some issues with chat messages</li>\n<li>Fixed multiple issues with manes</li>\n<li>Fixed issue with fetlocks</li>\n</ul>\n<h4 id="v0-11-2">v0.11.2</h4>\n<ul>\n<li>Added announcements support</li>\n<li>Added hide background switch for pony creator</li>\n<li>Removed stones from the spawning area</li>\n</ul>\n<h4 id="v0-11-1">v0.11.1</h4>\n<ul>\n<li>Added polish characters to pixel font</li>\n<li>Fixed sign-in with facebook</li>\n<li>Fixed cancelling character edit</li>\n<li>Fixed clouds</li>\n<li>Fixed spelling mistake</li>\n<li>Fixed buttmark position</li>\n</ul>\n<h4 id="v0-11-0">v0.11.0</h4>\n<ul>\n<li>Added cyrillic characters to pixel font</li>\n<li>Added logos</li>\n<li>Added optional swear filter</li>\n<li>Added more mane styles</li>\n<li>Reworked sign-in and account system</li>\n<li>Improved networking performance</li>\n</ul>\n<h4 id="v0-10-1">v0.10.1</h4>\n<ul>\n<li>Fixed connection resetting every 10 seconds when not in game</li>\n</ul>\n<h4 id="v0-10-0">v0.10.0</h4>\n<ul>\n<li>Added back butterflies</li>\n<li>Improved networking performance</li>\n<li>Fixed not initialized errors</li>\n<li>Fixed deleting character not updating character list</li>\n<li>Fixed cursor and camera offset errors on screens with high pixel density</li>\n<li>Fixed styling issue in chat box</li>\n</ul>\n<h4 id="v0-9-8">v0.9.8</h4>\n<ul>\n<li>Improved connection performance</li>\n<li>Fixed issues with chat box focus on Safari and Edge</li>\n</ul>\n<h4 id="v0-9-7">v0.9.7</h4>\n<ul>\n<li>Added chat buttons</li>\n<li>Improved connection performance</li>\n<li>Fixed automatically signing in after signing up for new account</li>\n<li>Fixed character name not saving if joining the game from home screen</li>\n</ul>\n<h4 id="v0-9-6">v0.9.6</h4>\n<ul>\n<li>Added logging off after 15 minutes of no activity</li>\n<li>Improved performance of joining to the game</li>\n<li>Fixed multiple issues with character creator on IE11</li>\n</ul>\n<h4 id="v0-9-5">v0.9.5</h4>\n<ul>\n<li>Fixed non-flippable buttmarks</li>\n<li>Fixed some rate limiting issues</li>\n</ul>\n<h4 id="v0-9-4">v0.9.4</h4>\n<ul>\n<li>Removed ability to log into the same character multiple times</li>\n<li>Added back rocks</li>\n<li>Added displaying of WegGL initialization error</li>\n</ul>\n<h4 id="v0-9-3">v0.9.3</h4>\n<ul>\n<li>Removed rocks</li>\n</ul>\n<h4 id="v0-9-2">v0.9.2</h4>\n<ul>\n<li>Removed butterflies</li>\n<li>Removed debug code</li>\n</ul>\n<h4 id="v0-9-1">v0.9.1</h4>\n<ul>\n<li>Fixed issue with rendering when value is out of range</li>\n</ul>\n<h4 id="v0-9-0">v0.9.0</h4>\n<ul>\n<li>Added shading to trot animation</li>\n<li>Added new mane styles</li>\n<li>Added mane color patterns</li>\n<li>Added option for non-flippable butt marks</li>\n<li>Added account system</li>\n<li>Added saving characters on server side</li>\n<li>Fixed eye colors switching sides  when turning left and right</li>\n<li>Fixed performance issues with rendering</li>\n<li>Fixed shader code not working on some low end devices</li>\n<li>Fixed errors when character has invalid values set for sprite types</li>\n<li>Fixed being able to use transparency for character colors</li>\n<li>Fixed chat not limiting characters properly</li>\n</ul>\n<h4 id="v0-8-0">v0.8.0</h4>\n<ul>\n<li>Added character customization in game</li>\n<li>Added eye blinking</li>\n<li>Added character selection on home screen</li>\n</ul>\n<h4 id="v0-7-0">v0.7.0</h4>\n<ul>\n<li>Removed spawn command</li>\n<li>Added character creation prototype</li>\n</ul>\n<h4 id="v0-6-1">v0.6.1</h4>\n<ul>\n<li>Fixed mouse not working in the game</li>\n</ul>\n<h4 id="v0-6-0">v0.6.0</h4>\n<ul>\n<li>Added AFK indicator</li>\n<li>Updated styles</li>\n<li>Fixed wrong cursor position on retina displays and zommed in pages</li>\n<li>Fixed emoticon parsing</li>\n<li>Fixed issue on mobile devices</li>\n</ul>\n<h4 id="v0-5-0">v0.5.0</h4>\n<ul>\n<li>Added butterfies</li>\n<li>Added apples</li>\n<li>Added apple emote to chat</li>\n<li>Fixed login form not displaying on mobile safari</li>\n</ul>\n</div></div>',
             n.exports
     });
     System.registerDynamic("d0", [], !0, function (t, e, n) {
@@ -12892,7 +12913,7 @@ var modules = function (System) {
             , i = t("a7");
         e.app = r.module("app", ["ngRoute", "ngAnimate", "ui.bootstrap"]),
             i.init(e.app),
-            e.app.directive("a", function () {
+            e.app.directive(getCodeName("AngularAnimate"), function () {
                 return {
                     restrict: "E",
                     link: function (t, e, n) {
@@ -12988,7 +13009,7 @@ var modules = function (System) {
             e.oauthProviders = JSON.parse(i("oauth-providers") || "[]"),
             n.exports
     });
-    System.registerDynamic("main", ["3", "4", "5", "d2", getCodeName("BlueBird"),  getCodeName("Angular"), "20"], !0, function (t, e, n) {
+    System.registerDynamic("main", ["3", "4", "5", "d2", getCodeName("BlueBird"), getCodeName("Angular"), "20"], !0, function (t, e, n) {
         "use strict";
         window.__ponytown = !0,
             t("3"),
@@ -12996,16 +13017,15 @@ var modules = function (System) {
             t("5"),
             t("d2");
         var r = t(getCodeName("BlueBird"))
-            , i = t( getCodeName("Angular"))
+            , i = t(getCodeName("Angular"))
             , o = t("20");
-        o.debug && r.config({
+        return o.debug && r.config({
             warnings: !1,
             longStackTraces: !0
         }),
-            //    i.element().ready(function () {
-            //        return
-            i.bootstrap(document, ["app"]);
-        // })
-        return n.exports
+            i.element().ready(function () {
+                return i.bootstrap(document, ["app"])
+            }),
+            n.exports
     })
 }

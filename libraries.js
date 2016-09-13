@@ -10,7 +10,7 @@ var mdls = {
         executingRequire: true
     },
     "angular.js": {
-        name: "d3",
+        name: "d4",
         dependencies: [],
         executingRequire: false
     },
@@ -35,7 +35,7 @@ var mdls = {
         executingRequire: true
     },
     "lodash/lodash.js": {
-        name: "lodashjs",
+        name: "cb",
         dependencies: ["@empty"],
         executingRequire: true
     },
@@ -131,29 +131,38 @@ var mdls = {
         name: "26",
         passThrough: true,
         passTo: "lodash/lodash.js"
-    }, "BufferForTheBrowser": {
+    },
+    "BufferForTheBrowser": {
         name: "c5",
         passThrough: true,
         passTo: "feross/buffer/index.js"
-    }, "base64-js": {
+    },
+    "base64-js": {
         name: "bf",
         passThrough: true,
         passTo: "base64-js/lib/b64.js"
-    }, "ieee754": {
+    },
+    "ieee754": {
         name: "c1",
         passThrough: true,
         passTo: "feross/ieee754/index.js"
-    }, "isarray": {
+    },
+    "isarray": {
         name: "c3",
         passThrough: true,
         passTo: "juliangruber/isarray/index.js"
     },
     "gl-matrix": {
+        name: "5d"
+        passThrough: true,
+        passTo: "gl-matrix/src/gl-matrix.js"
+    },
+    "":{
         name: "5d",
         passThrough: true,
         passTo: "gl-matrix/src/gl-matrix.js"
     }
-}
+
 function getCodeName(readableName) {
     var name = mdls[readableName]
     return name ? name.name : readableName;
