@@ -158,11 +158,11 @@ var mdls = {
         passTo: "gl-matrix/src/gl-matrix.js"
     },
     "":{
-        name: "5d",
+        name: "fdg",
         passThrough: true,
         passTo: "gl-matrix/src/gl-matrix.js"
     }
-
+}
 function getCodeName(readableName) {
     var name = mdls[readableName]
     return name ? name.name : readableName;
