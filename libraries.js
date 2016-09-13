@@ -153,7 +153,7 @@ var mdls = {
         passTo: "juliangruber/isarray/index.js"
     },
     "gl-matrix": {
-        name: "5d"
+        name: "5d",
         passThrough: true,
         passTo: "gl-matrix/src/gl-matrix.js"
     },
