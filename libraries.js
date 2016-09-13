@@ -104,8 +104,85 @@ var mdls = {
         "name": "9b",
         "dependencies": ["gl-matrix/src/gl-matrix/common.js"],
         "executingRequire": true
+    },
+    "gl-fbo/fbo.js": {
+        //https://github.com/stackgl/gl-fbo/blob/master/fbo.js
+        "name": "5a",
+        "dependencies": ["gl-texture2d"],
+        "executingRequire": true
+    },
+    "gl-texture2d/texture.js": {
+        //https://github.com/stackgl/gl-texture2d/blob/master/texture.js
+        "name": "55",
+        "dependencies": ["ndarray", "ndarray-ops", "typedarray-pool"],
+        "executingRequire": true
+    },
+    "ndarray/ndarray.js": {
+        //https://github.com/scijs/ndarray/blob/master/ndarray.js
+        "name": "af",
+        "dependencies": ["iota-array", "is-buffer"],
+        "executingRequire": true
+    },
+    "iota-array/iota.js": {
+        //https://github.com/scijs/iota-array/blob/master/iota.js
+        "name": "ab",
+        "dependencies": [],
+        "executingRequire": true
+    },
+    "is-buffer/index.js": {
+        //https://github.com/feross/is-buffer/blob/master/index.js
+        "name": "ad",
+        "dependencies": [],
+        "executingRequire": true
+    },
+    "ndarray-ops/ndarray-ops.js": {
+        //https://github.com/scijs/ndarray-ops/blob/master/ndarray-ops.js
+        "name": "b9",
+        "dependencies": ["cwise-compiler"],
+        "executingRequire": true
+    },
+    "cwise-compiler/compiler.js": {
+        //https://github.com/scijs/cwise-compiler/blob/master/compiler.js
+        "name": "b7",
+        "dependencies": ["cwise-compiler/lib/thunk.js"],
+        "executingRequire": true
+    },
+    "cwise-compiler/lib/thunk.js": {
+        //https://github.com/scijs/cwise-compiler/blob/master/lib/thunk.js
+        "name": "b6",
+        "dependencies": ["cwise-compiler/lib/compile.js"],
+        "executingRequire": true
+    },
+    "cwise-compiler/lib/compile.js": {
+        //https://github.com/scijs/cwise-compiler/blob/master/lib/compile.js
+        "name": "b5",
+        "dependencies": ["uniq"],
+        "executingRequire": true
+    },
+    "uniq/uniq.js": {
+        //https://github.com/mikolalysenko/uniq/blob/master/uniq.js
+        "name": "b0",
+        "dependencies": [],
+        "executingRequire": true
+    },
+    "typedarray-pool/pool.js": {
+        //https://github.com/mikolalysenko/typedarray-pool/blob/master/pool.js
+        "name": "c7",
+        "dependencies": ["bit-twiddle", "dup"],
+        "executingRequire": true
+    },
+    "bit-twiddle/twiddle.js": {
+        //https://github.com/mikolalysenko/bit-twiddle/blob/master/twiddle.js
+        "name": "ba",
+        "dependencies": [],
+        "executingRequire": true
+    },
+    "dup/dup.js": {
+        //https://github.com/scijs/dup/blob/master/dup.js
+        "name": "bc",
+        "dependencies": [],
+        "executingRequire": true
     }
-
     , //Passthroughs
     Angular: {
         name: "7",
@@ -157,7 +234,62 @@ var mdls = {
         passThrough: true,
         passTo: "gl-matrix/src/gl-matrix.js"
     },
-    "":{
+    "gl-fbo": {
+        name: "5b",
+        passThrough: true,
+        passTo: "gl-fbo/fbo.js"
+    },
+    "gl-texture2d": {
+        name: "59",
+        passThrough: true,
+        passTo: "gl-texture2d/texture.js"
+    },
+    "ndarray": {
+        name: "56",
+        passThrough: true,
+        passTo: "ndarray/ndarray.js"
+    },
+    "ndarray-ops": {
+        name: "57",
+        passThrough: true,
+        passTo: "ndarray-ops/ndarray-ops.js"
+    },
+    "typedarray-pool": {
+        name: "58",
+        passThrough: true,
+        passTo: "typedarray-pool/pool.js"
+    },
+    "iota-array": {
+        name: "ac",
+        passThrough: true,
+        passTo: "iota-array/iota.js"
+    },
+    "is-buffer": {
+        name: "ae",
+        passThrough: true,
+        passTo: "is-buffer/index.js"
+    },
+    "cwise-compiler": {
+        name: "b8",
+        passThrough: true,
+        passTo: "cwise-compiler/compiler.js"
+    },
+    "uniq": {
+        name: "b1",
+        passThrough: true,
+        passTo: "uniq/uniq.js"
+    },
+    "bit-twiddle": {
+        name: "bb",
+        passThrough: true,
+        passTo: "bit-twiddle/twiddle.js"
+    },
+    "dup": {
+        name: "bd",
+        passThrough: true,
+        passTo: "dup/dup.js"
+    },
+    "": {
         name: "fdg",
         passThrough: true,
         passTo: "gl-matrix/src/gl-matrix.js"
@@ -57160,7 +57292,7 @@ function getLibraries(System) {
              *
              * @param {Type} type Array type, such as Float32Array or Array
              */
-            glMatrix.setMatrixArrayType = function(type) {
+            glMatrix.setMatrixArrayType = function (type) {
                 glMatrix.ARRAY_TYPE = type;
             }
 
@@ -57171,7 +57303,7 @@ function getLibraries(System) {
              *
              * @param {Number} a Angle in Degrees
              */
-            glMatrix.toRadian = function(a){
+            glMatrix.toRadian = function (a) {
                 return a * degree;
             }
 
@@ -57184,8 +57316,8 @@ function getLibraries(System) {
              * @param {Number} b The second number to test.
              * @returns {Boolean} True if the numbers are approximately equal, false otherwise.
              */
-            glMatrix.equals = function(a, b) {
-                return Math.abs(a - b) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a), Math.abs(b));
+            glMatrix.equals = function (a, b) {
+                return Math.abs(a - b) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
             }
 
             module.exports = glMatrix;
@@ -57224,7 +57356,7 @@ function getLibraries(System) {
              *
              * @returns {mat2} a new 2x2 matrix
              */
-            mat2.create = function() {
+            mat2.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = 1;
                 out[1] = 0;
@@ -57239,7 +57371,7 @@ function getLibraries(System) {
              * @param {mat2} a matrix to clone
              * @returns {mat2} a new 2x2 matrix
              */
-            mat2.clone = function(a) {
+            mat2.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -57255,7 +57387,7 @@ function getLibraries(System) {
              * @param {mat2} a the source matrix
              * @returns {mat2} out
              */
-            mat2.copy = function(out, a) {
+            mat2.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -57269,7 +57401,7 @@ function getLibraries(System) {
              * @param {mat2} out the receiving matrix
              * @returns {mat2} out
              */
-            mat2.identity = function(out) {
+            mat2.identity = function (out) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -57286,7 +57418,7 @@ function getLibraries(System) {
              * @param {Number} m11 Component in column 1, row 1 position (index 3)
              * @returns {mat2} out A new 2x2 matrix
              */
-            mat2.fromValues = function(m00, m01, m10, m11) {
+            mat2.fromValues = function (m00, m01, m10, m11) {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = m00;
                 out[1] = m01;
@@ -57305,7 +57437,7 @@ function getLibraries(System) {
              * @param {Number} m11 Component in column 1, row 1 position (index 3)
              * @returns {mat2} out
              */
-            mat2.set = function(out, m00, m01, m10, m11) {
+            mat2.set = function (out, m00, m01, m10, m11) {
                 out[0] = m00;
                 out[1] = m01;
                 out[2] = m10;
@@ -57321,7 +57453,7 @@ function getLibraries(System) {
              * @param {mat2} a the source matrix
              * @returns {mat2} out
              */
-            mat2.transpose = function(out, a) {
+            mat2.transpose = function (out, a) {
                 // If we are transposing ourselves we can skip a few steps but have to cache some values
                 if (out === a) {
                     var a1 = a[1];
@@ -57344,7 +57476,7 @@ function getLibraries(System) {
              * @param {mat2} a the source matrix
              * @returns {mat2} out
              */
-            mat2.invert = function(out, a) {
+            mat2.invert = function (out, a) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
 
                 // Calculate the determinant
@@ -57355,10 +57487,10 @@ function getLibraries(System) {
                 }
                 det = 1.0 / det;
 
-                out[0] =  a3 * det;
+                out[0] = a3 * det;
                 out[1] = -a1 * det;
                 out[2] = -a2 * det;
-                out[3] =  a0 * det;
+                out[3] = a0 * det;
 
                 return out;
             };
@@ -57370,13 +57502,13 @@ function getLibraries(System) {
              * @param {mat2} a the source matrix
              * @returns {mat2} out
              */
-            mat2.adjoint = function(out, a) {
+            mat2.adjoint = function (out, a) {
                 // Caching this value is nessecary if out == a
                 var a0 = a[0];
-                out[0] =  a[3];
+                out[0] = a[3];
                 out[1] = -a[1];
                 out[2] = -a[2];
-                out[3] =  a0;
+                out[3] = a0;
 
                 return out;
             };
@@ -57427,8 +57559,8 @@ function getLibraries(System) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
                     s = Math.sin(rad),
                     c = Math.cos(rad);
-                out[0] = a0 *  c + a2 * s;
-                out[1] = a1 *  c + a3 * s;
+                out[0] = a0 * c + a2 * s;
+                out[1] = a1 * c + a3 * s;
                 out[2] = a0 * -s + a2 * c;
                 out[3] = a1 * -s + a3 * c;
                 return out;
@@ -57442,7 +57574,7 @@ function getLibraries(System) {
              * @param {vec2} v the vec2 to scale the matrix by
              * @returns {mat2} out
              **/
-            mat2.scale = function(out, a, v) {
+            mat2.scale = function (out, a, v) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
                     v0 = v[0], v1 = v[1];
                 out[0] = a0 * v0;
@@ -57463,7 +57595,7 @@ function getLibraries(System) {
              * @param {Number} rad the angle to rotate the matrix by
              * @returns {mat2} out
              */
-            mat2.fromRotation = function(out, rad) {
+            mat2.fromRotation = function (out, rad) {
                 var s = Math.sin(rad),
                     c = Math.cos(rad);
                 out[0] = c;
@@ -57484,7 +57616,7 @@ function getLibraries(System) {
              * @param {vec2} v Scaling vector
              * @returns {mat2} out
              */
-            mat2.fromScaling = function(out, v) {
+            mat2.fromScaling = function (out, v) {
                 out[0] = v[0];
                 out[1] = 0;
                 out[2] = 0;
@@ -57509,7 +57641,7 @@ function getLibraries(System) {
              * @returns {Number} Frobenius norm
              */
             mat2.frob = function (a) {
-                return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)))
+                return (Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2)))
             };
 
             /**
@@ -57521,7 +57653,7 @@ function getLibraries(System) {
              */
 
             mat2.LDU = function (L, D, U, a) {
-                L[2] = a[2]/a[0];
+                L[2] = a[2] / a[0];
                 U[0] = a[0];
                 U[1] = a[1];
                 U[3] = a[3] - L[2] * U[1];
@@ -57536,7 +57668,7 @@ function getLibraries(System) {
              * @param {mat2} b the second operand
              * @returns {mat2} out
              */
-            mat2.add = function(out, a, b) {
+            mat2.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 out[2] = a[2] + b[2];
@@ -57552,7 +57684,7 @@ function getLibraries(System) {
              * @param {mat2} b the second operand
              * @returns {mat2} out
              */
-            mat2.subtract = function(out, a, b) {
+            mat2.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 out[2] = a[2] - b[2];
@@ -57587,10 +57719,10 @@ function getLibraries(System) {
             mat2.equals = function (a, b) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
                 var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-                Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-                Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+                Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+                Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)));
             };
 
             /**
@@ -57601,7 +57733,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the matrix's elements by
              * @returns {mat2} out
              */
-            mat2.multiplyScalar = function(out, a, b) {
+            mat2.multiplyScalar = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 out[2] = a[2] * b;
@@ -57618,7 +57750,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b's elements by before adding
              * @returns {mat2} out
              */
-            mat2.multiplyScalarAndAdd = function(out, a, b, scale) {
+            mat2.multiplyScalarAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 out[2] = a[2] + (b[2] * scale);
@@ -57677,7 +57809,7 @@ function getLibraries(System) {
              *
              * @returns {mat2d} a new 2x3 matrix
              */
-            mat2d.create = function() {
+            mat2d.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(6);
                 out[0] = 1;
                 out[1] = 0;
@@ -57694,7 +57826,7 @@ function getLibraries(System) {
              * @param {mat2d} a matrix to clone
              * @returns {mat2d} a new 2x3 matrix
              */
-            mat2d.clone = function(a) {
+            mat2d.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(6);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -57712,7 +57844,7 @@ function getLibraries(System) {
              * @param {mat2d} a the source matrix
              * @returns {mat2d} out
              */
-            mat2d.copy = function(out, a) {
+            mat2d.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -57728,7 +57860,7 @@ function getLibraries(System) {
              * @param {mat2d} out the receiving matrix
              * @returns {mat2d} out
              */
-            mat2d.identity = function(out) {
+            mat2d.identity = function (out) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -57749,7 +57881,7 @@ function getLibraries(System) {
              * @param {Number} ty Component TY (index 5)
              * @returns {mat2d} A new mat2d
              */
-            mat2d.fromValues = function(a, b, c, d, tx, ty) {
+            mat2d.fromValues = function (a, b, c, d, tx, ty) {
                 var out = new glMatrix.ARRAY_TYPE(6);
                 out[0] = a;
                 out[1] = b;
@@ -57772,7 +57904,7 @@ function getLibraries(System) {
              * @param {Number} ty Component TY (index 5)
              * @returns {mat2d} out
              */
-            mat2d.set = function(out, a, b, c, d, tx, ty) {
+            mat2d.set = function (out, a, b, c, d, tx, ty) {
                 out[0] = a;
                 out[1] = b;
                 out[2] = c;
@@ -57789,12 +57921,12 @@ function getLibraries(System) {
              * @param {mat2d} a the source matrix
              * @returns {mat2d} out
              */
-            mat2d.invert = function(out, a) {
+            mat2d.invert = function (out, a) {
                 var aa = a[0], ab = a[1], ac = a[2], ad = a[3],
                     atx = a[4], aty = a[5];
 
                 var det = aa * ad - ab * ac;
-                if(!det){
+                if (!det) {
                     return null;
                 }
                 det = 1.0 / det;
@@ -57856,8 +57988,8 @@ function getLibraries(System) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
                     s = Math.sin(rad),
                     c = Math.cos(rad);
-                out[0] = a0 *  c + a2 * s;
-                out[1] = a1 *  c + a3 * s;
+                out[0] = a0 * c + a2 * s;
+                out[1] = a1 * c + a3 * s;
                 out[2] = a0 * -s + a2 * c;
                 out[3] = a1 * -s + a3 * c;
                 out[4] = a4;
@@ -57873,7 +58005,7 @@ function getLibraries(System) {
              * @param {vec2} v the vec2 to scale the matrix by
              * @returns {mat2d} out
              **/
-            mat2d.scale = function(out, a, v) {
+            mat2d.scale = function (out, a, v) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
                     v0 = v[0], v1 = v[1];
                 out[0] = a0 * v0;
@@ -57893,7 +58025,7 @@ function getLibraries(System) {
              * @param {vec2} v the vec2 to translate the matrix by
              * @returns {mat2d} out
              **/
-            mat2d.translate = function(out, a, v) {
+            mat2d.translate = function (out, a, v) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5],
                     v0 = v[0], v1 = v[1];
                 out[0] = a0;
@@ -57916,7 +58048,7 @@ function getLibraries(System) {
              * @param {Number} rad the angle to rotate the matrix by
              * @returns {mat2d} out
              */
-            mat2d.fromRotation = function(out, rad) {
+            mat2d.fromRotation = function (out, rad) {
                 var s = Math.sin(rad), c = Math.cos(rad);
                 out[0] = c;
                 out[1] = s;
@@ -57938,7 +58070,7 @@ function getLibraries(System) {
              * @param {vec2} v Scaling vector
              * @returns {mat2d} out
              */
-            mat2d.fromScaling = function(out, v) {
+            mat2d.fromScaling = function (out, v) {
                 out[0] = v[0];
                 out[1] = 0;
                 out[2] = 0;
@@ -57959,7 +58091,7 @@ function getLibraries(System) {
              * @param {vec2} v Translation vector
              * @returns {mat2d} out
              */
-            mat2d.fromTranslation = function(out, v) {
+            mat2d.fromTranslation = function (out, v) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -57987,7 +58119,7 @@ function getLibraries(System) {
              * @returns {Number} Frobenius norm
              */
             mat2d.frob = function (a) {
-                return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
+                return (Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + 1))
             };
 
             /**
@@ -57998,7 +58130,7 @@ function getLibraries(System) {
              * @param {mat2d} b the second operand
              * @returns {mat2d} out
              */
-            mat2d.add = function(out, a, b) {
+            mat2d.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 out[2] = a[2] + b[2];
@@ -58016,7 +58148,7 @@ function getLibraries(System) {
              * @param {mat2d} b the second operand
              * @returns {mat2d} out
              */
-            mat2d.subtract = function(out, a, b) {
+            mat2d.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 out[2] = a[2] - b[2];
@@ -58040,7 +58172,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the matrix's elements by
              * @returns {mat2d} out
              */
-            mat2d.multiplyScalar = function(out, a, b) {
+            mat2d.multiplyScalar = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 out[2] = a[2] * b;
@@ -58059,7 +58191,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b's elements by before adding
              * @returns {mat2d} out
              */
-            mat2d.multiplyScalarAndAdd = function(out, a, b, scale) {
+            mat2d.multiplyScalarAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 out[2] = a[2] + (b[2] * scale);
@@ -58090,12 +58222,12 @@ function getLibraries(System) {
             mat2d.equals = function (a, b) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5];
                 var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5];
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-                Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-                Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
-                Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
-                Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+                Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+                Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+                Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+                Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)));
             };
 
             module.exports = mat2d;
@@ -58134,7 +58266,7 @@ function getLibraries(System) {
              *
              * @returns {mat3} a new 3x3 matrix
              */
-            mat3.create = function() {
+            mat3.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(9);
                 out[0] = 1;
                 out[1] = 0;
@@ -58155,7 +58287,7 @@ function getLibraries(System) {
              * @param {mat4} a   the source 4x4 matrix
              * @returns {mat3} out
              */
-            mat3.fromMat4 = function(out, a) {
+            mat3.fromMat4 = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -58174,7 +58306,7 @@ function getLibraries(System) {
              * @param {mat3} a matrix to clone
              * @returns {mat3} a new 3x3 matrix
              */
-            mat3.clone = function(a) {
+            mat3.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(9);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -58195,7 +58327,7 @@ function getLibraries(System) {
              * @param {mat3} a the source matrix
              * @returns {mat3} out
              */
-            mat3.copy = function(out, a) {
+            mat3.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -58222,7 +58354,7 @@ function getLibraries(System) {
              * @param {Number} m22 Component in column 2, row 2 position (index 8)
              * @returns {mat3} A new mat3
              */
-            mat3.fromValues = function(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+            mat3.fromValues = function (m00, m01, m02, m10, m11, m12, m20, m21, m22) {
                 var out = new glMatrix.ARRAY_TYPE(9);
                 out[0] = m00;
                 out[1] = m01;
@@ -58251,7 +58383,7 @@ function getLibraries(System) {
              * @param {Number} m22 Component in column 2, row 2 position (index 8)
              * @returns {mat3} out
              */
-            mat3.set = function(out, m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+            mat3.set = function (out, m00, m01, m02, m10, m11, m12, m20, m21, m22) {
                 out[0] = m00;
                 out[1] = m01;
                 out[2] = m02;
@@ -58270,7 +58402,7 @@ function getLibraries(System) {
              * @param {mat3} out the receiving matrix
              * @returns {mat3} out
              */
-            mat3.identity = function(out) {
+            mat3.identity = function (out) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -58290,7 +58422,7 @@ function getLibraries(System) {
              * @param {mat3} a the source matrix
              * @returns {mat3} out
              */
-            mat3.transpose = function(out, a) {
+            mat3.transpose = function (out, a) {
                 // If we are transposing ourselves we can skip a few steps but have to cache some values
                 if (out === a) {
                     var a01 = a[1], a02 = a[2], a12 = a[5];
@@ -58322,7 +58454,7 @@ function getLibraries(System) {
              * @param {mat3} a the source matrix
              * @returns {mat3} out
              */
-            mat3.invert = function(out, a) {
+            mat3.invert = function (out, a) {
                 var a00 = a[0], a01 = a[1], a02 = a[2],
                     a10 = a[3], a11 = a[4], a12 = a[5],
                     a20 = a[6], a21 = a[7], a22 = a[8],
@@ -58358,7 +58490,7 @@ function getLibraries(System) {
              * @param {mat3} a the source matrix
              * @returns {mat3} out
              */
-            mat3.adjoint = function(out, a) {
+            mat3.adjoint = function (out, a) {
                 var a00 = a[0], a01 = a[1], a02 = a[2],
                     a10 = a[3], a11 = a[4], a12 = a[5],
                     a20 = a[6], a21 = a[7], a22 = a[8];
@@ -58434,7 +58566,7 @@ function getLibraries(System) {
              * @param {vec2} v vector to translate by
              * @returns {mat3} out
              */
-            mat3.translate = function(out, a, v) {
+            mat3.translate = function (out, a, v) {
                 var a00 = a[0], a01 = a[1], a02 = a[2],
                     a10 = a[3], a11 = a[4], a12 = a[5],
                     a20 = a[6], a21 = a[7], a22 = a[8],
@@ -58492,7 +58624,7 @@ function getLibraries(System) {
              * @param {vec2} v the vec2 to scale the matrix by
              * @returns {mat3} out
              **/
-            mat3.scale = function(out, a, v) {
+            mat3.scale = function (out, a, v) {
                 var x = v[0], y = v[1];
 
                 out[0] = x * a[0];
@@ -58520,7 +58652,7 @@ function getLibraries(System) {
              * @param {vec2} v Translation vector
              * @returns {mat3} out
              */
-            mat3.fromTranslation = function(out, v) {
+            mat3.fromTranslation = function (out, v) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -58544,7 +58676,7 @@ function getLibraries(System) {
              * @param {Number} rad the angle to rotate the matrix by
              * @returns {mat3} out
              */
-            mat3.fromRotation = function(out, rad) {
+            mat3.fromRotation = function (out, rad) {
                 var s = Math.sin(rad), c = Math.cos(rad);
 
                 out[0] = c;
@@ -58572,7 +58704,7 @@ function getLibraries(System) {
              * @param {vec2} v Scaling vector
              * @returns {mat3} out
              */
-            mat3.fromScaling = function(out, v) {
+            mat3.fromScaling = function (out, v) {
                 out[0] = v[0];
                 out[1] = 0;
                 out[2] = 0;
@@ -58594,7 +58726,7 @@ function getLibraries(System) {
              * @param {mat2d} a the matrix to copy
              * @returns {mat3} out
              **/
-            mat3.fromMat2d = function(out, a) {
+            mat3.fromMat2d = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = 0;
@@ -58717,7 +58849,7 @@ function getLibraries(System) {
              * @returns {Number} Frobenius norm
              */
             mat3.frob = function (a) {
-                return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
+                return (Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2)))
             };
 
             /**
@@ -58728,7 +58860,7 @@ function getLibraries(System) {
              * @param {mat3} b the second operand
              * @returns {mat3} out
              */
-            mat3.add = function(out, a, b) {
+            mat3.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 out[2] = a[2] + b[2];
@@ -58749,7 +58881,7 @@ function getLibraries(System) {
              * @param {mat3} b the second operand
              * @returns {mat3} out
              */
-            mat3.subtract = function(out, a, b) {
+            mat3.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 out[2] = a[2] - b[2];
@@ -58776,7 +58908,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the matrix's elements by
              * @returns {mat3} out
              */
-            mat3.multiplyScalar = function(out, a, b) {
+            mat3.multiplyScalar = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 out[2] = a[2] * b;
@@ -58798,7 +58930,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b's elements by before adding
              * @returns {mat3} out
              */
-            mat3.multiplyScalarAndAdd = function(out, a, b, scale) {
+            mat3.multiplyScalarAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 out[2] = a[2] + (b[2] * scale);
@@ -58834,15 +58966,15 @@ function getLibraries(System) {
             mat3.equals = function (a, b) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3], a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7], a8 = a[8];
                 var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = a[6], b7 = b[7], b8 = b[8];
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-                Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-                Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
-                Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
-                Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
-                Math.abs(a6 - b6) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
-                Math.abs(a7 - b7) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
-                Math.abs(a8 - b8) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a8), Math.abs(b8)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+                Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+                Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+                Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+                Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
+                Math.abs(a6 - b6) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
+                Math.abs(a7 - b7) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
+                Math.abs(a8 - b8) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a8), Math.abs(b8)));
             };
 
 
@@ -58885,7 +59017,7 @@ function getLibraries(System) {
              *
              * @returns {mat4} a new 4x4 matrix
              */
-            mat4.create = function() {
+            mat4.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(16);
                 out[0] = 1;
                 out[1] = 0;
@@ -58912,7 +59044,7 @@ function getLibraries(System) {
              * @param {mat4} a matrix to clone
              * @returns {mat4} a new 4x4 matrix
              */
-            mat4.clone = function(a) {
+            mat4.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(16);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -58940,7 +59072,7 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.copy = function(out, a) {
+            mat4.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -58981,7 +59113,7 @@ function getLibraries(System) {
              * @param {Number} m33 Component in column 3, row 3 position (index 15)
              * @returns {mat4} A new mat4
              */
-            mat4.fromValues = function(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+            mat4.fromValues = function (m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
                 var out = new glMatrix.ARRAY_TYPE(16);
                 out[0] = m00;
                 out[1] = m01;
@@ -59024,7 +59156,7 @@ function getLibraries(System) {
              * @param {Number} m33 Component in column 3, row 3 position (index 15)
              * @returns {mat4} out
              */
-            mat4.set = function(out, m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+            mat4.set = function (out, m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
                 out[0] = m00;
                 out[1] = m01;
                 out[2] = m02;
@@ -59051,7 +59183,7 @@ function getLibraries(System) {
              * @param {mat4} out the receiving matrix
              * @returns {mat4} out
              */
-            mat4.identity = function(out) {
+            mat4.identity = function (out) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -59078,7 +59210,7 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.scalar.transpose = function(out, a) {
+            mat4.scalar.transpose = function (out, a) {
                 // If we are transposing ourselves we can skip a few steps but have to cache some values
                 if (out === a) {
                     var a01 = a[1], a02 = a[2], a03 = a[3],
@@ -59126,7 +59258,7 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.SIMD.transpose = function(out, a) {
+            mat4.SIMD.transpose = function (out, a) {
                 var a0, a1, a2, a3,
                     tmp01, tmp23,
                     out0, out1, out2, out3;
@@ -59138,16 +59270,16 @@ function getLibraries(System) {
 
                 tmp01 = SIMD.Float32x4.shuffle(a0, a1, 0, 1, 4, 5);
                 tmp23 = SIMD.Float32x4.shuffle(a2, a3, 0, 1, 4, 5);
-                out0  = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
-                out1  = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
-                SIMD.Float32x4.store(out, 0,  out0);
-                SIMD.Float32x4.store(out, 4,  out1);
+                out0 = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
+                out1 = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
+                SIMD.Float32x4.store(out, 0, out0);
+                SIMD.Float32x4.store(out, 4, out1);
 
                 tmp01 = SIMD.Float32x4.shuffle(a0, a1, 2, 3, 6, 7);
                 tmp23 = SIMD.Float32x4.shuffle(a2, a3, 2, 3, 6, 7);
-                out2  = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
-                out3  = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
-                SIMD.Float32x4.store(out, 8,  out2);
+                out2 = SIMD.Float32x4.shuffle(tmp01, tmp23, 0, 2, 4, 6);
+                out3 = SIMD.Float32x4.shuffle(tmp01, tmp23, 1, 3, 5, 7);
+                SIMD.Float32x4.store(out, 8, out2);
                 SIMD.Float32x4.store(out, 12, out3);
 
                 return out;
@@ -59169,7 +59301,7 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.scalar.invert = function(out, a) {
+            mat4.scalar.invert = function (out, a) {
                 var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
                     a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
                     a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
@@ -59223,7 +59355,7 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.SIMD.invert = function(out, a) {
+            mat4.SIMD.invert = function (out, a) {
                 var row0, row1, row2, row3,
                     tmp1,
                     minor0, minor1, minor2, minor3,
@@ -59243,75 +59375,75 @@ function getLibraries(System) {
                 row2 = SIMD.Float32x4.shuffle(tmp1, row3, 0, 2, 4, 6);
                 row3 = SIMD.Float32x4.shuffle(row3, tmp1, 1, 3, 5, 7);
 
-                tmp1   = SIMD.Float32x4.mul(row2, row3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row2, row3);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor0 = SIMD.Float32x4.mul(row1, tmp1);
                 minor1 = SIMD.Float32x4.mul(row0, tmp1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row1, tmp1), minor0);
                 minor1 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor1);
                 minor1 = SIMD.Float32x4.swizzle(minor1, 2, 3, 0, 1);
 
-                tmp1   = SIMD.Float32x4.mul(row1, row2);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row1, row2);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor0);
                 minor3 = SIMD.Float32x4.mul(row0, tmp1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row3, tmp1));
                 minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor3);
                 minor3 = SIMD.Float32x4.swizzle(minor3, 2, 3, 0, 1);
 
-                tmp1   = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
-                row2   = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                row2 = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor0);
                 minor2 = SIMD.Float32x4.mul(row0, tmp1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row2, tmp1));
                 minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor2);
                 minor2 = SIMD.Float32x4.swizzle(minor2, 2, 3, 0, 1);
 
-                tmp1   = SIMD.Float32x4.mul(row0, row1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row0, row1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor2);
                 minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row2, tmp1), minor3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row3, tmp1), minor2);
                 minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row2, tmp1));
 
-                tmp1   = SIMD.Float32x4.mul(row0, row3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row0, row3);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row2, tmp1));
                 minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor2);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor1);
                 minor2 = SIMD.Float32x4.sub(minor2, SIMD.Float32x4.mul(row1, tmp1));
 
-                tmp1   = SIMD.Float32x4.mul(row0, row2);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row0, row2);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor1);
                 minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row1, tmp1));
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row3, tmp1));
                 minor3 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor3);
 
                 // Compute matrix determinant
-                det   = SIMD.Float32x4.mul(row0, minor0);
-                det   = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 2, 3, 0, 1), det);
-                det   = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 1, 0, 3, 2), det);
-                tmp1  = SIMD.Float32x4.reciprocalApproximation(det);
-                det   = SIMD.Float32x4.sub(
+                det = SIMD.Float32x4.mul(row0, minor0);
+                det = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 2, 3, 0, 1), det);
+                det = SIMD.Float32x4.add(SIMD.Float32x4.swizzle(det, 1, 0, 3, 2), det);
+                tmp1 = SIMD.Float32x4.reciprocalApproximation(det);
+                det = SIMD.Float32x4.sub(
                     SIMD.Float32x4.add(tmp1, tmp1),
                     SIMD.Float32x4.mul(det, SIMD.Float32x4.mul(tmp1, tmp1)));
-                det   = SIMD.Float32x4.swizzle(det, 0, 0, 0, 0);
+                det = SIMD.Float32x4.swizzle(det, 0, 0, 0, 0);
                 if (!det) {
                     return null;
                 }
 
                 // Compute matrix inverse
-                SIMD.Float32x4.store(out, 0,  SIMD.Float32x4.mul(det, minor0));
-                SIMD.Float32x4.store(out, 4,  SIMD.Float32x4.mul(det, minor1));
-                SIMD.Float32x4.store(out, 8,  SIMD.Float32x4.mul(det, minor2));
+                SIMD.Float32x4.store(out, 0, SIMD.Float32x4.mul(det, minor0));
+                SIMD.Float32x4.store(out, 4, SIMD.Float32x4.mul(det, minor1));
+                SIMD.Float32x4.store(out, 8, SIMD.Float32x4.mul(det, minor2));
                 SIMD.Float32x4.store(out, 12, SIMD.Float32x4.mul(det, minor3));
                 return out;
             }
@@ -59332,28 +59464,28 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.scalar.adjoint = function(out, a) {
+            mat4.scalar.adjoint = function (out, a) {
                 var a00 = a[0], a01 = a[1], a02 = a[2], a03 = a[3],
                     a10 = a[4], a11 = a[5], a12 = a[6], a13 = a[7],
                     a20 = a[8], a21 = a[9], a22 = a[10], a23 = a[11],
                     a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
 
-                out[0]  =  (a11 * (a22 * a33 - a23 * a32) - a21 * (a12 * a33 - a13 * a32) + a31 * (a12 * a23 - a13 * a22));
-                out[1]  = -(a01 * (a22 * a33 - a23 * a32) - a21 * (a02 * a33 - a03 * a32) + a31 * (a02 * a23 - a03 * a22));
-                out[2]  =  (a01 * (a12 * a33 - a13 * a32) - a11 * (a02 * a33 - a03 * a32) + a31 * (a02 * a13 - a03 * a12));
-                out[3]  = -(a01 * (a12 * a23 - a13 * a22) - a11 * (a02 * a23 - a03 * a22) + a21 * (a02 * a13 - a03 * a12));
-                out[4]  = -(a10 * (a22 * a33 - a23 * a32) - a20 * (a12 * a33 - a13 * a32) + a30 * (a12 * a23 - a13 * a22));
-                out[5]  =  (a00 * (a22 * a33 - a23 * a32) - a20 * (a02 * a33 - a03 * a32) + a30 * (a02 * a23 - a03 * a22));
-                out[6]  = -(a00 * (a12 * a33 - a13 * a32) - a10 * (a02 * a33 - a03 * a32) + a30 * (a02 * a13 - a03 * a12));
-                out[7]  =  (a00 * (a12 * a23 - a13 * a22) - a10 * (a02 * a23 - a03 * a22) + a20 * (a02 * a13 - a03 * a12));
-                out[8]  =  (a10 * (a21 * a33 - a23 * a31) - a20 * (a11 * a33 - a13 * a31) + a30 * (a11 * a23 - a13 * a21));
-                out[9]  = -(a00 * (a21 * a33 - a23 * a31) - a20 * (a01 * a33 - a03 * a31) + a30 * (a01 * a23 - a03 * a21));
-                out[10] =  (a00 * (a11 * a33 - a13 * a31) - a10 * (a01 * a33 - a03 * a31) + a30 * (a01 * a13 - a03 * a11));
+                out[0] = (a11 * (a22 * a33 - a23 * a32) - a21 * (a12 * a33 - a13 * a32) + a31 * (a12 * a23 - a13 * a22));
+                out[1] = -(a01 * (a22 * a33 - a23 * a32) - a21 * (a02 * a33 - a03 * a32) + a31 * (a02 * a23 - a03 * a22));
+                out[2] = (a01 * (a12 * a33 - a13 * a32) - a11 * (a02 * a33 - a03 * a32) + a31 * (a02 * a13 - a03 * a12));
+                out[3] = -(a01 * (a12 * a23 - a13 * a22) - a11 * (a02 * a23 - a03 * a22) + a21 * (a02 * a13 - a03 * a12));
+                out[4] = -(a10 * (a22 * a33 - a23 * a32) - a20 * (a12 * a33 - a13 * a32) + a30 * (a12 * a23 - a13 * a22));
+                out[5] = (a00 * (a22 * a33 - a23 * a32) - a20 * (a02 * a33 - a03 * a32) + a30 * (a02 * a23 - a03 * a22));
+                out[6] = -(a00 * (a12 * a33 - a13 * a32) - a10 * (a02 * a33 - a03 * a32) + a30 * (a02 * a13 - a03 * a12));
+                out[7] = (a00 * (a12 * a23 - a13 * a22) - a10 * (a02 * a23 - a03 * a22) + a20 * (a02 * a13 - a03 * a12));
+                out[8] = (a10 * (a21 * a33 - a23 * a31) - a20 * (a11 * a33 - a13 * a31) + a30 * (a11 * a23 - a13 * a21));
+                out[9] = -(a00 * (a21 * a33 - a23 * a31) - a20 * (a01 * a33 - a03 * a31) + a30 * (a01 * a23 - a03 * a21));
+                out[10] = (a00 * (a11 * a33 - a13 * a31) - a10 * (a01 * a33 - a03 * a31) + a30 * (a01 * a13 - a03 * a11));
                 out[11] = -(a00 * (a11 * a23 - a13 * a21) - a10 * (a01 * a23 - a03 * a21) + a20 * (a01 * a13 - a03 * a11));
                 out[12] = -(a10 * (a21 * a32 - a22 * a31) - a20 * (a11 * a32 - a12 * a31) + a30 * (a11 * a22 - a12 * a21));
-                out[13] =  (a00 * (a21 * a32 - a22 * a31) - a20 * (a01 * a32 - a02 * a31) + a30 * (a01 * a22 - a02 * a21));
+                out[13] = (a00 * (a21 * a32 - a22 * a31) - a20 * (a01 * a32 - a02 * a31) + a30 * (a01 * a22 - a02 * a21));
                 out[14] = -(a00 * (a11 * a32 - a12 * a31) - a10 * (a01 * a32 - a02 * a31) + a30 * (a01 * a12 - a02 * a11));
-                out[15] =  (a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11));
+                out[15] = (a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11));
                 return out;
             };
 
@@ -59364,7 +59496,7 @@ function getLibraries(System) {
              * @param {mat4} a the source matrix
              * @returns {mat4} out
              */
-            mat4.SIMD.adjoint = function(out, a) {
+            mat4.SIMD.adjoint = function (out, a) {
                 var a0, a1, a2, a3;
                 var row0, row1, row2, row3;
                 var tmp1;
@@ -59386,61 +59518,61 @@ function getLibraries(System) {
                 row2 = SIMD.Float32x4.shuffle(tmp1, row3, 0, 2, 4, 6);
                 row3 = SIMD.Float32x4.shuffle(row3, tmp1, 1, 3, 5, 7);
 
-                tmp1   = SIMD.Float32x4.mul(row2, row3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row2, row3);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor0 = SIMD.Float32x4.mul(row1, tmp1);
                 minor1 = SIMD.Float32x4.mul(row0, tmp1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row1, tmp1), minor0);
                 minor1 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor1);
                 minor1 = SIMD.Float32x4.swizzle(minor1, 2, 3, 0, 1);
 
-                tmp1   = SIMD.Float32x4.mul(row1, row2);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row1, row2);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor0);
                 minor3 = SIMD.Float32x4.mul(row0, tmp1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row3, tmp1));
                 minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor3);
                 minor3 = SIMD.Float32x4.swizzle(minor3, 2, 3, 0, 1);
 
-                tmp1   = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
-                row2   = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.mul(SIMD.Float32x4.swizzle(row1, 2, 3, 0, 1), row3);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                row2 = SIMD.Float32x4.swizzle(row2, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor0);
                 minor2 = SIMD.Float32x4.mul(row0, tmp1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor0 = SIMD.Float32x4.sub(minor0, SIMD.Float32x4.mul(row2, tmp1));
                 minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row0, tmp1), minor2);
                 minor2 = SIMD.Float32x4.swizzle(minor2, 2, 3, 0, 1);
 
-                tmp1   = SIMD.Float32x4.mul(row0, row1);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row0, row1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor2);
                 minor3 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row2, tmp1), minor3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor2 = SIMD.Float32x4.sub(SIMD.Float32x4.mul(row3, tmp1), minor2);
                 minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row2, tmp1));
 
-                tmp1   = SIMD.Float32x4.mul(row0, row3);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row0, row3);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row2, tmp1));
                 minor2 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor2);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row2, tmp1), minor1);
                 minor2 = SIMD.Float32x4.sub(minor2, SIMD.Float32x4.mul(row1, tmp1));
 
-                tmp1   = SIMD.Float32x4.mul(row0, row2);
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
+                tmp1 = SIMD.Float32x4.mul(row0, row2);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 1, 0, 3, 2);
                 minor1 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row3, tmp1), minor1);
                 minor3 = SIMD.Float32x4.sub(minor3, SIMD.Float32x4.mul(row1, tmp1));
-                tmp1   = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
+                tmp1 = SIMD.Float32x4.swizzle(tmp1, 2, 3, 0, 1);
                 minor1 = SIMD.Float32x4.sub(minor1, SIMD.Float32x4.mul(row3, tmp1));
                 minor3 = SIMD.Float32x4.add(SIMD.Float32x4.mul(row1, tmp1), minor3);
 
-                SIMD.Float32x4.store(out, 0,  minor0);
-                SIMD.Float32x4.store(out, 4,  minor1);
-                SIMD.Float32x4.store(out, 8,  minor2);
+                SIMD.Float32x4.store(out, 0, minor0);
+                SIMD.Float32x4.store(out, 4, minor1);
+                SIMD.Float32x4.store(out, 8, minor2);
                 SIMD.Float32x4.store(out, 12, minor3);
                 return out;
             };
@@ -59555,29 +59687,38 @@ function getLibraries(System) {
                     a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15];
 
                 // Cache only the current line of the second matrix
-                var b0  = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
-                out[0] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-                out[1] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-                out[2] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-                out[3] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+                var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
+                out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+                out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+                out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+                out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
 
-                b0 = b[4]; b1 = b[5]; b2 = b[6]; b3 = b[7];
-                out[4] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-                out[5] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-                out[6] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-                out[7] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+                b0 = b[4];
+                b1 = b[5];
+                b2 = b[6];
+                b3 = b[7];
+                out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+                out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+                out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+                out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
 
-                b0 = b[8]; b1 = b[9]; b2 = b[10]; b3 = b[11];
-                out[8] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-                out[9] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-                out[10] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-                out[11] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+                b0 = b[8];
+                b1 = b[9];
+                b2 = b[10];
+                b3 = b[11];
+                out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+                out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+                out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+                out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
 
-                b0 = b[12]; b1 = b[13]; b2 = b[14]; b3 = b[15];
-                out[12] = b0*a00 + b1*a10 + b2*a20 + b3*a30;
-                out[13] = b0*a01 + b1*a11 + b2*a21 + b3*a31;
-                out[14] = b0*a02 + b1*a12 + b2*a22 + b3*a32;
-                out[15] = b0*a03 + b1*a13 + b2*a23 + b3*a33;
+                b0 = b[12];
+                b1 = b[13];
+                b2 = b[14];
+                b3 = b[15];
+                out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
+                out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
+                out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
+                out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
                 return out;
             };
 
@@ -59617,13 +59758,31 @@ function getLibraries(System) {
                     out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
                     out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
                 } else {
-                    a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
-                    a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
-                    a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
+                    a00 = a[0];
+                    a01 = a[1];
+                    a02 = a[2];
+                    a03 = a[3];
+                    a10 = a[4];
+                    a11 = a[5];
+                    a12 = a[6];
+                    a13 = a[7];
+                    a20 = a[8];
+                    a21 = a[9];
+                    a22 = a[10];
+                    a23 = a[11];
 
-                    out[0] = a00; out[1] = a01; out[2] = a02; out[3] = a03;
-                    out[4] = a10; out[5] = a11; out[6] = a12; out[7] = a13;
-                    out[8] = a20; out[9] = a21; out[10] = a22; out[11] = a23;
+                    out[0] = a00;
+                    out[1] = a01;
+                    out[2] = a02;
+                    out[3] = a03;
+                    out[4] = a10;
+                    out[5] = a11;
+                    out[6] = a12;
+                    out[7] = a13;
+                    out[8] = a20;
+                    out[9] = a21;
+                    out[10] = a22;
+                    out[11] = a23;
 
                     out[12] = a00 * x + a10 * y + a20 * z + a[12];
                     out[13] = a01 * x + a11 * y + a21 * z + a[13];
@@ -59647,12 +59806,21 @@ function getLibraries(System) {
                     a1 = SIMD.Float32x4.load(a, 4),
                     a2 = SIMD.Float32x4.load(a, 8),
                     a3 = SIMD.Float32x4.load(a, 12),
-                    vec = SIMD.Float32x4(v[0], v[1], v[2] , 0);
+                    vec = SIMD.Float32x4(v[0], v[1], v[2], 0);
 
                 if (a !== out) {
-                    out[0] = a[0]; out[1] = a[1]; out[2] = a[2]; out[3] = a[3];
-                    out[4] = a[4]; out[5] = a[5]; out[6] = a[6]; out[7] = a[7];
-                    out[8] = a[8]; out[9] = a[9]; out[10] = a[10]; out[11] = a[11];
+                    out[0] = a[0];
+                    out[1] = a[1];
+                    out[2] = a[2];
+                    out[3] = a[3];
+                    out[4] = a[4];
+                    out[5] = a[5];
+                    out[6] = a[6];
+                    out[7] = a[7];
+                    out[8] = a[8];
+                    out[9] = a[9];
+                    out[10] = a[10];
+                    out[11] = a[11];
                 }
 
                 a0 = SIMD.Float32x4.mul(a0, SIMD.Float32x4.swizzle(vec, 0, 0, 0, 0));
@@ -59683,7 +59851,7 @@ function getLibraries(System) {
              * @param {vec3} v the vec3 to scale the matrix by
              * @returns {mat4} out
              **/
-            mat4.scalar.scale = function(out, a, v) {
+            mat4.scalar.scale = function (out, a, v) {
                 var x = v[0], y = v[1], z = v[2];
 
                 out[0] = a[0] * x;
@@ -59713,7 +59881,7 @@ function getLibraries(System) {
              * @param {vec3} v the vec3 to scale the matrix by
              * @returns {mat4} out
              **/
-            mat4.SIMD.scale = function(out, a, v) {
+            mat4.SIMD.scale = function (out, a, v) {
                 var a0, a1, a2;
                 var vec = SIMD.Float32x4(v[0], v[1], v[2], 0);
 
@@ -59766,7 +59934,9 @@ function getLibraries(System) {
                     b10, b11, b12,
                     b20, b21, b22;
 
-                if (Math.abs(len) < glMatrix.EPSILON) { return null; }
+                if (Math.abs(len) < glMatrix.EPSILON) {
+                    return null;
+                }
 
                 len = 1 / len;
                 x *= len;
@@ -59777,14 +59947,29 @@ function getLibraries(System) {
                 c = Math.cos(rad);
                 t = 1 - c;
 
-                a00 = a[0]; a01 = a[1]; a02 = a[2]; a03 = a[3];
-                a10 = a[4]; a11 = a[5]; a12 = a[6]; a13 = a[7];
-                a20 = a[8]; a21 = a[9]; a22 = a[10]; a23 = a[11];
+                a00 = a[0];
+                a01 = a[1];
+                a02 = a[2];
+                a03 = a[3];
+                a10 = a[4];
+                a11 = a[5];
+                a12 = a[6];
+                a13 = a[7];
+                a20 = a[8];
+                a21 = a[9];
+                a22 = a[10];
+                a23 = a[11];
 
                 // Construct the elements of the rotation matrix
-                b00 = x * x * t + c; b01 = y * x * t + z * s; b02 = z * x * t - y * s;
-                b10 = x * y * t - z * s; b11 = y * y * t + c; b12 = z * y * t + x * s;
-                b20 = x * z * t + y * s; b21 = y * z * t - x * s; b22 = z * z * t + c;
+                b00 = x * x * t + c;
+                b01 = y * x * t + z * s;
+                b02 = z * x * t - y * s;
+                b10 = x * y * t - z * s;
+                b11 = y * y * t + c;
+                b12 = z * y * t + x * s;
+                b20 = x * z * t + y * s;
+                b21 = y * z * t - x * s;
+                b22 = z * z * t + c;
 
                 // Perform rotation-specific matrix multiplication
                 out[0] = a00 * b00 + a10 * b01 + a20 * b02;
@@ -59830,10 +60015,10 @@ function getLibraries(System) {
                     a23 = a[11];
 
                 if (a !== out) { // If the source and destination differ, copy the unchanged rows
-                    out[0]  = a[0];
-                    out[1]  = a[1];
-                    out[2]  = a[2];
-                    out[3]  = a[3];
+                    out[0] = a[0];
+                    out[1] = a[1];
+                    out[2] = a[2];
+                    out[3] = a[3];
                     out[12] = a[12];
                     out[13] = a[13];
                     out[14] = a[14];
@@ -59865,10 +60050,10 @@ function getLibraries(System) {
                     c = SIMD.Float32x4.splat(Math.cos(rad));
 
                 if (a !== out) { // If the source and destination differ, copy the unchanged rows
-                    out[0]  = a[0];
-                    out[1]  = a[1];
-                    out[2]  = a[2];
-                    out[3]  = a[3];
+                    out[0] = a[0];
+                    out[1] = a[1];
+                    out[2] = a[2];
+                    out[3] = a[3];
                     out[12] = a[12];
                     out[13] = a[13];
                     out[14] = a[14];
@@ -59916,10 +60101,10 @@ function getLibraries(System) {
                     a23 = a[11];
 
                 if (a !== out) { // If the source and destination differ, copy the unchanged rows
-                    out[4]  = a[4];
-                    out[5]  = a[5];
-                    out[6]  = a[6];
-                    out[7]  = a[7];
+                    out[4] = a[4];
+                    out[5] = a[5];
+                    out[6] = a[6];
+                    out[7] = a[7];
                     out[12] = a[12];
                     out[13] = a[13];
                     out[14] = a[14];
@@ -59951,10 +60136,10 @@ function getLibraries(System) {
                     c = SIMD.Float32x4.splat(Math.cos(rad));
 
                 if (a !== out) { // If the source and destination differ, copy the unchanged rows
-                    out[4]  = a[4];
-                    out[5]  = a[5];
-                    out[6]  = a[6];
-                    out[7]  = a[7];
+                    out[4] = a[4];
+                    out[5] = a[5];
+                    out[6] = a[6];
+                    out[7] = a[7];
                     out[12] = a[12];
                     out[13] = a[13];
                     out[14] = a[14];
@@ -60002,8 +60187,8 @@ function getLibraries(System) {
                     a13 = a[7];
 
                 if (a !== out) { // If the source and destination differ, copy the unchanged last row
-                    out[8]  = a[8];
-                    out[9]  = a[9];
+                    out[8] = a[8];
+                    out[9] = a[9];
                     out[10] = a[10];
                     out[11] = a[11];
                     out[12] = a[12];
@@ -60037,8 +60222,8 @@ function getLibraries(System) {
                     c = SIMD.Float32x4.splat(Math.cos(rad));
 
                 if (a !== out) { // If the source and destination differ, copy the unchanged last row
-                    out[8]  = a[8];
-                    out[9]  = a[9];
+                    out[8] = a[8];
+                    out[9] = a[9];
                     out[10] = a[10];
                     out[11] = a[11];
                     out[12] = a[12];
@@ -60078,7 +60263,7 @@ function getLibraries(System) {
              * @param {vec3} v Translation vector
              * @returns {mat4} out
              */
-            mat4.fromTranslation = function(out, v) {
+            mat4.fromTranslation = function (out, v) {
                 out[0] = 1;
                 out[1] = 0;
                 out[2] = 0;
@@ -60109,7 +60294,7 @@ function getLibraries(System) {
              * @param {vec3} v Scaling vector
              * @returns {mat4} out
              */
-            mat4.fromScaling = function(out, v) {
+            mat4.fromScaling = function (out, v) {
                 out[0] = v[0];
                 out[1] = 0;
                 out[2] = 0;
@@ -60141,12 +60326,14 @@ function getLibraries(System) {
              * @param {vec3} axis the axis to rotate around
              * @returns {mat4} out
              */
-            mat4.fromRotation = function(out, rad, axis) {
+            mat4.fromRotation = function (out, rad, axis) {
                 var x = axis[0], y = axis[1], z = axis[2],
                     len = Math.sqrt(x * x + y * y + z * z),
                     s, c, t;
 
-                if (Math.abs(len) < glMatrix.EPSILON) { return null; }
+                if (Math.abs(len) < glMatrix.EPSILON) {
+                    return null;
+                }
 
                 len = 1 / len;
                 x *= len;
@@ -60188,15 +60375,15 @@ function getLibraries(System) {
              * @param {Number} rad the angle to rotate the matrix by
              * @returns {mat4} out
              */
-            mat4.fromXRotation = function(out, rad) {
+            mat4.fromXRotation = function (out, rad) {
                 var s = Math.sin(rad),
                     c = Math.cos(rad);
 
                 // Perform axis-specific matrix multiplication
-                out[0]  = 1;
-                out[1]  = 0;
-                out[2]  = 0;
-                out[3]  = 0;
+                out[0] = 1;
+                out[1] = 0;
+                out[2] = 0;
+                out[3] = 0;
                 out[4] = 0;
                 out[5] = c;
                 out[6] = s;
@@ -60223,15 +60410,15 @@ function getLibraries(System) {
              * @param {Number} rad the angle to rotate the matrix by
              * @returns {mat4} out
              */
-            mat4.fromYRotation = function(out, rad) {
+            mat4.fromYRotation = function (out, rad) {
                 var s = Math.sin(rad),
                     c = Math.cos(rad);
 
                 // Perform axis-specific matrix multiplication
-                out[0]  = c;
-                out[1]  = 0;
-                out[2]  = -s;
-                out[3]  = 0;
+                out[0] = c;
+                out[1] = 0;
+                out[2] = -s;
+                out[3] = 0;
                 out[4] = 0;
                 out[5] = 1;
                 out[6] = 0;
@@ -60258,15 +60445,15 @@ function getLibraries(System) {
              * @param {Number} rad the angle to rotate the matrix by
              * @returns {mat4} out
              */
-            mat4.fromZRotation = function(out, rad) {
+            mat4.fromZRotation = function (out, rad) {
                 var s = Math.sin(rad),
                     c = Math.cos(rad);
 
                 // Perform axis-specific matrix multiplication
-                out[0]  = c;
-                out[1]  = s;
-                out[2]  = 0;
-                out[3]  = 0;
+                out[0] = c;
+                out[1] = s;
+                out[2] = 0;
+                out[3] = 0;
                 out[4] = -s;
                 out[5] = c;
                 out[6] = 0;
@@ -60371,7 +60558,7 @@ function getLibraries(System) {
                     out[0] = (mat[6] - mat[9]) / S;
                     out[1] = (mat[8] - mat[2]) / S;
                     out[2] = (mat[1] - mat[4]) / S;
-                } else if ((mat[0] > mat[5])&(mat[0] > mat[10])) {
+                } else if ((mat[0] > mat[5]) & (mat[0] > mat[10])) {
                     S = Math.sqrt(1.0 + mat[0] - mat[5] - mat[10]) * 2;
                     out[3] = (mat[6] - mat[9]) / S;
                     out[0] = 0.25 * S;
@@ -60642,10 +60829,10 @@ function getLibraries(System) {
              * @returns {mat4} out
              */
             mat4.perspectiveFromFieldOfView = function (out, fov, near, far) {
-                var upTan = Math.tan(fov.upDegrees * Math.PI/180.0),
-                    downTan = Math.tan(fov.downDegrees * Math.PI/180.0),
-                    leftTan = Math.tan(fov.leftDegrees * Math.PI/180.0),
-                    rightTan = Math.tan(fov.rightDegrees * Math.PI/180.0),
+                var upTan = Math.tan(fov.upDegrees * Math.PI / 180.0),
+                    downTan = Math.tan(fov.downDegrees * Math.PI / 180.0),
+                    leftTan = Math.tan(fov.leftDegrees * Math.PI / 180.0),
+                    rightTan = Math.tan(fov.rightDegrees * Math.PI / 180.0),
                     xScale = 2.0 / (leftTan + rightTan),
                     yScale = 2.0 / (upTan + downTan);
 
@@ -60810,7 +60997,7 @@ function getLibraries(System) {
              * @returns {Number} Frobenius norm
              */
             mat4.frob = function (a) {
-                return(Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2) ))
+                return (Math.sqrt(Math.pow(a[0], 2) + Math.pow(a[1], 2) + Math.pow(a[2], 2) + Math.pow(a[3], 2) + Math.pow(a[4], 2) + Math.pow(a[5], 2) + Math.pow(a[6], 2) + Math.pow(a[7], 2) + Math.pow(a[8], 2) + Math.pow(a[9], 2) + Math.pow(a[10], 2) + Math.pow(a[11], 2) + Math.pow(a[12], 2) + Math.pow(a[13], 2) + Math.pow(a[14], 2) + Math.pow(a[15], 2)))
             };
 
             /**
@@ -60821,7 +61008,7 @@ function getLibraries(System) {
              * @param {mat4} b the second operand
              * @returns {mat4} out
              */
-            mat4.add = function(out, a, b) {
+            mat4.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 out[2] = a[2] + b[2];
@@ -60849,7 +61036,7 @@ function getLibraries(System) {
              * @param {mat4} b the second operand
              * @returns {mat4} out
              */
-            mat4.subtract = function(out, a, b) {
+            mat4.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 out[2] = a[2] - b[2];
@@ -60883,7 +61070,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the matrix's elements by
              * @returns {mat4} out
              */
-            mat4.multiplyScalar = function(out, a, b) {
+            mat4.multiplyScalar = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 out[2] = a[2] * b;
@@ -60912,7 +61099,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b's elements by before adding
              * @returns {mat4} out
              */
-            mat4.multiplyScalarAndAdd = function(out, a, b, scale) {
+            mat4.multiplyScalarAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 out[2] = a[2] + (b[2] * scale);
@@ -60954,34 +61141,33 @@ function getLibraries(System) {
              * @returns {Boolean} True if the matrices are equal, false otherwise.
              */
             mat4.equals = function (a, b) {
-                var a0  = a[0],  a1  = a[1],  a2  = a[2],  a3  = a[3],
-                    a4  = a[4],  a5  = a[5],  a6  = a[6],  a7  = a[7],
-                    a8  = a[8],  a9  = a[9],  a10 = a[10], a11 = a[11],
+                var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
+                    a4 = a[4], a5 = a[5], a6 = a[6], a7 = a[7],
+                    a8 = a[8], a9 = a[9], a10 = a[10], a11 = a[11],
                     a12 = a[12], a13 = a[13], a14 = a[14], a15 = a[15];
 
-                var b0  = b[0],  b1  = b[1],  b2  = b[2],  b3  = b[3],
-                    b4  = b[4],  b5  = b[5],  b6  = b[6],  b7  = b[7],
-                    b8  = b[8],  b9  = b[9],  b10 = b[10], b11 = b[11],
+                var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3],
+                    b4 = b[4], b5 = b[5], b6 = b[6], b7 = b[7],
+                    b8 = b[8], b9 = b[9], b10 = b[10], b11 = b[11],
                     b12 = b[12], b13 = b[13], b14 = b[14], b15 = b[15];
 
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-                Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-                Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
-                Math.abs(a4 - b4) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
-                Math.abs(a5 - b5) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
-                Math.abs(a6 - b6) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
-                Math.abs(a7 - b7) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
-                Math.abs(a8 - b8) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a8), Math.abs(b8)) &&
-                Math.abs(a9 - b9) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a9), Math.abs(b9)) &&
-                Math.abs(a10 - b10) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a10), Math.abs(b10)) &&
-                Math.abs(a11 - b11) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a11), Math.abs(b11)) &&
-                Math.abs(a12 - b12) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a12), Math.abs(b12)) &&
-                Math.abs(a13 - b13) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a13), Math.abs(b13)) &&
-                Math.abs(a14 - b14) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a14), Math.abs(b14)) &&
-                Math.abs(a15 - b15) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a15), Math.abs(b15)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+                Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+                Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) &&
+                Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) &&
+                Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)) &&
+                Math.abs(a6 - b6) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a6), Math.abs(b6)) &&
+                Math.abs(a7 - b7) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a7), Math.abs(b7)) &&
+                Math.abs(a8 - b8) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a8), Math.abs(b8)) &&
+                Math.abs(a9 - b9) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a9), Math.abs(b9)) &&
+                Math.abs(a10 - b10) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a10), Math.abs(b10)) &&
+                Math.abs(a11 - b11) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a11), Math.abs(b11)) &&
+                Math.abs(a12 - b12) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a12), Math.abs(b12)) &&
+                Math.abs(a13 - b13) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a13), Math.abs(b13)) &&
+                Math.abs(a14 - b14) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a14), Math.abs(b14)) &&
+                Math.abs(a15 - b15) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a15), Math.abs(b15)));
             };
-
 
 
             module.exports = mat4;
@@ -61023,7 +61209,7 @@ function getLibraries(System) {
              *
              * @returns {quat} a new quaternion
              */
-            quat.create = function() {
+            quat.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = 0;
                 out[1] = 0;
@@ -61043,12 +61229,12 @@ function getLibraries(System) {
              * @param {vec3} b the destination vector
              * @returns {quat} out
              */
-            quat.rotationTo = (function() {
+            quat.rotationTo = (function () {
                 var tmpvec3 = vec3.create();
-                var xUnitVec3 = vec3.fromValues(1,0,0);
-                var yUnitVec3 = vec3.fromValues(0,1,0);
+                var xUnitVec3 = vec3.fromValues(1, 0, 0);
+                var yUnitVec3 = vec3.fromValues(0, 1, 0);
 
-                return function(out, a, b) {
+                return function (out, a, b) {
                     var dot = vec3.dot(a, b);
                     if (dot < -0.999999) {
                         vec3.cross(tmpvec3, xUnitVec3, a);
@@ -61084,10 +61270,10 @@ function getLibraries(System) {
              * @param {vec3} up    the vector representing the local "up" direction
              * @returns {quat} out
              */
-            quat.setAxes = (function() {
+            quat.setAxes = (function () {
                 var matr = mat3.create();
 
-                return function(out, view, right, up) {
+                return function (out, view, right, up) {
                     matr[0] = right[0];
                     matr[3] = right[1];
                     matr[6] = right[2];
@@ -61154,7 +61340,7 @@ function getLibraries(System) {
              * @param {quat} out the receiving quaternion
              * @returns {quat} out
              */
-            quat.identity = function(out) {
+            quat.identity = function (out) {
                 out[0] = 0;
                 out[1] = 0;
                 out[2] = 0;
@@ -61171,7 +61357,7 @@ function getLibraries(System) {
              * @param {Number} rad the angle in radians
              * @returns {quat} out
              **/
-            quat.setAxisAngle = function(out, axis, rad) {
+            quat.setAxisAngle = function (out, axis, rad) {
                 rad = rad * 0.5;
                 var s = Math.sin(rad);
                 out[0] = s * axis[0];
@@ -61194,7 +61380,7 @@ function getLibraries(System) {
              * @param  {quat} q     Quaternion to be decomposed
              * @return {Number}     Angle, in radians, of the rotation
              */
-            quat.getAxisAngle = function(out_axis, q) {
+            quat.getAxisAngle = function (out_axis, q) {
                 var rad = Math.acos(q[3]) * 2.0;
                 var s = Math.sin(rad / 2.0);
                 if (s != 0.0) {
@@ -61229,7 +61415,7 @@ function getLibraries(System) {
              * @param {quat} b the second operand
              * @returns {quat} out
              */
-            quat.multiply = function(out, a, b) {
+            quat.multiply = function (out, a, b) {
                 var ax = a[0], ay = a[1], az = a[2], aw = a[3],
                     bx = b[0], by = b[1], bz = b[2], bw = b[3];
 
@@ -61377,23 +61563,23 @@ function getLibraries(System) {
                 var ax = a[0], ay = a[1], az = a[2], aw = a[3],
                     bx = b[0], by = b[1], bz = b[2], bw = b[3];
 
-                var        omega, cosom, sinom, scale0, scale1;
+                var omega, cosom, sinom, scale0, scale1;
 
                 // calc cosine
                 cosom = ax * bx + ay * by + az * bz + aw * bw;
                 // adjust signs (if necessary)
-                if ( cosom < 0.0 ) {
+                if (cosom < 0.0) {
                     cosom = -cosom;
-                    bx = - bx;
-                    by = - by;
-                    bz = - bz;
-                    bw = - bw;
+                    bx = -bx;
+                    by = -by;
+                    bz = -bz;
+                    bw = -bw;
                 }
                 // calculate coefficients
-                if ( (1.0 - cosom) > 0.000001 ) {
+                if ((1.0 - cosom) > 0.000001) {
                     // standard case (slerp)
-                    omega  = Math.acos(cosom);
-                    sinom  = Math.sin(omega);
+                    omega = Math.acos(cosom);
+                    sinom = Math.sin(omega);
                     scale0 = Math.sin((1.0 - t) * omega) / sinom;
                     scale1 = Math.sin(t * omega) / sinom;
                 } else {
@@ -61442,17 +61628,17 @@ function getLibraries(System) {
              * @param {quat} a quat to calculate inverse of
              * @returns {quat} out
              */
-            quat.invert = function(out, a) {
+            quat.invert = function (out, a) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3],
-                    dot = a0*a0 + a1*a1 + a2*a2 + a3*a3,
-                    invDot = dot ? 1.0/dot : 0;
+                    dot = a0 * a0 + a1 * a1 + a2 * a2 + a3 * a3,
+                    invDot = dot ? 1.0 / dot : 0;
 
                 // TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
 
-                out[0] = -a0*invDot;
-                out[1] = -a1*invDot;
-                out[2] = -a2*invDot;
-                out[3] = a3*invDot;
+                out[0] = -a0 * invDot;
+                out[1] = -a1 * invDot;
+                out[2] = -a2 * invDot;
+                out[3] = a3 * invDot;
                 return out;
             };
 
@@ -61523,36 +61709,36 @@ function getLibraries(System) {
              * @returns {quat} out
              * @function
              */
-            quat.fromMat3 = function(out, m) {
+            quat.fromMat3 = function (out, m) {
                 // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
                 // article "Quaternion Calculus and Fast Animation".
                 var fTrace = m[0] + m[4] + m[8];
                 var fRoot;
 
-                if ( fTrace > 0.0 ) {
+                if (fTrace > 0.0) {
                     // |w| > 1/2, may as well choose w > 1/2
                     fRoot = Math.sqrt(fTrace + 1.0);  // 2w
                     out[3] = 0.5 * fRoot;
-                    fRoot = 0.5/fRoot;  // 1/(4w)
-                    out[0] = (m[5]-m[7])*fRoot;
-                    out[1] = (m[6]-m[2])*fRoot;
-                    out[2] = (m[1]-m[3])*fRoot;
+                    fRoot = 0.5 / fRoot;  // 1/(4w)
+                    out[0] = (m[5] - m[7]) * fRoot;
+                    out[1] = (m[6] - m[2]) * fRoot;
+                    out[2] = (m[1] - m[3]) * fRoot;
                 } else {
                     // |w| <= 1/2
                     var i = 0;
-                    if ( m[4] > m[0] )
+                    if (m[4] > m[0])
                         i = 1;
-                    if ( m[8] > m[i*3+i] )
+                    if (m[8] > m[i * 3 + i])
                         i = 2;
-                    var j = (i+1)%3;
-                    var k = (i+2)%3;
+                    var j = (i + 1) % 3;
+                    var k = (i + 2) % 3;
 
-                    fRoot = Math.sqrt(m[i*3+i]-m[j*3+j]-m[k*3+k] + 1.0);
+                    fRoot = Math.sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0);
                     out[i] = 0.5 * fRoot;
                     fRoot = 0.5 / fRoot;
-                    out[3] = (m[j*3+k] - m[k*3+j]) * fRoot;
-                    out[j] = (m[j*3+i] + m[i*3+j]) * fRoot;
-                    out[k] = (m[k*3+i] + m[i*3+k]) * fRoot;
+                    out[3] = (m[j * 3 + k] - m[k * 3 + j]) * fRoot;
+                    out[j] = (m[j * 3 + i] + m[i * 3 + j]) * fRoot;
+                    out[k] = (m[k * 3 + i] + m[i * 3 + k]) * fRoot;
                 }
 
                 return out;
@@ -61622,7 +61808,7 @@ function getLibraries(System) {
              *
              * @returns {vec2} a new 2D vector
              */
-            vec2.create = function() {
+            vec2.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(2);
                 out[0] = 0;
                 out[1] = 0;
@@ -61635,7 +61821,7 @@ function getLibraries(System) {
              * @param {vec2} a vector to clone
              * @returns {vec2} a new 2D vector
              */
-            vec2.clone = function(a) {
+            vec2.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(2);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -61649,7 +61835,7 @@ function getLibraries(System) {
              * @param {Number} y Y component
              * @returns {vec2} a new 2D vector
              */
-            vec2.fromValues = function(x, y) {
+            vec2.fromValues = function (x, y) {
                 var out = new glMatrix.ARRAY_TYPE(2);
                 out[0] = x;
                 out[1] = y;
@@ -61663,7 +61849,7 @@ function getLibraries(System) {
              * @param {vec2} a the source vector
              * @returns {vec2} out
              */
-            vec2.copy = function(out, a) {
+            vec2.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 return out;
@@ -61677,7 +61863,7 @@ function getLibraries(System) {
              * @param {Number} y Y component
              * @returns {vec2} out
              */
-            vec2.set = function(out, x, y) {
+            vec2.set = function (out, x, y) {
                 out[0] = x;
                 out[1] = y;
                 return out;
@@ -61691,7 +61877,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec2} out
              */
-            vec2.add = function(out, a, b) {
+            vec2.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 return out;
@@ -61705,7 +61891,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec2} out
              */
-            vec2.subtract = function(out, a, b) {
+            vec2.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 return out;
@@ -61725,7 +61911,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec2} out
              */
-            vec2.multiply = function(out, a, b) {
+            vec2.multiply = function (out, a, b) {
                 out[0] = a[0] * b[0];
                 out[1] = a[1] * b[1];
                 return out;
@@ -61745,7 +61931,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec2} out
              */
-            vec2.divide = function(out, a, b) {
+            vec2.divide = function (out, a, b) {
                 out[0] = a[0] / b[0];
                 out[1] = a[1] / b[1];
                 return out;
@@ -61791,7 +61977,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec2} out
              */
-            vec2.min = function(out, a, b) {
+            vec2.min = function (out, a, b) {
                 out[0] = Math.min(a[0], b[0]);
                 out[1] = Math.min(a[1], b[1]);
                 return out;
@@ -61805,7 +61991,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec2} out
              */
-            vec2.max = function(out, a, b) {
+            vec2.max = function (out, a, b) {
                 out[0] = Math.max(a[0], b[0]);
                 out[1] = Math.max(a[1], b[1]);
                 return out;
@@ -61832,7 +62018,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the vector by
              * @returns {vec2} out
              */
-            vec2.scale = function(out, a, b) {
+            vec2.scale = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 return out;
@@ -61847,7 +62033,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b by before adding
              * @returns {vec2} out
              */
-            vec2.scaleAndAdd = function(out, a, b, scale) {
+            vec2.scaleAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 return out;
@@ -61860,10 +62046,10 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {Number} distance between a and b
              */
-            vec2.distance = function(a, b) {
+            vec2.distance = function (a, b) {
                 var x = b[0] - a[0],
                     y = b[1] - a[1];
-                return Math.sqrt(x*x + y*y);
+                return Math.sqrt(x * x + y * y);
             };
 
             /**
@@ -61879,10 +62065,10 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {Number} squared distance between a and b
              */
-            vec2.squaredDistance = function(a, b) {
+            vec2.squaredDistance = function (a, b) {
                 var x = b[0] - a[0],
                     y = b[1] - a[1];
-                return x*x + y*y;
+                return x * x + y * y;
             };
 
             /**
@@ -61900,7 +62086,7 @@ function getLibraries(System) {
             vec2.length = function (a) {
                 var x = a[0],
                     y = a[1];
-                return Math.sqrt(x*x + y*y);
+                return Math.sqrt(x * x + y * y);
             };
 
             /**
@@ -61918,7 +62104,7 @@ function getLibraries(System) {
             vec2.squaredLength = function (a) {
                 var x = a[0],
                     y = a[1];
-                return x*x + y*y;
+                return x * x + y * y;
             };
 
             /**
@@ -61934,7 +62120,7 @@ function getLibraries(System) {
              * @param {vec2} a vector to negate
              * @returns {vec2} out
              */
-            vec2.negate = function(out, a) {
+            vec2.negate = function (out, a) {
                 out[0] = -a[0];
                 out[1] = -a[1];
                 return out;
@@ -61947,7 +62133,7 @@ function getLibraries(System) {
              * @param {vec2} a vector to invert
              * @returns {vec2} out
              */
-            vec2.inverse = function(out, a) {
+            vec2.inverse = function (out, a) {
                 out[0] = 1.0 / a[0];
                 out[1] = 1.0 / a[1];
                 return out;
@@ -61960,10 +62146,10 @@ function getLibraries(System) {
              * @param {vec2} a vector to normalize
              * @returns {vec2} out
              */
-            vec2.normalize = function(out, a) {
+            vec2.normalize = function (out, a) {
                 var x = a[0],
                     y = a[1];
-                var len = x*x + y*y;
+                var len = x * x + y * y;
                 if (len > 0) {
                     //TODO: evaluate use of glm_invsqrt here?
                     len = 1 / Math.sqrt(len);
@@ -61993,7 +62179,7 @@ function getLibraries(System) {
              * @param {vec2} b the second operand
              * @returns {vec3} out
              */
-            vec2.cross = function(out, a, b) {
+            vec2.cross = function (out, a, b) {
                 var z = a[0] * b[1] - a[1] * b[0];
                 out[0] = out[1] = 0;
                 out[2] = z;
@@ -62040,7 +62226,7 @@ function getLibraries(System) {
              * @param {mat2} m matrix to transform with
              * @returns {vec2} out
              */
-            vec2.transformMat2 = function(out, a, m) {
+            vec2.transformMat2 = function (out, a, m) {
                 var x = a[0],
                     y = a[1];
                 out[0] = m[0] * x + m[2] * y;
@@ -62056,7 +62242,7 @@ function getLibraries(System) {
              * @param {mat2d} m matrix to transform with
              * @returns {vec2} out
              */
-            vec2.transformMat2d = function(out, a, m) {
+            vec2.transformMat2d = function (out, a, m) {
                 var x = a[0],
                     y = a[1];
                 out[0] = m[0] * x + m[2] * y + m[4];
@@ -62073,7 +62259,7 @@ function getLibraries(System) {
              * @param {mat3} m matrix to transform with
              * @returns {vec2} out
              */
-            vec2.transformMat3 = function(out, a, m) {
+            vec2.transformMat3 = function (out, a, m) {
                 var x = a[0],
                     y = a[1];
                 out[0] = m[0] * x + m[3] * y + m[6];
@@ -62091,7 +62277,7 @@ function getLibraries(System) {
              * @param {mat4} m matrix to transform with
              * @returns {vec2} out
              */
-            vec2.transformMat4 = function(out, a, m) {
+            vec2.transformMat4 = function (out, a, m) {
                 var x = a[0],
                     y = a[1];
                 out[0] = m[0] * x + m[4] * y + m[12];
@@ -62111,29 +62297,31 @@ function getLibraries(System) {
              * @returns {Array} a
              * @function
              */
-            vec2.forEach = (function() {
+            vec2.forEach = (function () {
                 var vec = vec2.create();
 
-                return function(a, stride, offset, count, fn, arg) {
+                return function (a, stride, offset, count, fn, arg) {
                     var i, l;
-                    if(!stride) {
+                    if (!stride) {
                         stride = 2;
                     }
 
-                    if(!offset) {
+                    if (!offset) {
                         offset = 0;
                     }
 
-                    if(count) {
+                    if (count) {
                         l = Math.min((count * stride) + offset, a.length);
                     } else {
                         l = a.length;
                     }
 
-                    for(i = offset; i < l; i += stride) {
-                        vec[0] = a[i]; vec[1] = a[i+1];
+                    for (i = offset; i < l; i += stride) {
+                        vec[0] = a[i];
+                        vec[1] = a[i + 1];
                         fn(vec, vec, arg);
-                        a[i] = vec[0]; a[i+1] = vec[1];
+                        a[i] = vec[0];
+                        a[i + 1] = vec[1];
                     }
 
                     return a;
@@ -62171,8 +62359,8 @@ function getLibraries(System) {
             vec2.equals = function (a, b) {
                 var a0 = a[0], a1 = a[1];
                 var b0 = b[0], b1 = b[1];
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)));
             };
 
             module.exports = vec2;
@@ -62211,7 +62399,7 @@ function getLibraries(System) {
              *
              * @returns {vec3} a new 3D vector
              */
-            vec3.create = function() {
+            vec3.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(3);
                 out[0] = 0;
                 out[1] = 0;
@@ -62225,7 +62413,7 @@ function getLibraries(System) {
              * @param {vec3} a vector to clone
              * @returns {vec3} a new 3D vector
              */
-            vec3.clone = function(a) {
+            vec3.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(3);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -62241,7 +62429,7 @@ function getLibraries(System) {
              * @param {Number} z Z component
              * @returns {vec3} a new 3D vector
              */
-            vec3.fromValues = function(x, y, z) {
+            vec3.fromValues = function (x, y, z) {
                 var out = new glMatrix.ARRAY_TYPE(3);
                 out[0] = x;
                 out[1] = y;
@@ -62256,7 +62444,7 @@ function getLibraries(System) {
              * @param {vec3} a the source vector
              * @returns {vec3} out
              */
-            vec3.copy = function(out, a) {
+            vec3.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -62272,7 +62460,7 @@ function getLibraries(System) {
              * @param {Number} z Z component
              * @returns {vec3} out
              */
-            vec3.set = function(out, x, y, z) {
+            vec3.set = function (out, x, y, z) {
                 out[0] = x;
                 out[1] = y;
                 out[2] = z;
@@ -62287,7 +62475,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.add = function(out, a, b) {
+            vec3.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 out[2] = a[2] + b[2];
@@ -62302,7 +62490,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.subtract = function(out, a, b) {
+            vec3.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 out[2] = a[2] - b[2];
@@ -62323,7 +62511,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.multiply = function(out, a, b) {
+            vec3.multiply = function (out, a, b) {
                 out[0] = a[0] * b[0];
                 out[1] = a[1] * b[1];
                 out[2] = a[2] * b[2];
@@ -62344,7 +62532,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.divide = function(out, a, b) {
+            vec3.divide = function (out, a, b) {
                 out[0] = a[0] / b[0];
                 out[1] = a[1] / b[1];
                 out[2] = a[2] / b[2];
@@ -62393,7 +62581,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.min = function(out, a, b) {
+            vec3.min = function (out, a, b) {
                 out[0] = Math.min(a[0], b[0]);
                 out[1] = Math.min(a[1], b[1]);
                 out[2] = Math.min(a[2], b[2]);
@@ -62408,7 +62596,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.max = function(out, a, b) {
+            vec3.max = function (out, a, b) {
                 out[0] = Math.max(a[0], b[0]);
                 out[1] = Math.max(a[1], b[1]);
                 out[2] = Math.max(a[2], b[2]);
@@ -62437,7 +62625,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the vector by
              * @returns {vec3} out
              */
-            vec3.scale = function(out, a, b) {
+            vec3.scale = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 out[2] = a[2] * b;
@@ -62453,7 +62641,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b by before adding
              * @returns {vec3} out
              */
-            vec3.scaleAndAdd = function(out, a, b, scale) {
+            vec3.scaleAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 out[2] = a[2] + (b[2] * scale);
@@ -62467,11 +62655,11 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {Number} distance between a and b
              */
-            vec3.distance = function(a, b) {
+            vec3.distance = function (a, b) {
                 var x = b[0] - a[0],
                     y = b[1] - a[1],
                     z = b[2] - a[2];
-                return Math.sqrt(x*x + y*y + z*z);
+                return Math.sqrt(x * x + y * y + z * z);
             };
 
             /**
@@ -62487,11 +62675,11 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {Number} squared distance between a and b
              */
-            vec3.squaredDistance = function(a, b) {
+            vec3.squaredDistance = function (a, b) {
                 var x = b[0] - a[0],
                     y = b[1] - a[1],
                     z = b[2] - a[2];
-                return x*x + y*y + z*z;
+                return x * x + y * y + z * z;
             };
 
             /**
@@ -62510,7 +62698,7 @@ function getLibraries(System) {
                 var x = a[0],
                     y = a[1],
                     z = a[2];
-                return Math.sqrt(x*x + y*y + z*z);
+                return Math.sqrt(x * x + y * y + z * z);
             };
 
             /**
@@ -62529,7 +62717,7 @@ function getLibraries(System) {
                 var x = a[0],
                     y = a[1],
                     z = a[2];
-                return x*x + y*y + z*z;
+                return x * x + y * y + z * z;
             };
 
             /**
@@ -62545,7 +62733,7 @@ function getLibraries(System) {
              * @param {vec3} a vector to negate
              * @returns {vec3} out
              */
-            vec3.negate = function(out, a) {
+            vec3.negate = function (out, a) {
                 out[0] = -a[0];
                 out[1] = -a[1];
                 out[2] = -a[2];
@@ -62559,7 +62747,7 @@ function getLibraries(System) {
              * @param {vec3} a vector to invert
              * @returns {vec3} out
              */
-            vec3.inverse = function(out, a) {
+            vec3.inverse = function (out, a) {
                 out[0] = 1.0 / a[0];
                 out[1] = 1.0 / a[1];
                 out[2] = 1.0 / a[2];
@@ -62573,11 +62761,11 @@ function getLibraries(System) {
              * @param {vec3} a vector to normalize
              * @returns {vec3} out
              */
-            vec3.normalize = function(out, a) {
+            vec3.normalize = function (out, a) {
                 var x = a[0],
                     y = a[1],
                     z = a[2];
-                var len = x*x + y*y + z*z;
+                var len = x * x + y * y + z * z;
                 if (len > 0) {
                     //TODO: evaluate use of glm_invsqrt here?
                     len = 1 / Math.sqrt(len);
@@ -62607,7 +62795,7 @@ function getLibraries(System) {
              * @param {vec3} b the second operand
              * @returns {vec3} out
              */
-            vec3.cross = function(out, a, b) {
+            vec3.cross = function (out, a, b) {
                 var ax = a[0], ay = a[1], az = a[2],
                     bx = b[0], by = b[1], bz = b[2];
 
@@ -62700,7 +62888,7 @@ function getLibraries(System) {
 
                 var r = glMatrix.RANDOM() * 2.0 * Math.PI;
                 var z = (glMatrix.RANDOM() * 2.0) - 1.0;
-                var zScale = Math.sqrt(1.0-z*z) * scale;
+                var zScale = Math.sqrt(1.0 - z * z) * scale;
 
                 out[0] = Math.cos(r) * zScale;
                 out[1] = Math.sin(r) * zScale;
@@ -62717,7 +62905,7 @@ function getLibraries(System) {
              * @param {mat4} m matrix to transform with
              * @returns {vec3} out
              */
-            vec3.transformMat4 = function(out, a, m) {
+            vec3.transformMat4 = function (out, a, m) {
                 var x = a[0], y = a[1], z = a[2],
                     w = m[3] * x + m[7] * y + m[11] * z + m[15];
                 w = w || 1.0;
@@ -62735,7 +62923,7 @@ function getLibraries(System) {
              * @param {mat4} m the 3x3 matrix to transform with
              * @returns {vec3} out
              */
-            vec3.transformMat3 = function(out, a, m) {
+            vec3.transformMat3 = function (out, a, m) {
                 var x = a[0], y = a[1], z = a[2];
                 out[0] = x * m[0] + y * m[3] + z * m[6];
                 out[1] = x * m[1] + y * m[4] + z * m[7];
@@ -62751,7 +62939,7 @@ function getLibraries(System) {
              * @param {quat} q quaternion to transform with
              * @returns {vec3} out
              */
-            vec3.transformQuat = function(out, a, q) {
+            vec3.transformQuat = function (out, a, q) {
                 // benchmarks: http://jsperf.com/quaternion-transform-vec3-implementations
 
                 var x = a[0], y = a[1], z = a[2],
@@ -62778,8 +62966,8 @@ function getLibraries(System) {
              * @param {Number} c The angle of rotation
              * @returns {vec3} out
              */
-            vec3.rotateX = function(out, a, b, c){
-                var p = [], r=[];
+            vec3.rotateX = function (out, a, b, c) {
+                var p = [], r = [];
                 //Translate point to the origin
                 p[0] = a[0] - b[0];
                 p[1] = a[1] - b[1];
@@ -62787,8 +62975,8 @@ function getLibraries(System) {
 
                 //perform rotation
                 r[0] = p[0];
-                r[1] = p[1]*Math.cos(c) - p[2]*Math.sin(c);
-                r[2] = p[1]*Math.sin(c) + p[2]*Math.cos(c);
+                r[1] = p[1] * Math.cos(c) - p[2] * Math.sin(c);
+                r[2] = p[1] * Math.sin(c) + p[2] * Math.cos(c);
 
                 //translate to correct position
                 out[0] = r[0] + b[0];
@@ -62806,17 +62994,17 @@ function getLibraries(System) {
              * @param {Number} c The angle of rotation
              * @returns {vec3} out
              */
-            vec3.rotateY = function(out, a, b, c){
-                var p = [], r=[];
+            vec3.rotateY = function (out, a, b, c) {
+                var p = [], r = [];
                 //Translate point to the origin
                 p[0] = a[0] - b[0];
                 p[1] = a[1] - b[1];
                 p[2] = a[2] - b[2];
 
                 //perform rotation
-                r[0] = p[2]*Math.sin(c) + p[0]*Math.cos(c);
+                r[0] = p[2] * Math.sin(c) + p[0] * Math.cos(c);
                 r[1] = p[1];
-                r[2] = p[2]*Math.cos(c) - p[0]*Math.sin(c);
+                r[2] = p[2] * Math.cos(c) - p[0] * Math.sin(c);
 
                 //translate to correct position
                 out[0] = r[0] + b[0];
@@ -62834,16 +63022,16 @@ function getLibraries(System) {
              * @param {Number} c The angle of rotation
              * @returns {vec3} out
              */
-            vec3.rotateZ = function(out, a, b, c){
-                var p = [], r=[];
+            vec3.rotateZ = function (out, a, b, c) {
+                var p = [], r = [];
                 //Translate point to the origin
                 p[0] = a[0] - b[0];
                 p[1] = a[1] - b[1];
                 p[2] = a[2] - b[2];
 
                 //perform rotation
-                r[0] = p[0]*Math.cos(c) - p[1]*Math.sin(c);
-                r[1] = p[0]*Math.sin(c) + p[1]*Math.cos(c);
+                r[0] = p[0] * Math.cos(c) - p[1] * Math.sin(c);
+                r[1] = p[0] * Math.sin(c) + p[1] * Math.cos(c);
                 r[2] = p[2];
 
                 //translate to correct position
@@ -62866,29 +63054,33 @@ function getLibraries(System) {
              * @returns {Array} a
              * @function
              */
-            vec3.forEach = (function() {
+            vec3.forEach = (function () {
                 var vec = vec3.create();
 
-                return function(a, stride, offset, count, fn, arg) {
+                return function (a, stride, offset, count, fn, arg) {
                     var i, l;
-                    if(!stride) {
+                    if (!stride) {
                         stride = 3;
                     }
 
-                    if(!offset) {
+                    if (!offset) {
                         offset = 0;
                     }
 
-                    if(count) {
+                    if (count) {
                         l = Math.min((count * stride) + offset, a.length);
                     } else {
                         l = a.length;
                     }
 
-                    for(i = offset; i < l; i += stride) {
-                        vec[0] = a[i]; vec[1] = a[i+1]; vec[2] = a[i+2];
+                    for (i = offset; i < l; i += stride) {
+                        vec[0] = a[i];
+                        vec[1] = a[i + 1];
+                        vec[2] = a[i + 2];
                         fn(vec, vec, arg);
-                        a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2];
+                        a[i] = vec[0];
+                        a[i + 1] = vec[1];
+                        a[i + 2] = vec[2];
                     }
 
                     return a;
@@ -62901,7 +63093,7 @@ function getLibraries(System) {
              * @param {vec3} b The second operand
              * @returns {Number} The angle in radians
              */
-            vec3.angle = function(a, b) {
+            vec3.angle = function (a, b) {
 
                 var tempA = vec3.fromValues(a[0], a[1], a[2]);
                 var tempB = vec3.fromValues(b[0], b[1], b[2]);
@@ -62911,7 +63103,7 @@ function getLibraries(System) {
 
                 var cosine = vec3.dot(tempA, tempB);
 
-                if(cosine > 1.0){
+                if (cosine > 1.0) {
                     return 0;
                 } else {
                     return Math.acos(cosine);
@@ -62949,9 +63141,9 @@ function getLibraries(System) {
             vec3.equals = function (a, b) {
                 var a0 = a[0], a1 = a[1], a2 = a[2];
                 var b0 = b[0], b1 = b[1], b2 = b[2];
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-                Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+                Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)));
             };
 
             module.exports = vec3;
@@ -62990,7 +63182,7 @@ function getLibraries(System) {
              *
              * @returns {vec4} a new 4D vector
              */
-            vec4.create = function() {
+            vec4.create = function () {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = 0;
                 out[1] = 0;
@@ -63005,7 +63197,7 @@ function getLibraries(System) {
              * @param {vec4} a vector to clone
              * @returns {vec4} a new 4D vector
              */
-            vec4.clone = function(a) {
+            vec4.clone = function (a) {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = a[0];
                 out[1] = a[1];
@@ -63023,7 +63215,7 @@ function getLibraries(System) {
              * @param {Number} w W component
              * @returns {vec4} a new 4D vector
              */
-            vec4.fromValues = function(x, y, z, w) {
+            vec4.fromValues = function (x, y, z, w) {
                 var out = new glMatrix.ARRAY_TYPE(4);
                 out[0] = x;
                 out[1] = y;
@@ -63039,7 +63231,7 @@ function getLibraries(System) {
              * @param {vec4} a the source vector
              * @returns {vec4} out
              */
-            vec4.copy = function(out, a) {
+            vec4.copy = function (out, a) {
                 out[0] = a[0];
                 out[1] = a[1];
                 out[2] = a[2];
@@ -63057,7 +63249,7 @@ function getLibraries(System) {
              * @param {Number} w W component
              * @returns {vec4} out
              */
-            vec4.set = function(out, x, y, z, w) {
+            vec4.set = function (out, x, y, z, w) {
                 out[0] = x;
                 out[1] = y;
                 out[2] = z;
@@ -63073,7 +63265,7 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {vec4} out
              */
-            vec4.add = function(out, a, b) {
+            vec4.add = function (out, a, b) {
                 out[0] = a[0] + b[0];
                 out[1] = a[1] + b[1];
                 out[2] = a[2] + b[2];
@@ -63089,7 +63281,7 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {vec4} out
              */
-            vec4.subtract = function(out, a, b) {
+            vec4.subtract = function (out, a, b) {
                 out[0] = a[0] - b[0];
                 out[1] = a[1] - b[1];
                 out[2] = a[2] - b[2];
@@ -63111,7 +63303,7 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {vec4} out
              */
-            vec4.multiply = function(out, a, b) {
+            vec4.multiply = function (out, a, b) {
                 out[0] = a[0] * b[0];
                 out[1] = a[1] * b[1];
                 out[2] = a[2] * b[2];
@@ -63133,7 +63325,7 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {vec4} out
              */
-            vec4.divide = function(out, a, b) {
+            vec4.divide = function (out, a, b) {
                 out[0] = a[0] / b[0];
                 out[1] = a[1] / b[1];
                 out[2] = a[2] / b[2];
@@ -63185,7 +63377,7 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {vec4} out
              */
-            vec4.min = function(out, a, b) {
+            vec4.min = function (out, a, b) {
                 out[0] = Math.min(a[0], b[0]);
                 out[1] = Math.min(a[1], b[1]);
                 out[2] = Math.min(a[2], b[2]);
@@ -63201,7 +63393,7 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {vec4} out
              */
-            vec4.max = function(out, a, b) {
+            vec4.max = function (out, a, b) {
                 out[0] = Math.max(a[0], b[0]);
                 out[1] = Math.max(a[1], b[1]);
                 out[2] = Math.max(a[2], b[2]);
@@ -63232,7 +63424,7 @@ function getLibraries(System) {
              * @param {Number} b amount to scale the vector by
              * @returns {vec4} out
              */
-            vec4.scale = function(out, a, b) {
+            vec4.scale = function (out, a, b) {
                 out[0] = a[0] * b;
                 out[1] = a[1] * b;
                 out[2] = a[2] * b;
@@ -63249,7 +63441,7 @@ function getLibraries(System) {
              * @param {Number} scale the amount to scale b by before adding
              * @returns {vec4} out
              */
-            vec4.scaleAndAdd = function(out, a, b, scale) {
+            vec4.scaleAndAdd = function (out, a, b, scale) {
                 out[0] = a[0] + (b[0] * scale);
                 out[1] = a[1] + (b[1] * scale);
                 out[2] = a[2] + (b[2] * scale);
@@ -63264,12 +63456,12 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {Number} distance between a and b
              */
-            vec4.distance = function(a, b) {
+            vec4.distance = function (a, b) {
                 var x = b[0] - a[0],
                     y = b[1] - a[1],
                     z = b[2] - a[2],
                     w = b[3] - a[3];
-                return Math.sqrt(x*x + y*y + z*z + w*w);
+                return Math.sqrt(x * x + y * y + z * z + w * w);
             };
 
             /**
@@ -63285,12 +63477,12 @@ function getLibraries(System) {
              * @param {vec4} b the second operand
              * @returns {Number} squared distance between a and b
              */
-            vec4.squaredDistance = function(a, b) {
+            vec4.squaredDistance = function (a, b) {
                 var x = b[0] - a[0],
                     y = b[1] - a[1],
                     z = b[2] - a[2],
                     w = b[3] - a[3];
-                return x*x + y*y + z*z + w*w;
+                return x * x + y * y + z * z + w * w;
             };
 
             /**
@@ -63310,7 +63502,7 @@ function getLibraries(System) {
                     y = a[1],
                     z = a[2],
                     w = a[3];
-                return Math.sqrt(x*x + y*y + z*z + w*w);
+                return Math.sqrt(x * x + y * y + z * z + w * w);
             };
 
             /**
@@ -63330,7 +63522,7 @@ function getLibraries(System) {
                     y = a[1],
                     z = a[2],
                     w = a[3];
-                return x*x + y*y + z*z + w*w;
+                return x * x + y * y + z * z + w * w;
             };
 
             /**
@@ -63346,7 +63538,7 @@ function getLibraries(System) {
              * @param {vec4} a vector to negate
              * @returns {vec4} out
              */
-            vec4.negate = function(out, a) {
+            vec4.negate = function (out, a) {
                 out[0] = -a[0];
                 out[1] = -a[1];
                 out[2] = -a[2];
@@ -63361,7 +63553,7 @@ function getLibraries(System) {
              * @param {vec4} a vector to invert
              * @returns {vec4} out
              */
-            vec4.inverse = function(out, a) {
+            vec4.inverse = function (out, a) {
                 out[0] = 1.0 / a[0];
                 out[1] = 1.0 / a[1];
                 out[2] = 1.0 / a[2];
@@ -63376,12 +63568,12 @@ function getLibraries(System) {
              * @param {vec4} a vector to normalize
              * @returns {vec4} out
              */
-            vec4.normalize = function(out, a) {
+            vec4.normalize = function (out, a) {
                 var x = a[0],
                     y = a[1],
                     z = a[2],
                     w = a[3];
-                var len = x*x + y*y + z*z + w*w;
+                var len = x * x + y * y + z * z + w * w;
                 if (len > 0) {
                     len = 1 / Math.sqrt(len);
                     out[0] = x * len;
@@ -63452,7 +63644,7 @@ function getLibraries(System) {
              * @param {mat4} m matrix to transform with
              * @returns {vec4} out
              */
-            vec4.transformMat4 = function(out, a, m) {
+            vec4.transformMat4 = function (out, a, m) {
                 var x = a[0], y = a[1], z = a[2], w = a[3];
                 out[0] = m[0] * x + m[4] * y + m[8] * z + m[12] * w;
                 out[1] = m[1] * x + m[5] * y + m[9] * z + m[13] * w;
@@ -63469,7 +63661,7 @@ function getLibraries(System) {
              * @param {quat} q quaternion to transform with
              * @returns {vec4} out
              */
-            vec4.transformQuat = function(out, a, q) {
+            vec4.transformQuat = function (out, a, q) {
                 var x = a[0], y = a[1], z = a[2],
                     qx = q[0], qy = q[1], qz = q[2], qw = q[3],
 
@@ -63499,29 +63691,35 @@ function getLibraries(System) {
              * @returns {Array} a
              * @function
              */
-            vec4.forEach = (function() {
+            vec4.forEach = (function () {
                 var vec = vec4.create();
 
-                return function(a, stride, offset, count, fn, arg) {
+                return function (a, stride, offset, count, fn, arg) {
                     var i, l;
-                    if(!stride) {
+                    if (!stride) {
                         stride = 4;
                     }
 
-                    if(!offset) {
+                    if (!offset) {
                         offset = 0;
                     }
 
-                    if(count) {
+                    if (count) {
                         l = Math.min((count * stride) + offset, a.length);
                     } else {
                         l = a.length;
                     }
 
-                    for(i = offset; i < l; i += stride) {
-                        vec[0] = a[i]; vec[1] = a[i+1]; vec[2] = a[i+2]; vec[3] = a[i+3];
+                    for (i = offset; i < l; i += stride) {
+                        vec[0] = a[i];
+                        vec[1] = a[i + 1];
+                        vec[2] = a[i + 2];
+                        vec[3] = a[i + 3];
                         fn(vec, vec, arg);
-                        a[i] = vec[0]; a[i+1] = vec[1]; a[i+2] = vec[2]; a[i+3] = vec[3];
+                        a[i] = vec[0];
+                        a[i + 1] = vec[1];
+                        a[i + 2] = vec[2];
+                        a[i + 3] = vec[3];
                     }
 
                     return a;
@@ -63559,14 +63757,1390 @@ function getLibraries(System) {
             vec4.equals = function (a, b) {
                 var a0 = a[0], a1 = a[1], a2 = a[2], a3 = a[3];
                 var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3];
-                return (Math.abs(a0 - b0) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
-                Math.abs(a1 - b1) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
-                Math.abs(a2 - b2) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
-                Math.abs(a3 - b3) <= glMatrix.EPSILON*Math.max(1.0, Math.abs(a3), Math.abs(b3)));
+                return (Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) &&
+                Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) &&
+                Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) &&
+                Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)));
             };
 
             module.exports = vec4;
         },
+        "gl-fbo/fbo.js": function (require, exports, module) {
+            'use strict'
+
+            var createTexture = require(getCodeName('gl-texture2d'))
+
+            module.exports = createFBO
+
+            var colorAttachmentArrays = null
+            var FRAMEBUFFER_UNSUPPORTED
+            var FRAMEBUFFER_INCOMPLETE_ATTACHMENT
+            var FRAMEBUFFER_INCOMPLETE_DIMENSIONS
+            var FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
+
+            function saveFBOState(gl) {
+                var fbo = gl.getParameter(gl.FRAMEBUFFER_BINDING)
+                var rbo = gl.getParameter(gl.RENDERBUFFER_BINDING)
+                var tex = gl.getParameter(gl.TEXTURE_BINDING_2D)
+                return [fbo, rbo, tex]
+            }
+
+            function restoreFBOState(gl, data) {
+                gl.bindFramebuffer(gl.FRAMEBUFFER, data[0])
+                gl.bindRenderbuffer(gl.RENDERBUFFER, data[1])
+                gl.bindTexture(gl.TEXTURE_2D, data[2])
+            }
+
+            function lazyInitColorAttachments(gl, ext) {
+                var maxColorAttachments = gl.getParameter(ext.MAX_COLOR_ATTACHMENTS_WEBGL)
+                colorAttachmentArrays = new Array(maxColorAttachments + 1)
+                for (var i = 0; i <= maxColorAttachments; ++i) {
+                    var x = new Array(maxColorAttachments)
+                    for (var j = 0; j < i; ++j) {
+                        x[j] = gl.COLOR_ATTACHMENT0 + j
+                    }
+                    for (var j = i; j < maxColorAttachments; ++j) {
+                        x[j] = gl.NONE
+                    }
+                    colorAttachmentArrays[i] = x
+                }
+            }
+
+//Throw an appropriate error
+            function throwFBOError(status) {
+                switch (status) {
+                    case FRAMEBUFFER_UNSUPPORTED:
+                        throw new Error('gl-fbo: Framebuffer unsupported')
+                    case FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
+                        throw new Error('gl-fbo: Framebuffer incomplete attachment')
+                    case FRAMEBUFFER_INCOMPLETE_DIMENSIONS:
+                        throw new Error('gl-fbo: Framebuffer incomplete dimensions')
+                    case FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
+                        throw new Error('gl-fbo: Framebuffer incomplete missing attachment')
+                    default:
+                        throw new Error('gl-fbo: Framebuffer failed for unspecified reason')
+                }
+            }
+
+//Initialize a texture object
+            function initTexture(gl, width, height, type, format, attachment) {
+                if (!type) {
+                    return null
+                }
+                var result = createTexture(gl, width, height, format, type)
+                result.magFilter = gl.NEAREST
+                result.minFilter = gl.NEAREST
+                result.mipSamples = 1
+                result.bind()
+                gl.framebufferTexture2D(gl.FRAMEBUFFER, attachment, gl.TEXTURE_2D, result.handle, 0)
+                return result
+            }
+
+//Initialize a render buffer object
+            function initRenderBuffer(gl, width, height, component, attachment) {
+                var result = gl.createRenderbuffer()
+                gl.bindRenderbuffer(gl.RENDERBUFFER, result)
+                gl.renderbufferStorage(gl.RENDERBUFFER, component, width, height)
+                gl.framebufferRenderbuffer(gl.FRAMEBUFFER, attachment, gl.RENDERBUFFER, result)
+                return result
+            }
+
+//Rebuild the frame buffer
+            function rebuildFBO(fbo) {
+
+                //Save FBO state
+                var state = saveFBOState(fbo.gl)
+
+                var gl = fbo.gl
+                var handle = fbo.handle = gl.createFramebuffer()
+                var width = fbo._shape[0]
+                var height = fbo._shape[1]
+                var numColors = fbo.color.length
+                var ext = fbo._ext
+                var useStencil = fbo._useStencil
+                var useDepth = fbo._useDepth
+                var colorType = fbo._colorType
+
+                //Bind the fbo
+                gl.bindFramebuffer(gl.FRAMEBUFFER, handle)
+
+                //Allocate color buffers
+                for (var i = 0; i < numColors; ++i) {
+                    fbo.color[i] = initTexture(gl, width, height, colorType, gl.RGBA, gl.COLOR_ATTACHMENT0 + i)
+                }
+                if (numColors === 0) {
+                    fbo._color_rb = initRenderBuffer(gl, width, height, gl.RGBA4, gl.COLOR_ATTACHMENT0)
+                    if (ext) {
+                        ext.drawBuffersWEBGL(colorAttachmentArrays[0])
+                    }
+                } else if (numColors > 1) {
+                    ext.drawBuffersWEBGL(colorAttachmentArrays[numColors])
+                }
+
+                //Allocate depth/stencil buffers
+                var WEBGL_depth_texture = gl.getExtension('WEBGL_depth_texture')
+                if (WEBGL_depth_texture) {
+                    if (useStencil) {
+                        fbo.depth = initTexture(gl, width, height,
+                            WEBGL_depth_texture.UNSIGNED_INT_24_8_WEBGL,
+                            gl.DEPTH_STENCIL,
+                            gl.DEPTH_STENCIL_ATTACHMENT)
+                    } else if (useDepth) {
+                        fbo.depth = initTexture(gl, width, height,
+                            gl.UNSIGNED_SHORT,
+                            gl.DEPTH_COMPONENT,
+                            gl.DEPTH_ATTACHMENT)
+                    }
+                } else {
+                    if (useDepth && useStencil) {
+                        fbo._depth_rb = initRenderBuffer(gl, width, height, gl.DEPTH_STENCIL, gl.DEPTH_STENCIL_ATTACHMENT)
+                    } else if (useDepth) {
+                        fbo._depth_rb = initRenderBuffer(gl, width, height, gl.DEPTH_COMPONENT16, gl.DEPTH_ATTACHMENT)
+                    } else if (useStencil) {
+                        fbo._depth_rb = initRenderBuffer(gl, width, height, gl.STENCIL_INDEX, gl.STENCIL_ATTACHMENT)
+                    }
+                }
+
+                //Check frame buffer state
+                var status = gl.checkFramebufferStatus(gl.FRAMEBUFFER)
+                if (status !== gl.FRAMEBUFFER_COMPLETE) {
+
+                    //Release all partially allocated resources
+                    fbo._destroyed = true
+
+                    //Release all resources
+                    gl.bindFramebuffer(gl.FRAMEBUFFER, null)
+                    gl.deleteFramebuffer(fbo.handle)
+                    fbo.handle = null
+                    if (fbo.depth) {
+                        fbo.depth.dispose()
+                        fbo.depth = null
+                    }
+                    if (fbo._depth_rb) {
+                        gl.deleteRenderbuffer(fbo._depth_rb)
+                        fbo._depth_rb = null
+                    }
+                    for (var i = 0; i < fbo.color.length; ++i) {
+                        fbo.color[i].dispose()
+                        fbo.color[i] = null
+                    }
+                    if (fbo._color_rb) {
+                        gl.deleteRenderbuffer(fbo._color_rb)
+                        fbo._color_rb = null
+                    }
+
+                    restoreFBOState(gl, state)
+
+                    //Throw the frame buffer error
+                    throwFBOError(status)
+                }
+
+                //Everything ok, let's get on with life
+                restoreFBOState(gl, state)
+            }
+
+            function Framebuffer(gl, width, height, colorType, numColors, useDepth, useStencil, ext) {
+
+                //Handle and set properties
+                this.gl = gl
+                this._shape = [width | 0, height | 0]
+                this._destroyed = false
+                this._ext = ext
+
+                //Allocate buffers
+                this.color = new Array(numColors)
+                for (var i = 0; i < numColors; ++i) {
+                    this.color[i] = null
+                }
+                this._color_rb = null
+                this.depth = null
+                this._depth_rb = null
+
+                //Save depth and stencil flags
+                this._colorType = colorType
+                this._useDepth = useDepth
+                this._useStencil = useStencil
+
+                //Shape vector for resizing
+                var parent = this
+                var shapeVector = [width | 0, height | 0]
+                Object.defineProperties(shapeVector, {
+                    0: {
+                        get: function () {
+                            return parent._shape[0]
+                        },
+                        set: function (w) {
+                            return parent.width = w
+                        }
+                    },
+                    1: {
+                        get: function () {
+                            return parent._shape[1]
+                        },
+                        set: function (h) {
+                            return parent.height = h
+                        }
+                    }
+                })
+                this._shapeVector = shapeVector
+
+                //Initialize all attachments
+                rebuildFBO(this)
+            }
+
+            var proto = Framebuffer.prototype
+
+            function reshapeFBO(fbo, w, h) {
+                //If fbo is invalid, just skip this
+                if (fbo._destroyed) {
+                    throw new Error('gl-fbo: Can\'t resize destroyed FBO')
+                }
+
+                //Don't resize if no change in shape
+                if ((fbo._shape[0] === w) &&
+                    (fbo._shape[1] === h)) {
+                    return
+                }
+
+                var gl = fbo.gl
+
+                //Check parameter ranges
+                var maxFBOSize = gl.getParameter(gl.MAX_RENDERBUFFER_SIZE)
+                if (w < 0 || w > maxFBOSize ||
+                    h < 0 || h > maxFBOSize) {
+                    throw new Error('gl-fbo: Can\'t resize FBO, invalid dimensions')
+                }
+
+                //Update shape
+                fbo._shape[0] = w
+                fbo._shape[1] = h
+
+                //Save framebuffer state
+                var state = saveFBOState(gl)
+
+                //Resize framebuffer attachments
+                for (var i = 0; i < fbo.color.length; ++i) {
+                    fbo.color[i].shape = fbo._shape
+                }
+                if (fbo._color_rb) {
+                    gl.bindRenderbuffer(gl.RENDERBUFFER, fbo._color_rb)
+                    gl.renderbufferStorage(gl.RENDERBUFFER, gl.RGBA4, fbo._shape[0], fbo._shape[1])
+                }
+                if (fbo.depth) {
+                    fbo.depth.shape = fbo._shape
+                }
+                if (fbo._depth_rb) {
+                    gl.bindRenderbuffer(gl.RENDERBUFFER, fbo._depth_rb)
+                    if (fbo._useDepth && fbo._useStencil) {
+                        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_STENCIL, fbo._shape[0], fbo._shape[1])
+                    } else if (fbo._useDepth) {
+                        gl.renderbufferStorage(gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, fbo._shape[0], fbo._shape[1])
+                    } else if (fbo._useStencil) {
+                        gl.renderbufferStorage(gl.RENDERBUFFER, gl.STENCIL_INDEX, fbo._shape[0], fbo._shape[1])
+                    }
+                }
+
+                //Check FBO status after resize, if something broke then die in a fire
+                gl.bindFramebuffer(gl.FRAMEBUFFER, fbo.handle)
+                var status = gl.checkFramebufferStatus(gl.FRAMEBUFFER)
+                if (status !== gl.FRAMEBUFFER_COMPLETE) {
+                    fbo.dispose()
+                    restoreFBOState(gl, state)
+                    throwFBOError(status)
+                }
+
+                //Restore framebuffer state
+                restoreFBOState(gl, state)
+            }
+
+            Object.defineProperties(proto, {
+                'shape': {
+                    get: function () {
+                        if (this._destroyed) {
+                            return [0, 0]
+                        }
+                        return this._shapeVector
+                    },
+                    set: function (x) {
+                        if (!Array.isArray(x)) {
+                            x = [x | 0, x | 0]
+                        }
+                        if (x.length !== 2) {
+                            throw new Error('gl-fbo: Shape vector must be length 2')
+                        }
+
+                        var w = x[0] | 0
+                        var h = x[1] | 0
+                        reshapeFBO(this, w, h)
+
+                        return [w, h]
+                    },
+                    enumerable: false
+                },
+                'width': {
+                    get: function () {
+                        if (this._destroyed) {
+                            return 0
+                        }
+                        return this._shape[0]
+                    },
+                    set: function (w) {
+                        w = w | 0
+                        reshapeFBO(this, w, this._shape[1])
+                        return w
+                    },
+                    enumerable: false
+                },
+                'height': {
+                    get: function () {
+                        if (this._destroyed) {
+                            return 0
+                        }
+                        return this._shape[1]
+                    },
+                    set: function (h) {
+                        h = h | 0
+                        reshapeFBO(this, this._shape[0], h)
+                        return h
+                    },
+                    enumerable: false
+                }
+            })
+
+            proto.bind = function () {
+                if (this._destroyed) {
+                    return
+                }
+                var gl = this.gl
+                gl.bindFramebuffer(gl.FRAMEBUFFER, this.handle)
+                gl.viewport(0, 0, this._shape[0], this._shape[1])
+            }
+
+            proto.dispose = function () {
+                if (this._destroyed) {
+                    return
+                }
+                this._destroyed = true
+                var gl = this.gl
+                gl.deleteFramebuffer(this.handle)
+                this.handle = null
+                if (this.depth) {
+                    this.depth.dispose()
+                    this.depth = null
+                }
+                if (this._depth_rb) {
+                    gl.deleteRenderbuffer(this._depth_rb)
+                    this._depth_rb = null
+                }
+                for (var i = 0; i < this.color.length; ++i) {
+                    this.color[i].dispose()
+                    this.color[i] = null
+                }
+                if (this._color_rb) {
+                    gl.deleteRenderbuffer(this._color_rb)
+                    this._color_rb = null
+                }
+            }
+
+            function createFBO(gl, width, height, options) {
+
+                //Update frame buffer error code values
+                if (!FRAMEBUFFER_UNSUPPORTED) {
+                    FRAMEBUFFER_UNSUPPORTED = gl.FRAMEBUFFER_UNSUPPORTED
+                    FRAMEBUFFER_INCOMPLETE_ATTACHMENT = gl.FRAMEBUFFER_INCOMPLETE_ATTACHMENT
+                    FRAMEBUFFER_INCOMPLETE_DIMENSIONS = gl.FRAMEBUFFER_INCOMPLETE_DIMENSIONS
+                    FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT = gl.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT
+                }
+
+                //Lazily initialize color attachment arrays
+                var WEBGL_draw_buffers = gl.getExtension('WEBGL_draw_buffers')
+                if (!colorAttachmentArrays && WEBGL_draw_buffers) {
+                    lazyInitColorAttachments(gl, WEBGL_draw_buffers)
+                }
+
+                //Special case: Can accept an array as argument
+                if (Array.isArray(width)) {
+                    options = height
+                    height = width[1] | 0
+                    width = width[0] | 0
+                }
+
+                if (typeof width !== 'number') {
+                    throw new Error('gl-fbo: Missing shape parameter')
+                }
+
+                //Validate width/height properties
+                var maxFBOSize = gl.getParameter(gl.MAX_RENDERBUFFER_SIZE)
+                if (width < 0 || width > maxFBOSize || height < 0 || height > maxFBOSize) {
+                    throw new Error('gl-fbo: Parameters are too large for FBO')
+                }
+
+                //Handle each option type
+                options = options || {}
+
+                //Figure out number of color buffers to use
+                var numColors = 1
+                if ('color' in options) {
+                    numColors = Math.max(options.color | 0, 0)
+                    if (numColors < 0) {
+                        throw new Error('gl-fbo: Must specify a nonnegative number of colors')
+                    }
+                    if (numColors > 1) {
+                        //Check if multiple render targets supported
+                        if (!WEBGL_draw_buffers) {
+                            throw new Error('gl-fbo: Multiple draw buffer extension not supported')
+                        } else if (numColors > gl.getParameter(WEBGL_draw_buffers.MAX_COLOR_ATTACHMENTS_WEBGL)) {
+                            throw new Error('gl-fbo: Context does not support ' + numColors + ' draw buffers')
+                        }
+                    }
+                }
+
+                //Determine whether to use floating point textures
+                var colorType = gl.UNSIGNED_BYTE
+                var OES_texture_float = gl.getExtension('OES_texture_float')
+                if (options.float && numColors > 0) {
+                    if (!OES_texture_float) {
+                        throw new Error('gl-fbo: Context does not support floating point textures')
+                    }
+                    colorType = gl.FLOAT
+                } else if (options.preferFloat && numColors > 0) {
+                    if (OES_texture_float) {
+                        colorType = gl.FLOAT
+                    }
+                }
+
+                //Check if we should use depth buffer
+                var useDepth = true
+                if ('depth' in options) {
+                    useDepth = !!options.depth
+                }
+
+                //Check if we should use a stencil buffer
+                var useStencil = false
+                if ('stencil' in options) {
+                    useStencil = !!options.stencil
+                }
+
+                return new Framebuffer(
+                    gl,
+                    width,
+                    height,
+                    colorType,
+                    numColors,
+                    useDepth,
+                    useStencil,
+                    WEBGL_draw_buffers)
+            }
+        },
+        "gl-texture2d/texture.js": function (require, exports, module) {
+            'use strict'
+            var ndarray = require(getCodeName('ndarray'))
+            var ops = require(getCodeName('ndarray-ops'))
+            var pool = require(getCodeName('typedarray-pool'))
+
+            module.exports = createTexture2D
+
+            var linearTypes = null
+            var filterTypes = null
+            var wrapTypes = null
+
+            function lazyInitLinearTypes(gl) {
+                linearTypes = [
+                    gl.LINEAR,
+                    gl.NEAREST_MIPMAP_LINEAR,
+                    gl.LINEAR_MIPMAP_NEAREST,
+                    gl.LINEAR_MIPMAP_NEAREST
+                ]
+                filterTypes = [
+                    gl.NEAREST,
+                    gl.LINEAR,
+                    gl.NEAREST_MIPMAP_NEAREST,
+                    gl.NEAREST_MIPMAP_LINEAR,
+                    gl.LINEAR_MIPMAP_NEAREST,
+                    gl.LINEAR_MIPMAP_LINEAR
+                ]
+                wrapTypes = [
+                    gl.REPEAT,
+                    gl.CLAMP_TO_EDGE,
+                    gl.MIRRORED_REPEAT
+                ]
+            }
+
+            var convertFloatToUint8 = function (out, inp) {
+                ops.muls(out, inp, 255.0)
+            }
+
+            function reshapeTexture(tex, w, h) {
+                var gl = tex.gl
+                var maxSize = gl.getParameter(gl.MAX_TEXTURE_SIZE)
+                if (w < 0 || w > maxSize || h < 0 || h > maxSize) {
+                    throw new Error('gl-texture2d: Invalid texture size')
+                }
+                tex._shape = [w, h]
+                tex.bind()
+                gl.texImage2D(gl.TEXTURE_2D, 0, tex.format, w, h, 0, tex.format, tex.type, null)
+                tex._mipLevels = [0]
+                return tex
+            }
+
+            function Texture2D(gl, handle, width, height, format, type) {
+                this.gl = gl
+                this.handle = handle
+                this.format = format
+                this.type = type
+                this._shape = [width, height]
+                this._mipLevels = [0]
+                this._magFilter = gl.NEAREST
+                this._minFilter = gl.NEAREST
+                this._wrapS = gl.CLAMP_TO_EDGE
+                this._wrapT = gl.CLAMP_TO_EDGE
+                this._anisoSamples = 1
+
+                var parent = this
+                var wrapVector = [this._wrapS, this._wrapT]
+                Object.defineProperties(wrapVector, [
+                    {
+                        get: function () {
+                            return parent._wrapS
+                        },
+                        set: function (v) {
+                            return parent.wrapS = v
+                        }
+                    },
+                    {
+                        get: function () {
+                            return parent._wrapT
+                        },
+                        set: function (v) {
+                            return parent.wrapT = v
+                        }
+                    }
+                ])
+                this._wrapVector = wrapVector
+
+                var shapeVector = [this._shape[0], this._shape[1]]
+                Object.defineProperties(shapeVector, [
+                    {
+                        get: function () {
+                            return parent._shape[0]
+                        },
+                        set: function (v) {
+                            return parent.width = v
+                        }
+                    },
+                    {
+                        get: function () {
+                            return parent._shape[1]
+                        },
+                        set: function (v) {
+                            return parent.height = v
+                        }
+                    }
+                ])
+                this._shapeVector = shapeVector
+            }
+
+            var proto = Texture2D.prototype
+
+            Object.defineProperties(proto, {
+                minFilter: {
+                    get: function () {
+                        return this._minFilter
+                    },
+                    set: function (v) {
+                        this.bind()
+                        var gl = this.gl
+                        if (this.type === gl.FLOAT && linearTypes.indexOf(v) >= 0) {
+                            if (!gl.getExtension('OES_texture_float_linear')) {
+                                v = gl.NEAREST
+                            }
+                        }
+                        if (filterTypes.indexOf(v) < 0) {
+                            throw new Error('gl-texture2d: Unknown filter mode ' + v)
+                        }
+                        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, v)
+                        return this._minFilter = v
+                    }
+                },
+                magFilter: {
+                    get: function () {
+                        return this._magFilter
+                    },
+                    set: function (v) {
+                        this.bind()
+                        var gl = this.gl
+                        if (this.type === gl.FLOAT && linearTypes.indexOf(v) >= 0) {
+                            if (!gl.getExtension('OES_texture_float_linear')) {
+                                v = gl.NEAREST
+                            }
+                        }
+                        if (filterTypes.indexOf(v) < 0) {
+                            throw new Error('gl-texture2d: Unknown filter mode ' + v)
+                        }
+                        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, v)
+                        return this._magFilter = v
+                    }
+                },
+                mipSamples: {
+                    get: function () {
+                        return this._anisoSamples
+                    },
+                    set: function (i) {
+                        var psamples = this._anisoSamples
+                        this._anisoSamples = Math.max(i, 1) | 0
+                        if (psamples !== this._anisoSamples) {
+                            var ext = this.gl.getExtension('EXT_texture_filter_anisotropic')
+                            if (ext) {
+                                this.gl.texParameterf(this.gl.TEXTURE_2D, ext.TEXTURE_MAX_ANISOTROPY_EXT, this._anisoSamples)
+                            }
+                        }
+                        return this._anisoSamples
+                    }
+                },
+                wrapS: {
+                    get: function () {
+                        return this._wrapS
+                    },
+                    set: function (v) {
+                        this.bind()
+                        if (wrapTypes.indexOf(v) < 0) {
+                            throw new Error('gl-texture2d: Unknown wrap mode ' + v)
+                        }
+                        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, v)
+                        return this._wrapS = v
+                    }
+                },
+                wrapT: {
+                    get: function () {
+                        return this._wrapT
+                    },
+                    set: function (v) {
+                        this.bind()
+                        if (wrapTypes.indexOf(v) < 0) {
+                            throw new Error('gl-texture2d: Unknown wrap mode ' + v)
+                        }
+                        this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, v)
+                        return this._wrapT = v
+                    }
+                },
+                wrap: {
+                    get: function () {
+                        return this._wrapVector
+                    },
+                    set: function (v) {
+                        if (!Array.isArray(v)) {
+                            v = [v, v]
+                        }
+                        if (v.length !== 2) {
+                            throw new Error('gl-texture2d: Must specify wrap mode for rows and columns')
+                        }
+                        for (var i = 0; i < 2; ++i) {
+                            if (wrapTypes.indexOf(v[i]) < 0) {
+                                throw new Error('gl-texture2d: Unknown wrap mode ' + v)
+                            }
+                        }
+                        this._wrapS = v[0]
+                        this._wrapT = v[1]
+
+                        var gl = this.gl
+                        this.bind()
+                        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, this._wrapS)
+                        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, this._wrapT)
+
+                        return v
+                    }
+                },
+                shape: {
+                    get: function () {
+                        return this._shapeVector
+                    },
+                    set: function (x) {
+                        if (!Array.isArray(x)) {
+                            x = [x | 0, x | 0]
+                        } else {
+                            if (x.length !== 2) {
+                                throw new Error('gl-texture2d: Invalid texture shape')
+                            }
+                        }
+                        reshapeTexture(this, x[0] | 0, x[1] | 0)
+                        return [x[0] | 0, x[1] | 0]
+                    }
+                },
+                width: {
+                    get: function () {
+                        return this._shape[0]
+                    },
+                    set: function (w) {
+                        w = w | 0
+                        reshapeTexture(this, w, this._shape[1])
+                        return w
+                    }
+                },
+                height: {
+                    get: function () {
+                        return this._shape[1]
+                    },
+                    set: function (h) {
+                        h = h | 0
+                        reshapeTexture(this, this._shape[0], h)
+                        return h
+                    }
+                }
+            })
+
+            proto.bind = function (unit) {
+                var gl = this.gl
+                if (unit !== undefined) {
+                    gl.activeTexture(gl.TEXTURE0 + (unit | 0))
+                }
+                gl.bindTexture(gl.TEXTURE_2D, this.handle)
+                if (unit !== undefined) {
+                    return (unit | 0)
+                }
+                return gl.getParameter(gl.ACTIVE_TEXTURE) - gl.TEXTURE0
+            }
+
+            proto.dispose = function () {
+                this.gl.deleteTexture(this.handle)
+            }
+
+            proto.generateMipmap = function () {
+                this.bind()
+                this.gl.generateMipmap(this.gl.TEXTURE_2D)
+
+                //Update mip levels
+                var l = Math.min(this._shape[0], this._shape[1])
+                for (var i = 0; l > 0; ++i, l >>>= 1) {
+                    if (this._mipLevels.indexOf(i) < 0) {
+                        this._mipLevels.push(i)
+                    }
+                }
+            }
+
+            proto.setPixels = function (data, x_off, y_off, mip_level) {
+                var gl = this.gl
+                this.bind()
+                if (Array.isArray(x_off)) {
+                    mip_level = y_off
+                    y_off = x_off[1] | 0
+                    x_off = x_off[0] | 0
+                } else {
+                    x_off = x_off || 0
+                    y_off = y_off || 0
+                }
+                mip_level = mip_level || 0
+                if (data instanceof HTMLCanvasElement ||
+                    data instanceof ImageData ||
+                    data instanceof HTMLImageElement ||
+                    data instanceof HTMLVideoElement) {
+                    var needsMip = this._mipLevels.indexOf(mip_level) < 0
+                    if (needsMip) {
+                        gl.texImage2D(gl.TEXTURE_2D, 0, this.format, this.format, this.type, data)
+                        this._mipLevels.push(mip_level)
+                    } else {
+                        gl.texSubImage2D(gl.TEXTURE_2D, mip_level, x_off, y_off, this.format, this.type, data)
+                    }
+                } else if (data.shape && data.stride && data.data) {
+                    if (data.shape.length < 2 ||
+                        x_off + data.shape[1] > this._shape[1] >>> mip_level ||
+                        y_off + data.shape[0] > this._shape[0] >>> mip_level ||
+                        x_off < 0 ||
+                        y_off < 0) {
+                        throw new Error('gl-texture2d: Texture dimensions are out of bounds')
+                    }
+                    texSubImageArray(gl, x_off, y_off, mip_level, this.format, this.type, this._mipLevels, data)
+                } else {
+                    throw new Error('gl-texture2d: Unsupported data type')
+                }
+            }
+
+
+            function isPacked(shape, stride) {
+                if (shape.length === 3) {
+                    return (stride[2] === 1) &&
+                        (stride[1] === shape[0] * shape[2]) &&
+                        (stride[0] === shape[2])
+                }
+                return (stride[0] === 1) &&
+                    (stride[1] === shape[0])
+            }
+
+            function texSubImageArray(gl, x_off, y_off, mip_level, cformat, ctype, mipLevels, array) {
+                var dtype = array.dtype
+                var shape = array.shape.slice()
+                if (shape.length < 2 || shape.length > 3) {
+                    throw new Error('gl-texture2d: Invalid ndarray, must be 2d or 3d')
+                }
+                var type = 0, format = 0
+                var packed = isPacked(shape, array.stride.slice())
+                if (dtype === 'float32') {
+                    type = gl.FLOAT
+                } else if (dtype === 'float64') {
+                    type = gl.FLOAT
+                    packed = false
+                    dtype = 'float32'
+                } else if (dtype === 'uint8') {
+                    type = gl.UNSIGNED_BYTE
+                } else {
+                    type = gl.UNSIGNED_BYTE
+                    packed = false
+                    dtype = 'uint8'
+                }
+                var channels = 1
+                if (shape.length === 2) {
+                    format = gl.LUMINANCE
+                    shape = [shape[0], shape[1], 1]
+                    array = ndarray(array.data, shape, [array.stride[0], array.stride[1], 1], array.offset)
+                } else if (shape.length === 3) {
+                    if (shape[2] === 1) {
+                        format = gl.ALPHA
+                    } else if (shape[2] === 2) {
+                        format = gl.LUMINANCE_ALPHA
+                    } else if (shape[2] === 3) {
+                        format = gl.RGB
+                    } else if (shape[2] === 4) {
+                        format = gl.RGBA
+                    } else {
+                        throw new Error('gl-texture2d: Invalid shape for pixel coords')
+                    }
+                    channels = shape[2]
+                } else {
+                    throw new Error('gl-texture2d: Invalid shape for texture')
+                }
+                //For 1-channel textures allow conversion between formats
+                if ((format === gl.LUMINANCE || format === gl.ALPHA) &&
+                    (cformat === gl.LUMINANCE || cformat === gl.ALPHA)) {
+                    format = cformat
+                }
+                if (format !== cformat) {
+                    throw new Error('gl-texture2d: Incompatible texture format for setPixels')
+                }
+                var size = array.size
+                var needsMip = mipLevels.indexOf(mip_level) < 0
+                if (needsMip) {
+                    mipLevels.push(mip_level)
+                }
+                if (type === ctype && packed) {
+                    //Array data types are compatible, can directly copy into texture
+                    if (array.offset === 0 && array.data.length === size) {
+                        if (needsMip) {
+                            gl.texImage2D(gl.TEXTURE_2D, mip_level, cformat, shape[0], shape[1], 0, cformat, ctype, array.data)
+                        } else {
+                            gl.texSubImage2D(gl.TEXTURE_2D, mip_level, x_off, y_off, shape[0], shape[1], cformat, ctype, array.data)
+                        }
+                    } else {
+                        if (needsMip) {
+                            gl.texImage2D(gl.TEXTURE_2D, mip_level, cformat, shape[0], shape[1], 0, cformat, ctype, array.data.subarray(array.offset, array.offset + size))
+                        } else {
+                            gl.texSubImage2D(gl.TEXTURE_2D, mip_level, x_off, y_off, shape[0], shape[1], cformat, ctype, array.data.subarray(array.offset, array.offset + size))
+                        }
+                    }
+                } else {
+                    //Need to do type conversion to pack data into buffer
+                    var pack_buffer
+                    if (ctype === gl.FLOAT) {
+                        pack_buffer = pool.mallocFloat32(size)
+                    } else {
+                        pack_buffer = pool.mallocUint8(size)
+                    }
+                    var pack_view = ndarray(pack_buffer, shape, [shape[2], shape[2] * shape[0], 1])
+                    if (type === gl.FLOAT && ctype === gl.UNSIGNED_BYTE) {
+                        convertFloatToUint8(pack_view, array)
+                    } else {
+                        ops.assign(pack_view, array)
+                    }
+                    if (needsMip) {
+                        gl.texImage2D(gl.TEXTURE_2D, mip_level, cformat, shape[0], shape[1], 0, cformat, ctype, pack_buffer.subarray(0, size))
+                    } else {
+                        gl.texSubImage2D(gl.TEXTURE_2D, mip_level, x_off, y_off, shape[0], shape[1], cformat, ctype, pack_buffer.subarray(0, size))
+                    }
+                    if (ctype === gl.FLOAT) {
+                        pool.freeFloat32(pack_buffer)
+                    } else {
+                        pool.freeUint8(pack_buffer)
+                    }
+                }
+            }
+
+            function initTexture(gl) {
+                var tex = gl.createTexture()
+                gl.bindTexture(gl.TEXTURE_2D, tex)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
+                gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
+                return tex
+            }
+
+            function createTextureShape(gl, width, height, format, type) {
+                var maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE)
+                if (width < 0 || width > maxTextureSize || height < 0 || height > maxTextureSize) {
+                    throw new Error('gl-texture2d: Invalid texture shape')
+                }
+                if (type === gl.FLOAT && !gl.getExtension('OES_texture_float')) {
+                    throw new Error('gl-texture2d: Floating point textures not supported on this platform')
+                }
+                var tex = initTexture(gl)
+                gl.texImage2D(gl.TEXTURE_2D, 0, format, width, height, 0, format, type, null)
+                return new Texture2D(gl, tex, width, height, format, type)
+            }
+
+            function createTextureDOM(gl, element, format, type) {
+                var tex = initTexture(gl)
+                gl.texImage2D(gl.TEXTURE_2D, 0, format, format, type, element)
+                return new Texture2D(gl, tex, element.width | 0, element.height | 0, format, type)
+            }
+
+//Creates a texture from an ndarray
+            function createTextureArray(gl, array) {
+                var dtype = array.dtype
+                var shape = array.shape.slice()
+                var maxSize = gl.getParameter(gl.MAX_TEXTURE_SIZE)
+                if (shape[0] < 0 || shape[0] > maxSize || shape[1] < 0 || shape[1] > maxSize) {
+                    throw new Error('gl-texture2d: Invalid texture size')
+                }
+                var packed = isPacked(shape, array.stride.slice())
+                var type = 0
+                if (dtype === 'float32') {
+                    type = gl.FLOAT
+                } else if (dtype === 'float64') {
+                    type = gl.FLOAT
+                    packed = false
+                    dtype = 'float32'
+                } else if (dtype === 'uint8') {
+                    type = gl.UNSIGNED_BYTE
+                } else {
+                    type = gl.UNSIGNED_BYTE
+                    packed = false
+                    dtype = 'uint8'
+                }
+                var format = 0
+                if (shape.length === 2) {
+                    format = gl.LUMINANCE
+                    shape = [shape[0], shape[1], 1]
+                    array = ndarray(array.data, shape, [array.stride[0], array.stride[1], 1], array.offset)
+                } else if (shape.length === 3) {
+                    if (shape[2] === 1) {
+                        format = gl.ALPHA
+                    } else if (shape[2] === 2) {
+                        format = gl.LUMINANCE_ALPHA
+                    } else if (shape[2] === 3) {
+                        format = gl.RGB
+                    } else if (shape[2] === 4) {
+                        format = gl.RGBA
+                    } else {
+                        throw new Error('gl-texture2d: Invalid shape for pixel coords')
+                    }
+                } else {
+                    throw new Error('gl-texture2d: Invalid shape for texture')
+                }
+                if (type === gl.FLOAT && !gl.getExtension('OES_texture_float')) {
+                    type = gl.UNSIGNED_BYTE
+                    packed = false
+                }
+                var buffer, buf_store
+                var size = array.size
+                if (!packed) {
+                    var stride = [shape[2], shape[2] * shape[0], 1]
+                    buf_store = pool.malloc(size, dtype)
+                    var buf_array = ndarray(buf_store, shape, stride, 0)
+                    if ((dtype === 'float32' || dtype === 'float64') && type === gl.UNSIGNED_BYTE) {
+                        convertFloatToUint8(buf_array, array)
+                    } else {
+                        ops.assign(buf_array, array)
+                    }
+                    buffer = buf_store.subarray(0, size)
+                } else if (array.offset === 0 && array.data.length === size) {
+                    buffer = array.data
+                } else {
+                    buffer = array.data.subarray(array.offset, array.offset + size)
+                }
+                var tex = initTexture(gl)
+                gl.texImage2D(gl.TEXTURE_2D, 0, format, shape[0], shape[1], 0, format, type, buffer)
+                if (!packed) {
+                    pool.free(buf_store)
+                }
+                return new Texture2D(gl, tex, shape[0], shape[1], format, type)
+            }
+
+            function createTexture2D(gl) {
+                if (arguments.length <= 1) {
+                    throw new Error('gl-texture2d: Missing arguments for texture2d constructor')
+                }
+                if (!linearTypes) {
+                    lazyInitLinearTypes(gl)
+                }
+                if (typeof arguments[1] === 'number') {
+                    return createTextureShape(gl, arguments[1], arguments[2], arguments[3] || gl.RGBA, arguments[4] || gl.UNSIGNED_BYTE)
+                }
+                if (Array.isArray(arguments[1])) {
+                    return createTextureShape(gl, arguments[1][0] | 0, arguments[1][1] | 0, arguments[2] || gl.RGBA, arguments[3] || gl.UNSIGNED_BYTE)
+                }
+                if (typeof arguments[1] === 'object') {
+                    var obj = arguments[1]
+                    if (obj instanceof HTMLCanvasElement ||
+                        obj instanceof HTMLImageElement ||
+                        obj instanceof HTMLVideoElement ||
+                        obj instanceof ImageData) {
+                        return createTextureDOM(gl, obj, arguments[2] || gl.RGBA, arguments[3] || gl.UNSIGNED_BYTE)
+                    } else if (obj.shape && obj.data && obj.stride) {
+                        return createTextureArray(gl, obj)
+                    }
+                }
+                throw new Error('gl-texture2d: Invalid arguments for texture2d constructor')
+            }
+        },
+        "ndarray/ndarray.js":function(require,exports,module){var iota = require(getCodeName("iota-array"))
+            var isBuffer = require(getCodeName("is-buffer"))
+
+            var hasTypedArrays  = ((typeof Float64Array) !== "undefined")
+
+            function compare1st(a, b) {
+                return a[0] - b[0]
+            }
+
+            function order() {
+                var stride = this.stride
+                var terms = new Array(stride.length)
+                var i
+                for(i=0; i<terms.length; ++i) {
+                    terms[i] = [Math.abs(stride[i]), i]
+                }
+                terms.sort(compare1st)
+                var result = new Array(terms.length)
+                for(i=0; i<result.length; ++i) {
+                    result[i] = terms[i][1]
+                }
+                return result
+            }
+
+            function compileConstructor(dtype, dimension) {
+                var className = ["View", dimension, "d", dtype].join("")
+                if(dimension < 0) {
+                    className = "View_Nil" + dtype
+                }
+                var useGetters = (dtype === "generic")
+
+                if(dimension === -1) {
+                    //Special case for trivial arrays
+                    var code =
+                        "function "+className+"(a){this.data=a;};\
+var proto="+className+".prototype;\
+proto.dtype='"+dtype+"';\
+proto.index=function(){return -1};\
+proto.size=0;\
+proto.dimension=-1;\
+proto.shape=proto.stride=proto.order=[];\
+proto.lo=proto.hi=proto.transpose=proto.step=\
+function(){return new "+className+"(this.data);};\
+proto.get=proto.set=function(){};\
+proto.pick=function(){return null};\
+return function construct_"+className+"(a){return new "+className+"(a);}"
+                    var procedure = new Function(code)
+                    return procedure()
+                } else if(dimension === 0) {
+                    //Special case for 0d arrays
+                    var code =
+                        "function "+className+"(a,d) {\
+this.data = a;\
+this.offset = d\
+};\
+var proto="+className+".prototype;\
+proto.dtype='"+dtype+"';\
+proto.index=function(){return this.offset};\
+proto.dimension=0;\
+proto.size=1;\
+proto.shape=\
+proto.stride=\
+proto.order=[];\
+proto.lo=\
+proto.hi=\
+proto.transpose=\
+proto.step=function "+className+"_copy() {\
+return new "+className+"(this.data,this.offset)\
+};\
+proto.pick=function "+className+"_pick(){\
+return TrivialArray(this.data);\
+};\
+proto.valueOf=proto.get=function "+className+"_get(){\
+return "+(useGetters ? "this.data.get(this.offset)" : "this.data[this.offset]")+
+                        "};\
+                        proto.set=function "+className+"_set(v){\
+return "+(useGetters ? "this.data.set(this.offset,v)" : "this.data[this.offset]=v")+"\
+};\
+return function construct_"+className+"(a,b,c,d){return new "+className+"(a,d)}"
+                    var procedure = new Function("TrivialArray", code)
+                    return procedure(CACHED_CONSTRUCTORS[dtype][0])
+                }
+
+                var code = ["'use strict'"]
+
+                //Create constructor for view
+                var indices = iota(dimension)
+                var args = indices.map(function(i) { return "i"+i })
+                var index_str = "this.offset+" + indices.map(function(i) {
+                        return "this.stride[" + i + "]*i" + i
+                    }).join("+")
+                var shapeArg = indices.map(function(i) {
+                    return "b"+i
+                }).join(",")
+                var strideArg = indices.map(function(i) {
+                    return "c"+i
+                }).join(",")
+                code.push(
+                    "function "+className+"(a," + shapeArg + "," + strideArg + ",d){this.data=a",
+                    "this.shape=[" + shapeArg + "]",
+                    "this.stride=[" + strideArg + "]",
+                    "this.offset=d|0}",
+                    "var proto="+className+".prototype",
+                    "proto.dtype='"+dtype+"'",
+                    "proto.dimension="+dimension)
+
+                //view.size:
+                code.push("Object.defineProperty(proto,'size',{get:function "+className+"_size(){\
+return "+indices.map(function(i) { return "this.shape["+i+"]" }).join("*"),
+                    "}})")
+
+                //view.order:
+                if(dimension === 1) {
+                    code.push("proto.order=[0]")
+                } else {
+                    code.push("Object.defineProperty(proto,'order',{get:")
+                    if(dimension < 4) {
+                        code.push("function "+className+"_order(){")
+                        if(dimension === 2) {
+                            code.push("return (Math.abs(this.stride[0])>Math.abs(this.stride[1]))?[1,0]:[0,1]}})")
+                        } else if(dimension === 3) {
+                            code.push(
+                                "var s0=Math.abs(this.stride[0]),s1=Math.abs(this.stride[1]),s2=Math.abs(this.stride[2]);\
+                                if(s0>s1){\
+                                if(s1>s2){\
+                                return [2,1,0];\
+                                }else if(s0>s2){\
+                                return [1,2,0];\
+                                }else{\
+                                return [1,0,2];\
+                                }\
+                                }else if(s0>s2){\
+                                return [2,0,1];\
+                                }else if(s2>s1){\
+                                return [0,1,2];\
+                                }else{\
+                                return [0,2,1];\
+                                }}})")
+                        }
+                    } else {
+                        code.push("ORDER})")
+                    }
+                }
+
+                //view.set(i0, ..., v):
+                code.push(
+                    "proto.set=function "+className+"_set("+args.join(",")+",v){")
+                if(useGetters) {
+                    code.push("return this.data.set("+index_str+",v)}")
+                } else {
+                    code.push("return this.data["+index_str+"]=v}")
+                }
+
+                //view.get(i0, ...):
+                code.push("proto.get=function "+className+"_get("+args.join(",")+"){")
+                if(useGetters) {
+                    code.push("return this.data.get("+index_str+")}")
+                } else {
+                    code.push("return this.data["+index_str+"]}")
+                }
+
+                //view.index:
+                code.push(
+                    "proto.index=function "+className+"_index(", args.join(), "){return "+index_str+"}")
+
+                //view.hi():
+                code.push("proto.hi=function "+className+"_hi("+args.join(",")+"){return new "+className+"(this.data,"+
+                    indices.map(function(i) {
+                        return ["(typeof i",i,"!=='number'||i",i,"<0)?this.shape[", i, "]:i", i,"|0"].join("")
+                    }).join(",")+","+
+                    indices.map(function(i) {
+                        return "this.stride["+i + "]"
+                    }).join(",")+",this.offset)}")
+
+                //view.lo():
+                var a_vars = indices.map(function(i) { return "a"+i+"=this.shape["+i+"]" })
+                var c_vars = indices.map(function(i) { return "c"+i+"=this.stride["+i+"]" })
+                code.push("proto.lo=function "+className+"_lo("+args.join(",")+"){var b=this.offset,d=0,"+a_vars.join(",")+","+c_vars.join(","))
+                for(var i=0; i<dimension; ++i) {
+                    code.push(
+                        "if(typeof i"+i+"==='number'&&i"+i+">=0){\
+d=i"+i+"|0;\
+b+=c"+i+"*d;\
+a"+i+"-=d}")
+                }
+                code.push("return new "+className+"(this.data,"+
+                    indices.map(function(i) {
+                        return "a"+i
+                    }).join(",")+","+
+                    indices.map(function(i) {
+                        return "c"+i
+                    }).join(",")+",b)}")
+
+                //view.step():
+                code.push("proto.step=function "+className+"_step("+args.join(",")+"){var "+
+                    indices.map(function(i) {
+                        return "a"+i+"=this.shape["+i+"]"
+                    }).join(",")+","+
+                    indices.map(function(i) {
+                        return "b"+i+"=this.stride["+i+"]"
+                    }).join(",")+",c=this.offset,d=0,ceil=Math.ceil")
+                for(var i=0; i<dimension; ++i) {
+                    code.push(
+                        "if(typeof i"+i+"==='number'){\
+d=i"+i+"|0;\
+if(d<0){\
+c+=b"+i+"*(a"+i+"-1);\
+a"+i+"=ceil(-a"+i+"/d)\
+}else{\
+a"+i+"=ceil(a"+i+"/d)\
+}\
+b"+i+"*=d\
+}")
+                }
+                code.push("return new "+className+"(this.data,"+
+                    indices.map(function(i) {
+                        return "a" + i
+                    }).join(",")+","+
+                    indices.map(function(i) {
+                        return "b" + i
+                    }).join(",")+",c)}")
+
+                //view.transpose():
+                var tShape = new Array(dimension)
+                var tStride = new Array(dimension)
+                for(var i=0; i<dimension; ++i) {
+                    tShape[i] = "a[i"+i+"]"
+                    tStride[i] = "b[i"+i+"]"
+                }
+                code.push("proto.transpose=function "+className+"_transpose("+args+"){"+
+                    args.map(function(n,idx) { return n + "=(" + n + "===undefined?" + idx + ":" + n + "|0)"}).join(";"),
+                    "var a=this.shape,b=this.stride;return new "+className+"(this.data,"+tShape.join(",")+","+tStride.join(",")+",this.offset)}")
+
+                //view.pick():
+                code.push("proto.pick=function "+className+"_pick("+args+"){var a=[],b=[],c=this.offset")
+                for(var i=0; i<dimension; ++i) {
+                    code.push("if(typeof i"+i+"==='number'&&i"+i+">=0){c=(c+this.stride["+i+"]*i"+i+")|0}else{a.push(this.shape["+i+"]);b.push(this.stride["+i+"])}")
+                }
+                code.push("var ctor=CTOR_LIST[a.length+1];return ctor(this.data,a,b,c)}")
+
+                //Add return statement
+                code.push("return function construct_"+className+"(data,shape,stride,offset){return new "+className+"(data,"+
+                    indices.map(function(i) {
+                        return "shape["+i+"]"
+                    }).join(",")+","+
+                    indices.map(function(i) {
+                        return "stride["+i+"]"
+                    }).join(",")+",offset)}")
+
+                //Compile procedure
+                var procedure = new Function("CTOR_LIST", "ORDER", code.join("\n"))
+                return procedure(CACHED_CONSTRUCTORS[dtype], order)
+            }
+
+            function arrayDType(data) {
+                if(isBuffer(data)) {
+                    return "buffer"
+                }
+                if(hasTypedArrays) {
+                    switch(Object.prototype.toString.call(data)) {
+                        case "[object Float64Array]":
+                            return "float64"
+                        case "[object Float32Array]":
+                            return "float32"
+                        case "[object Int8Array]":
+                            return "int8"
+                        case "[object Int16Array]":
+                            return "int16"
+                        case "[object Int32Array]":
+                            return "int32"
+                        case "[object Uint8Array]":
+                            return "uint8"
+                        case "[object Uint16Array]":
+                            return "uint16"
+                        case "[object Uint32Array]":
+                            return "uint32"
+                        case "[object Uint8ClampedArray]":
+                            return "uint8_clamped"
+                    }
+                }
+                if(Array.isArray(data)) {
+                    return "array"
+                }
+                return "generic"
+            }
+
+            var CACHED_CONSTRUCTORS = {
+                    "float32":[],
+                    "float64":[],
+                    "int8":[],
+                    "int16":[],
+                    "int32":[],
+                    "uint8":[],
+                    "uint16":[],
+                    "uint32":[],
+                    "array":[],
+                    "uint8_clamped":[],
+                    "buffer":[],
+                    "generic":[]
+                }
+
+                ;(function() {
+                for(var id in CACHED_CONSTRUCTORS) {
+                    CACHED_CONSTRUCTORS[id].push(compileConstructor(id, -1))
+                }
+            });
+
+            function wrappedNDArrayCtor(data, shape, stride, offset) {
+                if(data === undefined) {
+                    var ctor = CACHED_CONSTRUCTORS.array[0]
+                    return ctor([])
+                } else if(typeof data === "number") {
+                    data = [data]
+                }
+                if(shape === undefined) {
+                    shape = [ data.length ]
+                }
+                var d = shape.length
+                if(stride === undefined) {
+                    stride = new Array(d)
+                    for(var i=d-1, sz=1; i>=0; --i) {
+                        stride[i] = sz
+                        sz *= shape[i]
+                    }
+                }
+                if(offset === undefined) {
+                    offset = 0
+                    for(var i=0; i<d; ++i) {
+                        if(stride[i] < 0) {
+                            offset -= (shape[i]-1)*stride[i]
+                        }
+                    }
+                }
+                var dtype = arrayDType(data)
+                var ctor_list = CACHED_CONSTRUCTORS[dtype]
+                while(ctor_list.length <= d+1) {
+                    ctor_list.push(compileConstructor(dtype, ctor_list.length-1))
+                }
+                var ctor = ctor_list[d+1]
+                return ctor(data, shape, stride, offset)
+            }
+
+            module.exports = wrappedNDArrayCtor
+        },
+        "cwise-compiler/compiler.js":{},
+        "cwise-compiler/lib/thunk.js":{},
+        "cwise-compiler/lib/compile.js":{},
+        "uniq/uniq.js":{},
+        "typedarray-pool/pool.js":{},
+        "bit-twiddle/twiddle.js":{},
+        "dup/dup.js":{},
         npmModules: (function () {
             libraries["SystemJS/lib/global-helpers.js"]("undefined" != typeof self ? self : global);
             libraries.amdModules("undefined" != typeof self ? self : global);
