@@ -240,7 +240,7 @@ var mdls = {
         passTo: "gl-fbo/fbo.js"
     },
     "gl-texture2d": {
-        name: "59",
+        name: "59",//6a (it is both?)
         passThrough: true,
         passTo: "gl-texture2d/texture.js"
     },
@@ -65134,6 +65134,17 @@ b"+i+"*=d\
 
             module.exports = wrappedNDArrayCtor
         },
+        "iota-array/iota.js": function(require,exports,module){"use strict"
+
+function iota(n) {
+  var result = new Array(n)
+  for(var i=0; i<n; ++i) {
+    result[i] = i
+  }
+  return result
+}
+
+module.exports = iota},
         "cwise-compiler/compiler.js":function(require,exports,module){"use strict"
 
 var createThunk = require(getCodeName("cwise-compiler/lib/thunk.js"))
