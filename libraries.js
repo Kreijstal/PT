@@ -66239,7 +66239,8 @@ module.exports = generateCWiseOp
 
             module.exports = unique
         },
-        "typedarray-pool/pool.js":function(require,exports,module){'use strict'
+        "typedarray-pool/pool.js":function(require,exports,module){
+            (function (global) {'use strict'
 
             var bits = require(getCodeName('bit-twiddle'))
             var dup = require(getCodeName('dup'))
@@ -66452,7 +66453,8 @@ module.exports = generateCWiseOp
                     DATA[i].length = 0
                     BUFFER[i].length = 0
                 }
-            }},
+            }}).call(this, typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+            },
         "bit-twiddle/twiddle.js":function(require,exports,module){/**
          * Bit twiddling hacks for JavaScript.
          *
