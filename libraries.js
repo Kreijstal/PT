@@ -186,7 +186,7 @@ var mdls = {
     "gl-buffer/buffer.js":{
         //https://github.com/stackgl/gl-buffer/blob/master/buffer.js
         "name": "62",
-        "dependencies": ["ndarray", "ndarray-ops", "typedarray-pool"],
+        "dependencies": ["typedarray-pool", "ndarray-ops", "ndarray"],
         "executingRequire": true
     },
     "gl-shader/index.js":{
@@ -200,7 +200,66 @@ var mdls = {
 "gl-shader/lib/reflect.js":{"name":"70","dependencies":[],"executingRequire":true},
 "gl-shader/lib/shader-cache.js":{"name":"90","dependencies":["gl-shader/lib/GLError.js",'gl-format-compiler-error','weakmap-shim'],"executingRequire":true},
 "gl-shader/lib/runtime-reflect.js":{"name":"91","dependencies":[],"executingRequire":true},
-"gl-shader/lib/GLError.js":{"name":"71","dependencies":[],"executingRequire":true}
+"gl-shader/lib/GLError.js":{"name":"71","dependencies":[],"executingRequire":true},
+"gl-format-compiler-error/index.js":{
+    //https://github.com/wwwtyro/gl-format-compiler-error/edit/master/index.js
+    "name":"8a","dependencies":['sprintf-js','gl-constants/lookup.js','glsl-shader-name','add-line-numbers'],"executingRequire":true},
+'gl-constants/lookup.js':{
+    //https://github.com/mattdesl/gl-constants/blob/master/lookup.js
+    "name":"77","dependencies":["gl-constants/1.0/numbers.js"],"executingRequire":true},
+"gl-constants/1.0/numbers.js":{
+    //https://github.com/mattdesl/gl-constants/blob/master/1.0/numbers.js
+    "name":"76","dependencies":[],"executingRequire":true},
+    "sprintf.js/src/sprintf.js":{
+        //https://github.com/alexei/sprintf.js/blob/master/src/sprintf.js
+        "name":"74","dependencies":[],"executingRequire":true},
+    "weakmap-shim/index.js": {
+        //https://github.com/Raynos/weakmap-shim/blob/master/index.js
+        "name": "8e",
+        "dependencies": ['weakmap-shim/create-store.js'],
+        "executingRequire": true
+    },
+    'weakmap-shim/create-store.js': {
+        //https://github.com/Raynos/weakmap-shim/blob/master/create-store.js
+        "name": "8d",
+        "dependencies": ['weakmap-shim/hidden-store.js'],
+        "executingRequire": true
+    },
+    'weakmap-shim/hidden-store.js': {
+        //https://github.com/Raynos/weakmap-shim/blob/master/hidden-store.js
+        "name": "8c",
+        "dependencies": [],
+        "executingRequire": true
+    },
+    "glsl-shader-name/index.js": {
+        //https://github.com/stackgl/glsl-shader-name/blob/master/index.js
+        "name": "82",
+        "dependencies": ['glsl-tokenizer','atob-lite'],
+        "executingRequire": true
+    },
+    "add-line-numbers/index.js": {
+        //https://github.com/Jam3/add-line-numbers/blob/master/index.js
+        "name": "88",
+        "dependencies": ['pad-left'],
+        "executingRequire": true
+    },
+    "glsl-tokenizer/string.js": {
+        //https://github.com/stackgl/glsl-tokenizer/blob/master/string.js
+        "name": "7e",
+        "dependencies": ['glsl-tokenizer/index.js'],
+        "executingRequire": true
+    },
+    'glsl-tokenizer/index.js: {
+        //https://github.com/stackgl/glsl-tokenizer/blob/master/index.js
+        "name": "7d",
+        "dependencies": ['glsl-tokenizer/lib/literals','glsl-tokenizer/lib/operators','glsl-tokenizer/lib/builtins','glsl-tokenizer/lib/literals-300es','glsl-tokenizer/lib/builtins-300es'],
+        "executingRequire": true
+    },
+    "glsl-tokenizer/lib/literals":{"name":"","dependencies":[],"executingRequire":true},
+"glsl-tokenizer/lib/operators":{"name":"","dependencies":[],"executingRequire":true},
+"glsl-tokenizer/lib/builtins":{"name":"","dependencies":[],"executingRequire":true},
+"glsl-tokenizer/lib/literals-300es":{"name":"","dependencies":[],"executingRequire":true},
+"glsl-tokenizer/lib/builtins-300es":{"name":"","dependencies":[],"executingRequire":true}
     , //Passthroughs
     Angular: {
         name: "7",
@@ -318,21 +377,53 @@ var mdls = {
         passTo: "gl-shader/index.js"
     },
     'gl-format-compiler-error':{
-        name: "",
+        name: "8b",
         passThrough: true,
-        passTo: ""
-    },'weakmap-shim':{
-        name: "",
+        passTo: "gl-format-compiler-error/index.js"
+    },
+    'weakmap-shim':{
+        name: "8f",
+        passThrough: true,
+        passTo: "weakmap-shim/index.js"
+    },
+    'sprintf-js':{
+        name: "75",
+        passThrough: true,
+        passTo: "sprintf.js/src/sprintf.js"
+    },
+    'glsl-shader-name':{
+        name: "83",
+        passThrough: true,
+        passTo: "glsl-shader-name/index.js"
+    },
+    'add-line-numbers':{
+        name: "89",
+        passThrough: true,
+        passTo: "add-line-numbers/index.js"
+    },
+    'glsl-tokenizer':{
+        name: "7f",
+        passThrough: true,
+        passTo: "glsl-tokenizer/string.js"
+    },
+    'atob-lite':{
+        name: "81",
         passThrough: true,
         passTo: ""
     },
+    'pad-left':{
+        name: "87",
+        passThrough: true,
+        passTo: ""
+    
+    
     "": {
         name: "fdg",
         passThrough: true,
         passTo: ""
     }
 }
-//creator (function(a){return JSON.stringify(a)+":"+JSON.stringify({name:"",dependencies:"",executingRequire:true})})
+//creator (function(a){return JSON.stringify(a)+":"+JSON.stringify({name:"",dependencies:[],executingRequire:true})})
 function getCodeName(readableName) {
     var name = mdls[readableName]
     return name ? name.name : readableName;
