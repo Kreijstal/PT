@@ -65417,7 +65417,8 @@ b"+i+"*=d\
                     BUFFER[i].length = 0
                 }
             }},
-        "bit-twiddle/twiddle.js":function(require,exports,module){/**
+        "bit-twiddle/twiddle.js":function(require,exports,module){
+            /**
          * Bit twiddling hacks for JavaScript.
          *
          * Author: Mikola Lysenko
