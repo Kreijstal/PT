@@ -3419,114 +3419,6 @@ var modules = function(System) {
     return e.SpriteBatch = l,
       n.exports
   });
-  System.registerDynamic("62", [getCodeName("typedarray-pool"), getCodeName("ndarray-ops"), getCodeName("ndarray")], !0, function(t, e, n) {
-    "use strict";
-
-    function r(t, e, n, r, i) {
-      this.gl = t,
-        this.type = e,
-        this.handle = n,
-        this.length = r,
-        this.usage = i
-    }
-
-    function i(t, e, n, r, i, o) {
-      var a = i.length * i.BYTES_PER_ELEMENT;
-      if (o < 0)
-        return t.bufferData(e, i, r),
-          a;
-      if (a + o > n)
-        throw new Error("gl-buffer: If resizing buffer, must not specify offset");
-      return t.bufferSubData(e, o, i),
-        n
-    }
-
-    function o(t, e) {
-      for (var n = u.malloc(t.length, e), r = t.length, i = 0; i < r; ++i)
-        n[i] = t[i];
-      return n
-    }
-
-    function a(t, e) {
-      for (var n = 1, r = e.length - 1; r >= 0; --r) {
-        if (e[r] !== n)
-          return !1;
-        n *= t[r]
-      }
-      return !0
-    }
-
-    function s(t, e, n, i) {
-      if (n = n || t.ARRAY_BUFFER,
-        i = i || t.DYNAMIC_DRAW,
-        n !== t.ARRAY_BUFFER && n !== t.ELEMENT_ARRAY_BUFFER)
-        throw new Error("gl-buffer: Invalid type for webgl buffer, must be either gl.ARRAY_BUFFER or gl.ELEMENT_ARRAY_BUFFER");
-      if (i !== t.DYNAMIC_DRAW && i !== t.STATIC_DRAW && i !== t.STREAM_DRAW)
-        throw new Error("gl-buffer: Invalid usage for buffer, must be either gl.DYNAMIC_DRAW, gl.STATIC_DRAW or gl.STREAM_DRAW");
-      var o = t.createBuffer(),
-        a = new r(t, n, o, 0, i);
-      return a.update(e),
-        a
-    }
-
-    var u = t(getCodeName("typedarray-pool")),
-      l = t(getCodeName("ndarray-ops")),
-      c = t(getCodeName("ndarray")),
-      f = ["uint8", "uint8_clamped", "uint16", "uint32", "int8", "int16", "int32", "float32"],
-      p = r.prototype;
-    return p.bind = function() {
-        this.gl.bindBuffer(this.type, this.handle)
-      },
-      p.unbind = function() {
-        this.gl.bindBuffer(this.type, null)
-      },
-      p.dispose = function() {
-        this.gl.deleteBuffer(this.handle)
-      },
-      p.update = function(t, e) {
-        if ("number" != typeof e && (e = -1),
-          this.bind(),
-          "object" == typeof t && "undefined" != typeof t.shape) {
-          var n = t.dtype;
-          if (f.indexOf(n) < 0 && (n = "float32"),
-            this.type === this.gl.ELEMENT_ARRAY_BUFFER) {
-            var r = gl.getExtension("OES_element_index_uint");
-            n = r && "uint16" !== n ? "uint32" : "uint16"
-          }
-          if (n === t.dtype && a(t.shape, t.stride))
-            0 === t.offset && t.data.length === t.shape[0] ? this.length = i(this.gl, this.type, this.length, this.usage, t.data, e) : this.length = i(this.gl, this.type, this.length, this.usage, t.data.subarray(t.offset, t.shape[0]), e);
-          else {
-            var s = u.malloc(t.size, n),
-              p = c(s, t.shape);
-            l.assign(p, t),
-              e < 0 ? this.length = i(this.gl, this.type, this.length, this.usage, s, e) : this.length = i(this.gl, this.type, this.length, this.usage, s.subarray(0, t.size), e),
-              u.free(s)
-          }
-        } else if (Array.isArray(t)) {
-          var h;
-          h = this.type === this.gl.ELEMENT_ARRAY_BUFFER ? o(t, "uint16") : o(t, "float32"),
-            e < 0 ? this.length = i(this.gl, this.type, this.length, this.usage, h, e) : this.length = i(this.gl, this.type, this.length, this.usage, h.subarray(0, t.length), e),
-            u.free(h)
-        } else if ("object" == typeof t && "number" == typeof t.length)
-          this.length = i(this.gl, this.type, this.length, this.usage, t, e);
-        else {
-          if ("number" != typeof t && void 0 !== t)
-            throw new Error("gl-buffer: Invalid data type");
-          if (e >= 0)
-            throw new Error("gl-buffer: Cannot specify offset when resizing buffer");
-          t = 0 | t,
-            t <= 0 && (t = 1),
-            this.gl.bufferData(this.type, 0 | t, this.usage),
-            this.length = t
-        }
-      },
-      n.exports = s,
-      n.exports
-  });
-  System.registerDynamic("63", ["62"], !0, function(t, e, n) {
-    return n.exports = t("62"),
-      n.exports
-  });
   System.registerDynamic("64", ["65"], !0, function(t, e, n) {
     "use strict";
 
@@ -3708,7 +3600,7 @@ var modules = function(System) {
     return n.exports = t("67"),
       n.exports
   });
-  System.registerDynamic("61", ["63", getCodeName("gl-texture2d"), "68", "22", "69"], !0, function(t, e, n) {
+  System.registerDynamic("61", [getCodeName("gl-buffer"), getCodeName("gl-texture2d"), "68", "22", "69"], !0, function(t, e, n) {
     "use strict";
 
     function r(t, e, n, r, i) {
@@ -3722,7 +3614,7 @@ var modules = function(System) {
         r
     }
 
-    var i = t("63"),
+    var i = t(getCodeName("gl-buffer")),
       o = t(getCodeName("gl-texture2d")),
       a = t("68"),
       s = t("22"),
