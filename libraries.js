@@ -275,19 +275,31 @@ var mdls = {
     },
     "glsl-tokenizer/lib/literals": {
         "name": "79", "dependencies": [], "executingRequire": true
-    }    ,
+    },
     "glsl-tokenizer/lib/operators": {
         "name": "78", "dependencies": [], "executingRequire": true
-    }    ,
+    },
     "glsl-tokenizer/lib/builtins": {
         "name": "7b", "dependencies": [], "executingRequire": true
-    }    ,
+    },
     "glsl-tokenizer/lib/literals-300es": {
         "name": "7a", "dependencies": ['glsl-tokenizer/lib/literals'], "executingRequire": true
-    }    ,
+    },
     "glsl-tokenizer/lib/builtins-300es": {
         "name": "7c", "dependencies": ['glsl-tokenizer/lib/builtins'], "executingRequire": true
-    }    , //Passthroughs
+    },
+    "atob-lite/atob-browser.js": {
+        "name": "80", "dependencies": [], "executingRequire": true
+    },
+    "pad-left/index.js":{
+        //https://github.com/jonschlinkert/pad-left/blob/master/index.js
+        "name": "86", "dependencies": ['repeat-string'], "executingRequire": true
+    },
+"repeat-string/index.js": {
+    //https://github.com/jonschlinkert/repeat-string/blob/master/index.js
+    "name": "84", "dependencies": [], "executingRequire": true
+}
+    , //Passthroughs
     Angular: {
         name: "7",
         passThrough: true,
@@ -436,13 +448,18 @@ var mdls = {
     'atob-lite': {
         name: "81",
         passThrough: true,
-        passTo: ""
+        passTo: "atob-lite/atob-browser.js"
     },
     'pad-left': {
         name: "87",
         passThrough: true,
-        passTo: ""
+        passTo: "pad-left/index.js"
     },
+'repeat-string': {
+    name: "85",
+        passThrough: true,
+        passTo: "repeat-string/index.js"
+},
     "": {
         name: "fdg",
         passThrough: true,
@@ -68181,37 +68198,115 @@ b" + i + "*=d\
             //https://github.com/alexei/sprintf.js/blob/master/src/sprintf.js
             "name": "74", "dependencies": [], "executingRequire": true
         },
-        "weakmap-shim/index.js": {
-            //https://github.com/Raynos/weakmap-shim/blob/master/index.js
-            "name": "8e",
-            "dependencies": ['weakmap-shim/create-store.js'],
-            "executingRequire": true
+        "weakmap-shim/index.js": function(require,exports,module){// Original - @Gozola.
+// https://gist.github.com/Gozala/1269991
+// This is a reimplemented version (with a few bug fixes).
+
+            var createStore = require(getCodeName('weakmap-shim/create-store.js'));
+
+            module.exports = weakMap;
+
+            function weakMap() {
+                var privates = createStore();
+
+                return {
+                    'get': function (key, fallback) {
+                        var store = privates(key)
+                        return store.hasOwnProperty('value') ?
+                            store.value : fallback
+                    },
+                    'set': function (key, value) {
+                        privates(key).value = value;
+                    },
+                    'has': function(key) {
+                        return 'value' in privates(key);
+                    },
+                    'delete': function (key) {
+                        return delete privates(key).value;
+                    }
+                }
+            }
         },
-        'weakmap-shim/create-store.js': {
-            //https://github.com/Raynos/weakmap-shim/blob/master/create-store.js
-            "name": "8d",
-            "dependencies": ['weakmap-shim/hidden-store.js'],
-            "executingRequire": true
+        'weakmap-shim/create-store.js': function(require,exports,module){var hiddenStore = require(getCodeName('weakmap-shim/hidden-store.js'));
+
+            module.exports = createStore;
+
+            function createStore() {
+                var key = {};
+
+                return function (obj) {
+                    if ((typeof obj !== 'object' || obj === null) &&
+                        typeof obj !== 'function'
+                    ) {
+                        throw new Error('Weakmap-shim: Key must be object')
+                    }
+
+                    var store = obj.valueOf(key);
+                    return store && store.identity === key ?
+                        store : hiddenStore(obj, key);
+                };
+            }
         },
-        'weakmap-shim/hidden-store.js': {
-            //https://github.com/Raynos/weakmap-shim/blob/master/hidden-store.js
-            "name": "8c",
-            "dependencies": [],
-            "executingRequire": true
+        'weakmap-shim/hidden-store.js': function(require,exports,module){module.exports = hiddenStore;
+
+            function hiddenStore(obj, key) {
+                var store = { identity: key };
+                var valueOf = obj.valueOf;
+
+                Object.defineProperty(obj, "valueOf", {
+                    value: function (value) {
+                        return value !== key ?
+                            valueOf.apply(this, arguments) : store;
+                    },
+                    writable: true
+                });
+
+                return store;
+            }
         },
-        "glsl-shader-name/index.js": {
-            //https://github.com/stackgl/glsl-shader-name/blob/master/index.js
-            "name": "82",
-            "dependencies": ['glsl-tokenizer', 'atob-lite'],
-            "executingRequire": true
+        "glsl-shader-name/index.js": function(require,exports,module){var tokenize = require(getCodeName('glsl-tokenizer'))
+            var atob     = require(getCodeName('atob-lite'))
+
+            module.exports = getName
+
+            function getName(src) {
+                var tokens = Array.isArray(src)
+                    ? src
+                    : tokenize(src)
+
+                for (var i = 0; i < tokens.length; i++) {
+                    var token = tokens[i]
+                    if (token.type !== 'preprocessor') continue
+                    var match = token.data.match(/\#define\s+SHADER_NAME(_B64)?\s+(.+)$/)
+                    if (!match) continue
+                    if (!match[2]) continue
+
+                    var b64  = match[1]
+                    var name = match[2]
+
+                    return (b64 ? atob(name) : name).trim()
+                }
+            }
         },
-        "add-line-numbers/index.js": {
-            //https://github.com/Jam3/add-line-numbers/blob/master/index.js
-            "name": "88",
-            "dependencies": ['pad-left'],
-            "executingRequire": true
+        "add-line-numbers/index.js": function(require,exports,module){var padLeft = require(getCodeName('pad-left'))
+
+            module.exports = addLineNumbers
+            function addLineNumbers (string, start, delim) {
+                start = typeof start === 'number' ? start : 1
+                delim = delim || ': '
+
+                var lines = string.split(/\r?\n/)
+                var totalDigits = String(lines.length + start - 1).length
+                return lines.map(function (line, i) {
+                    var c = i + start
+                    var digits = String(c).length
+                    var prefix = padLeft(c, totalDigits - digits)
+                    return prefix + delim + line
+                }).join('\n')
+            }
         },
-        "glsl-tokenizer/string.js": function(require,exports,module){var tokenize = require(getCodeName('glsl-tokenizer/index.js'))
+        "glsl-tokenizer/string.js": function (require, exports, module) {
+            var tokenize = require(getCodeName('glsl-tokenizer/index.js'))
 
             module.exports = tokenizeString
 
@@ -68223,9 +68318,10 @@ b" + i + "*=d\
                 tokens = tokens.concat(generator(null))
 
                 return tokens
-            }}
-        ,
-        "glsl-tokenizer/index.js":function(require,exports,module){module.exports = tokenize
+            }
+        },
+        "glsl-tokenizer/index.js": function (require, exports, module) {
+            module.exports = tokenize
 
             var literals100 = require(getCodeName('glsl-tokenizer/lib/literals'))
                 , operators = require(getCodeName('glsl-tokenizer/lib/operators'))
@@ -68289,7 +68385,7 @@ b" + i + "*=d\
                     allLiterals = literals300es
                 }
 
-                return function(data) {
+                return function (data) {
                     tokens = []
                     if (data !== null) return write(data.replace ? data.replace(/\r\n/g, '\n') : data)
                     return end()
@@ -68314,26 +68410,51 @@ b" + i + "*=d\
 
                     var last
 
-                    while(c = input[i], i < len) {
+                    while (c = input[i], i < len) {
                         last = i
 
-                        switch(mode) {
-                            case BLOCK_COMMENT: i = block_comment(); break
-                            case LINE_COMMENT: i = line_comment(); break
-                            case PREPROCESSOR: i = preprocessor(); break
-                            case OPERATOR: i = operator(); break
-                            case INTEGER: i = integer(); break
-                            case HEX: i = hex(); break
-                            case FLOAT: i = decimal(); break
-                            case TOKEN: i = readtoken(); break
-                            case WHITESPACE: i = whitespace(); break
-                            case NORMAL: i = normal(); break
+                        switch (mode) {
+                            case BLOCK_COMMENT:
+                                i = block_comment();
+                                break
+                            case LINE_COMMENT:
+                                i = line_comment();
+                                break
+                            case PREPROCESSOR:
+                                i = preprocessor();
+                                break
+                            case OPERATOR:
+                                i = operator();
+                                break
+                            case INTEGER:
+                                i = integer();
+                                break
+                            case HEX:
+                                i = hex();
+                                break
+                            case FLOAT:
+                                i = decimal();
+                                break
+                            case TOKEN:
+                                i = readtoken();
+                                break
+                            case WHITESPACE:
+                                i = whitespace();
+                                break
+                            case NORMAL:
+                                i = normal();
+                                break
                         }
 
-                        if(last !== i) {
-                            switch(input[last]) {
-                                case '\n': col = 0; ++line; break
-                                default: ++col; break
+                        if (last !== i) {
+                            switch (input[last]) {
+                                case '\n':
+                                    col = 0;
+                                    ++line;
+                                    break
+                                default:
+                                    ++col;
+                                    break
                             }
                         }
                     }
@@ -68344,7 +68465,7 @@ b" + i + "*=d\
                 }
 
                 function end(chunk) {
-                    if(content.length) {
+                    if (content.length) {
                         token(content.join(''))
                     }
 
@@ -68356,27 +68477,27 @@ b" + i + "*=d\
                 function normal() {
                     content = content.length ? [] : content
 
-                    if(last === '/' && c === '*') {
+                    if (last === '/' && c === '*') {
                         start = total + i - 1
                         mode = BLOCK_COMMENT
                         last = c
                         return i + 1
                     }
 
-                    if(last === '/' && c === '/') {
+                    if (last === '/' && c === '/') {
                         start = total + i - 1
                         mode = LINE_COMMENT
                         last = c
                         return i + 1
                     }
 
-                    if(c === '#') {
+                    if (c === '#') {
                         mode = PREPROCESSOR
                         start = total + i
                         return i
                     }
 
-                    if(/\s/.test(c)) {
+                    if (/\s/.test(c)) {
                         mode = WHITESPACE
                         start = total + i
                         return i
@@ -68391,7 +68512,7 @@ b" + i + "*=d\
                 }
 
                 function whitespace() {
-                    if(/[^\s]/g.test(c)) {
+                    if (/[^\s]/g.test(c)) {
                         token(content.join(''))
                         mode = NORMAL
                         return i
@@ -68402,7 +68523,7 @@ b" + i + "*=d\
                 }
 
                 function preprocessor() {
-                    if((c === '\r' || c === '\n') && last !== '\\') {
+                    if ((c === '\r' || c === '\n') && last !== '\\') {
                         token(content.join(''))
                         mode = NORMAL
                         return i
@@ -68417,7 +68538,7 @@ b" + i + "*=d\
                 }
 
                 function block_comment() {
-                    if(c === '/' && last === '*') {
+                    if (c === '/' && last === '*') {
                         content.push(c)
                         token(content.join(''))
                         mode = NORMAL
@@ -68430,38 +68551,38 @@ b" + i + "*=d\
                 }
 
                 function operator() {
-                    if(last === '.' && /\d/.test(c)) {
+                    if (last === '.' && /\d/.test(c)) {
                         mode = FLOAT
                         return i
                     }
 
-                    if(last === '/' && c === '*') {
+                    if (last === '/' && c === '*') {
                         mode = BLOCK_COMMENT
                         return i
                     }
 
-                    if(last === '/' && c === '/') {
+                    if (last === '/' && c === '/') {
                         mode = LINE_COMMENT
                         return i
                     }
 
-                    if(c === '.' && content.length) {
-                        while(determine_operator(content));
+                    if (c === '.' && content.length) {
+                        while (determine_operator(content));
 
                         mode = FLOAT
                         return i
                     }
 
-                    if(c === ';' || c === ')' || c === '(') {
-                        if(content.length) while(determine_operator(content));
+                    if (c === ';' || c === ')' || c === '(') {
+                        if (content.length) while (determine_operator(content));
                         token(c)
                         mode = NORMAL
                         return i + 1
                     }
 
                     var is_composite_operator = content.length === 2 && c !== '='
-                    if(/[\w_\d\s]/.test(c) || is_composite_operator) {
-                        while(determine_operator(content));
+                    if (/[\w_\d\s]/.test(c) || is_composite_operator) {
+                        while (determine_operator(content));
                         mode = NORMAL
                         return i
                     }
@@ -68480,8 +68601,8 @@ b" + i + "*=d\
                         idx = operators.indexOf(buf.slice(0, buf.length + j).join(''))
                         res = operators[idx]
 
-                        if(idx === -1) {
-                            if(j-- + buf.length > 0) continue
+                        if (idx === -1) {
+                            if (j-- + buf.length > 0) continue
                             res = buf.slice(0, 1).join('')
                         }
 
@@ -68490,11 +68611,11 @@ b" + i + "*=d\
                         start += res.length
                         content = content.slice(res.length)
                         return content.length
-                    } while(1)
+                    } while (1)
                 }
 
                 function hex() {
-                    if(/[^a-fA-F0-9]/.test(c)) {
+                    if (/[^a-fA-F0-9]/.test(c)) {
                         token(content.join(''))
                         mode = NORMAL
                         return i
@@ -68506,28 +68627,28 @@ b" + i + "*=d\
                 }
 
                 function integer() {
-                    if(c === '.') {
+                    if (c === '.') {
                         content.push(c)
                         mode = FLOAT
                         last = c
                         return i + 1
                     }
 
-                    if(/[eE]/.test(c)) {
+                    if (/[eE]/.test(c)) {
                         content.push(c)
                         mode = FLOAT
                         last = c
                         return i + 1
                     }
 
-                    if(c === 'x' && content.length === 1 && content[0] === '0') {
+                    if (c === 'x' && content.length === 1 && content[0] === '0') {
                         mode = HEX
                         content.push(c)
                         last = c
                         return i + 1
                     }
 
-                    if(/[^\d]/.test(c)) {
+                    if (/[^\d]/.test(c)) {
                         token(content.join(''))
                         mode = NORMAL
                         return i
@@ -68539,13 +68660,13 @@ b" + i + "*=d\
                 }
 
                 function decimal() {
-                    if(c === 'f') {
+                    if (c === 'f') {
                         content.push(c)
                         last = c
                         i += 1
                     }
 
-                    if(/[eE]/.test(c)) {
+                    if (/[eE]/.test(c)) {
                         content.push(c)
                         last = c
                         return i + 1
@@ -68557,7 +68678,7 @@ b" + i + "*=d\
                         return i + 1
                     }
 
-                    if(/[^\d]/.test(c)) {
+                    if (/[^\d]/.test(c)) {
                         token(content.join(''))
                         mode = NORMAL
                         return i
@@ -68569,11 +68690,11 @@ b" + i + "*=d\
                 }
 
                 function readtoken() {
-                    if(/[^\d\w_]/.test(c)) {
+                    if (/[^\d\w_]/.test(c)) {
                         var contentstr = content.join('')
-                        if(allLiterals.indexOf(contentstr) > -1) {
+                        if (allLiterals.indexOf(contentstr) > -1) {
                             mode = KEYWORD
-                        } else if(allBuiltins.indexOf(contentstr) > -1) {
+                        } else if (allBuiltins.indexOf(contentstr) > -1) {
                             mode = BUILTIN
                         } else {
                             mode = IDENT
@@ -68588,458 +68709,565 @@ b" + i + "*=d\
                 }
             }
         },
-        "glsl-tokenizer/lib/literals": function(require,exports,module){module.exports = [
-            // current
-            'precision'
-            , 'highp'
-            , 'mediump'
-            , 'lowp'
-            , 'attribute'
-            , 'const'
-            , 'uniform'
-            , 'varying'
-            , 'break'
-            , 'continue'
-            , 'do'
-            , 'for'
-            , 'while'
-            , 'if'
-            , 'else'
-            , 'in'
-            , 'out'
-            , 'inout'
-            , 'float'
-            , 'int'
-            , 'void'
-            , 'bool'
-            , 'true'
-            , 'false'
-            , 'discard'
-            , 'return'
-            , 'mat2'
-            , 'mat3'
-            , 'mat4'
-            , 'vec2'
-            , 'vec3'
-            , 'vec4'
-            , 'ivec2'
-            , 'ivec3'
-            , 'ivec4'
-            , 'bvec2'
-            , 'bvec3'
-            , 'bvec4'
-            , 'sampler1D'
-            , 'sampler2D'
-            , 'sampler3D'
-            , 'samplerCube'
-            , 'sampler1DShadow'
-            , 'sampler2DShadow'
-            , 'struct'
+        "glsl-tokenizer/lib/literals": function (require, exports, module) {
+            module.exports = [
+                // current
+                'precision'
+                , 'highp'
+                , 'mediump'
+                , 'lowp'
+                , 'attribute'
+                , 'const'
+                , 'uniform'
+                , 'varying'
+                , 'break'
+                , 'continue'
+                , 'do'
+                , 'for'
+                , 'while'
+                , 'if'
+                , 'else'
+                , 'in'
+                , 'out'
+                , 'inout'
+                , 'float'
+                , 'int'
+                , 'void'
+                , 'bool'
+                , 'true'
+                , 'false'
+                , 'discard'
+                , 'return'
+                , 'mat2'
+                , 'mat3'
+                , 'mat4'
+                , 'vec2'
+                , 'vec3'
+                , 'vec4'
+                , 'ivec2'
+                , 'ivec3'
+                , 'ivec4'
+                , 'bvec2'
+                , 'bvec3'
+                , 'bvec4'
+                , 'sampler1D'
+                , 'sampler2D'
+                , 'sampler3D'
+                , 'samplerCube'
+                , 'sampler1DShadow'
+                , 'sampler2DShadow'
+                , 'struct'
 
-            // future
-            , 'asm'
-            , 'class'
-            , 'union'
-            , 'enum'
-            , 'typedef'
-            , 'template'
-            , 'this'
-            , 'packed'
-            , 'goto'
-            , 'switch'
-            , 'default'
-            , 'inline'
-            , 'noinline'
-            , 'volatile'
-            , 'public'
-            , 'static'
-            , 'extern'
-            , 'external'
-            , 'interface'
-            , 'long'
-            , 'short'
-            , 'double'
-            , 'half'
-            , 'fixed'
-            , 'unsigned'
-            , 'input'
-            , 'output'
-            , 'hvec2'
-            , 'hvec3'
-            , 'hvec4'
-            , 'dvec2'
-            , 'dvec3'
-            , 'dvec4'
-            , 'fvec2'
-            , 'fvec3'
-            , 'fvec4'
-            , 'sampler2DRect'
-            , 'sampler3DRect'
-            , 'sampler2DRectShadow'
-            , 'sizeof'
-            , 'cast'
-            , 'namespace'
-            , 'using'
-        ]
+                // future
+                , 'asm'
+                , 'class'
+                , 'union'
+                , 'enum'
+                , 'typedef'
+                , 'template'
+                , 'this'
+                , 'packed'
+                , 'goto'
+                , 'switch'
+                , 'default'
+                , 'inline'
+                , 'noinline'
+                , 'volatile'
+                , 'public'
+                , 'static'
+                , 'extern'
+                , 'external'
+                , 'interface'
+                , 'long'
+                , 'short'
+                , 'double'
+                , 'half'
+                , 'fixed'
+                , 'unsigned'
+                , 'input'
+                , 'output'
+                , 'hvec2'
+                , 'hvec3'
+                , 'hvec4'
+                , 'dvec2'
+                , 'dvec3'
+                , 'dvec4'
+                , 'fvec2'
+                , 'fvec3'
+                , 'fvec4'
+                , 'sampler2DRect'
+                , 'sampler3DRect'
+                , 'sampler2DRectShadow'
+                , 'sizeof'
+                , 'cast'
+                , 'namespace'
+                , 'using'
+            ]
         },
-        "glsl-tokenizer/lib/operators": function(require,exports,module){module.exports = [
-        '<<='
-        , '>>='
-        , '++'
-        , '--'
-        , '<<'
-        , '>>'
-        , '<='
-        , '>='
-        , '=='
-        , '!='
-        , '&&'
-        , '||'
-        , '+='
-        , '-='
-        , '*='
-        , '/='
-        , '%='
-        , '&='
-        , '^^'
-        , '^='
-        , '|='
-        , '('
-        , ')'
-        , '['
-        , ']'
-        , '.'
-        , '!'
-        , '~'
-        , '*'
-        , '/'
-        , '%'
-        , '+'
-        , '-'
-        , '<'
-        , '>'
-        , '&'
-        , '^'
-        , '|'
-        , '?'
-        , ':'
-        , '='
-        , ','
-        , ';'
-        , '{'
-        , '}'
-    ]
-    },
-        "glsl-tokenizer/lib/builtins": function(require,exports,module){module.exports = [
-        // Keep this list sorted
-        'abs'
-        , 'acos'
-        , 'all'
-        , 'any'
-        , 'asin'
-        , 'atan'
-        , 'ceil'
-        , 'clamp'
-        , 'cos'
-        , 'cross'
-        , 'dFdx'
-        , 'dFdy'
-        , 'degrees'
-        , 'distance'
-        , 'dot'
-        , 'equal'
-        , 'exp'
-        , 'exp2'
-        , 'faceforward'
-        , 'floor'
-        , 'fract'
-        , 'gl_BackColor'
-        , 'gl_BackLightModelProduct'
-        , 'gl_BackLightProduct'
-        , 'gl_BackMaterial'}
-, 'gl_BackSecondaryColor'
-        , 'gl_ClipPlane'
-        , 'gl_ClipVertex'
-        , 'gl_Color'
-        , 'gl_DepthRange'
-        , 'gl_DepthRangeParameters'
-        , 'gl_EyePlaneQ'
-        , 'gl_EyePlaneR'
-        , 'gl_EyePlaneS'
-        , 'gl_EyePlaneT'
-        , 'gl_Fog'
-        , 'gl_FogCoord'
-        , 'gl_FogFragCoord'
-        , 'gl_FogParameters'
-        , 'gl_FragColor'
-        , 'gl_FragCoord'
-        , 'gl_FragData'
-        , 'gl_FragDepth'
-        , 'gl_FragDepthEXT'
-        , 'gl_FrontColor'
-        , 'gl_FrontFacing'
-        , 'gl_FrontLightModelProduct'
-        , 'gl_FrontLightProduct'
-        , 'gl_FrontMaterial'
-        , 'gl_FrontSecondaryColor'
-        , 'gl_LightModel'
-        , 'gl_LightModelParameters'
-        , 'gl_LightModelProducts'
-        , 'gl_LightProducts'
-        , 'gl_LightSource'
-        , 'gl_LightSourceParameters'
-        , 'gl_MaterialParameters'
-        , 'gl_MaxClipPlanes'
-        , 'gl_MaxCombinedTextureImageUnits'
-        , 'gl_MaxDrawBuffers'
-        , 'gl_MaxFragmentUniformComponents'
-        , 'gl_MaxLights'
-        , 'gl_MaxTextureCoords'
-        , 'gl_MaxTextureImageUnits'
-        , 'gl_MaxTextureUnits'
-        , 'gl_MaxVaryingFloats'
-        , 'gl_MaxVertexAttribs'
-        , 'gl_MaxVertexTextureImageUnits'
-        , 'gl_MaxVertexUniformComponents'
-        , 'gl_ModelViewMatrix'
-        , 'gl_ModelViewMatrixInverse'
-        , 'gl_ModelViewMatrixInverseTranspose'
-        , 'gl_ModelViewMatrixTranspose'
-        , 'gl_ModelViewProjectionMatrix'
-        , 'gl_ModelViewProjectionMatrixInverse'
-        , 'gl_ModelViewProjectionMatrixInverseTranspose'
-        , 'gl_ModelViewProjectionMatrixTranspose'
-        , 'gl_MultiTexCoord0'
-        , 'gl_MultiTexCoord1'
-        , 'gl_MultiTexCoord2'
-        , 'gl_MultiTexCoord3'
-        , 'gl_MultiTexCoord4'
-        , 'gl_MultiTexCoord5'
-        , 'gl_MultiTexCoord6'
-        , 'gl_MultiTexCoord7'
-        , 'gl_Normal'
-        , 'gl_NormalMatrix'
-        , 'gl_NormalScale'
-        , 'gl_ObjectPlaneQ'
-        , 'gl_ObjectPlaneR'
-        , 'gl_ObjectPlaneS'
-        , 'gl_ObjectPlaneT'
-        , 'gl_Point'
-        , 'gl_PointCoord'
-        , 'gl_PointParameters'
-        , 'gl_PointSize'
-        , 'gl_Position'
-        , 'gl_ProjectionMatrix'
-        , 'gl_ProjectionMatrixInverse'
-        , 'gl_ProjectionMatrixInverseTranspose'
-        , 'gl_ProjectionMatrixTranspose'
-        , 'gl_SecondaryColor'
-        , 'gl_TexCoord'
-        , 'gl_TextureEnvColor'
-        , 'gl_TextureMatrix'
-        , 'gl_TextureMatrixInverse'
-        , 'gl_TextureMatrixInverseTranspose'
-        , 'gl_TextureMatrixTranspose'
-        , 'gl_Vertex'
-        , 'greaterThan'
-        , 'greaterThanEqual'
-        , 'inversesqrt'
-        , 'length'
-        , 'lessThan'
-        , 'lessThanEqual'
-        , 'log'
-        , 'log2'
-        , 'matrixCompMult'
-        , 'max'
-        , 'min'
-        , 'mix'
-        , 'mod'
-        , 'normalize'
-        , 'not'
-        , 'notEqual'
-        , 'pow'
-    , 'radians'
-    , 'reflect'
-    , 'refract'
-    , 'sign'
-    , 'sin'
-    , 'smoothstep'
-    , 'sqrt'
-    , 'step'
-    , 'tan'
-    , 'texture2D'
-    , 'texture2DLod'
-    , 'texture2DProj'
-    , 'texture2DProjLod'
-    , 'textureCube'
-    , 'textureCubeLod'
-    , 'texture2DLodEXT'
-    , 'texture2DProjLodEXT'
-    , 'textureCubeLodEXT'
-    , 'texture2DGradEXT'
-    , 'texture2DProjGradEXT'
-    , 'textureCubeGradEXT'
-]
-,
-        "glsl-tokenizer/lib/literals-300es": function(require,exports,module){var v100 = require(getCodeName('glsl-tokenizer/lib/literals'))
+        "glsl-tokenizer/lib/operators": function (require, exports, module) {
+            module.exports = [
+                '<<='
+                , '>>='
+                , '++'
+                , '--'
+                , '<<'
+                , '>>'
+                , '<='
+                , '>='
+                , '=='
+                , '!='
+                , '&&'
+                , '||'
+                , '+='
+                , '-='
+                , '*='
+                , '/='
+                , '%='
+                , '&='
+                , '^^'
+                , '^='
+                , '|='
+                , '('
+                , ')'
+                , '['
+                , ']'
+                , '.'
+                , '!'
+                , '~'
+                , '*'
+                , '/'
+                , '%'
+                , '+'
+                , '-'
+                , '<'
+                , '>'
+                , '&'
+                , '^'
+                , '|'
+                , '?'
+                , ':'
+                , '='
+                , ','
+                , ';'
+                , '{'
+                , '}'
+            ]
+        },
+        "glsl-tokenizer/lib/builtins": function (require, exports, module) {
+            module.exports = [
+                // Keep this list sorted
+                'abs'
+                , 'acos'
+                , 'all'
+                , 'any'
+                , 'asin'
+                , 'atan'
+                , 'ceil'
+                , 'clamp'
+                , 'cos'
+                , 'cross'
+                , 'dFdx'
+                , 'dFdy'
+                , 'degrees'
+                , 'distance'
+                , 'dot'
+                , 'equal'
+                , 'exp'
+                , 'exp2'
+                , 'faceforward'
+                , 'floor'
+                , 'fract'
+                , 'gl_BackColor'
+                , 'gl_BackLightModelProduct'
+                , 'gl_BackLightProduct'
+                , 'gl_BackMaterial'
+                , 'gl_BackSecondaryColor'
+                , 'gl_ClipPlane'
+                , 'gl_ClipVertex'
+                , 'gl_Color'
+                , 'gl_DepthRange'
+                , 'gl_DepthRangeParameters'
+                , 'gl_EyePlaneQ'
+                , 'gl_EyePlaneR'
+                , 'gl_EyePlaneS'
+                , 'gl_EyePlaneT'
+                , 'gl_Fog'
+                , 'gl_FogCoord'
+                , 'gl_FogFragCoord'
+                , 'gl_FogParameters'
+                , 'gl_FragColor'
+                , 'gl_FragCoord'
+                , 'gl_FragData'
+                , 'gl_FragDepth'
+                , 'gl_FragDepthEXT'
+                , 'gl_FrontColor'
+                , 'gl_FrontFacing'
+                , 'gl_FrontLightModelProduct'
+                , 'gl_FrontLightProduct'
+                , 'gl_FrontMaterial'
+                , 'gl_FrontSecondaryColor'
+                , 'gl_LightModel'
+                , 'gl_LightModelParameters'
+                , 'gl_LightModelProducts'
+                , 'gl_LightProducts'
+                , 'gl_LightSource'
+                , 'gl_LightSourceParameters'
+                , 'gl_MaterialParameters'
+                , 'gl_MaxClipPlanes'
+                , 'gl_MaxCombinedTextureImageUnits'
+                , 'gl_MaxDrawBuffers'
+                , 'gl_MaxFragmentUniformComponents'
+                , 'gl_MaxLights'
+                , 'gl_MaxTextureCoords'
+                , 'gl_MaxTextureImageUnits'
+                , 'gl_MaxTextureUnits'
+                , 'gl_MaxVaryingFloats'
+                , 'gl_MaxVertexAttribs'
+                , 'gl_MaxVertexTextureImageUnits'
+                , 'gl_MaxVertexUniformComponents'
+                , 'gl_ModelViewMatrix'
+                , 'gl_ModelViewMatrixInverse'
+                , 'gl_ModelViewMatrixInverseTranspose'
+                , 'gl_ModelViewMatrixTranspose'
+                , 'gl_ModelViewProjectionMatrix'
+                , 'gl_ModelViewProjectionMatrixInverse'
+                , 'gl_ModelViewProjectionMatrixInverseTranspose'
+                , 'gl_ModelViewProjectionMatrixTranspose'
+                , 'gl_MultiTexCoord0'
+                , 'gl_MultiTexCoord1'
+                , 'gl_MultiTexCoord2'
+                , 'gl_MultiTexCoord3'
+                , 'gl_MultiTexCoord4'
+                , 'gl_MultiTexCoord5'
+                , 'gl_MultiTexCoord6'
+                , 'gl_MultiTexCoord7'
+                , 'gl_Normal'
+                , 'gl_NormalMatrix'
+                , 'gl_NormalScale'
+                , 'gl_ObjectPlaneQ'
+                , 'gl_ObjectPlaneR'
+                , 'gl_ObjectPlaneS'
+                , 'gl_ObjectPlaneT'
+                , 'gl_Point'
+                , 'gl_PointCoord'
+                , 'gl_PointParameters'
+                , 'gl_PointSize'
+                , 'gl_Position'
+                , 'gl_ProjectionMatrix'
+                , 'gl_ProjectionMatrixInverse'
+                , 'gl_ProjectionMatrixInverseTranspose'
+                , 'gl_ProjectionMatrixTranspose'
+                , 'gl_SecondaryColor'
+                , 'gl_TexCoord'
+                , 'gl_TextureEnvColor'
+                , 'gl_TextureMatrix'
+                , 'gl_TextureMatrixInverse'
+                , 'gl_TextureMatrixInverseTranspose'
+                , 'gl_TextureMatrixTranspose'
+                , 'gl_Vertex'
+                , 'greaterThan'
+                , 'greaterThanEqual'
+                , 'inversesqrt'
+                , 'length'
+                , 'lessThan'
+                , 'lessThanEqual'
+                , 'log'
+                , 'log2'
+                , 'matrixCompMult'
+                , 'max'
+                , 'min'
+                , 'mix'
+                , 'mod'
+                , 'normalize'
+                , 'not'
+                , 'notEqual'
+                , 'pow'
+                , 'radians'
+                , 'reflect'
+                , 'refract'
+                , 'sign'
+                , 'sin'
+                , 'smoothstep'
+                , 'sqrt'
+                , 'step'
+                , 'tan'
+                , 'texture2D'
+                , 'texture2DLod'
+                , 'texture2DProj'
+                , 'texture2DProjLod'
+                , 'textureCube'
+                , 'textureCubeLod'
+                , 'texture2DLodEXT'
+                , 'texture2DProjLodEXT'
+                , 'textureCubeLodEXT'
+                , 'texture2DGradEXT'
+                , 'texture2DProjGradEXT'
+                , 'textureCubeGradEXT'
+            ]
+        },
+        "glsl-tokenizer/lib/literals-300es": function (require, exports, module) {
+            var v100 = require(getCodeName('glsl-tokenizer/lib/literals'))
 
-        module.exports = v100.slice().concat([
-            'layout'
-            , 'centroid'
-            , 'smooth'
-            , 'case'
-            , 'mat2x2'
-            , 'mat2x3'
-            , 'mat2x4'
-            , 'mat3x2'
-            , 'mat3x3'
-            , 'mat3x4'
-            , 'mat4x2'
-            , 'mat4x3'
-            , 'mat4x4'
-            , 'uint'
-            , 'uvec2'
-            , 'uvec3'
-            , 'uvec4'
-            , 'samplerCubeShadow'
-            , 'sampler2DArray'
-            , 'sampler2DArrayShadow'
-            , 'isampler2D'
-            , 'isampler3D'
-            , 'isamplerCube'
-            , 'isampler2DArray'
-            , 'usampler2D'
-            , 'usampler3D'
-            , 'usamplerCube'
-            , 'usampler2DArray'
-            , 'coherent'
-            , 'restrict'
-            , 'readonly'
-            , 'writeonly'
-            , 'resource'
-            , 'atomic_uint'
-            , 'noperspective'
-            , 'patch'
-            , 'sample'
-            , 'subroutine'
-            , 'common'
-            , 'partition'
-            , 'active'
-            , 'filter'
-            , 'image1D'
-            , 'image2D'
-            , 'image3D'
-            , 'imageCube'
-            , 'iimage1D'
-            , 'iimage2D'
-            , 'iimage3D'
-            , 'iimageCube'
-            , 'uimage1D'
-            , 'uimage2D'
-            , 'uimage3D'
-            , 'uimageCube'
-            , 'image1DArray'
-            , 'image2DArray'
-            , 'iimage1DArray'
-            , 'iimage2DArray'
-            , 'uimage1DArray'
-            , 'uimage2DArray'
-            , 'image1DShadow'
-            , 'image2DShadow'
-            , 'image1DArrayShadow'
-            , 'image2DArrayShadow'
-            , 'imageBuffer'
-            , 'iimageBuffer'
-            , 'uimageBuffer'
-            , 'sampler1DArray'
-            , 'sampler1DArrayShadow'
-            , 'isampler1D'
-            , 'isampler1DArray'
-            , 'usampler1D'
-            , 'usampler1DArray'
-            , 'isampler2DRect'
-            , 'usampler2DRect'
-            , 'samplerBuffer'
-            , 'isamplerBuffer'
-            , 'usamplerBuffer'
-            , 'sampler2DMS'
-            , 'isampler2DMS'
-            , 'usampler2DMS'
-            , 'sampler2DMSArray'
-            , 'isampler2DMSArray'
-            , 'usampler2DMSArray'
-        ])
-    },
-        "glsl-tokenizer/lib/builtins-300es": function(require,exports,module){// 300es builtins/reserved words that were previously valid in v100
-        var v100 = require(getCodeName('glsl-tokenizer/lib/builtins'))
+            module.exports = v100.slice().concat([
+                'layout'
+                , 'centroid'
+                , 'smooth'
+                , 'case'
+                , 'mat2x2'
+                , 'mat2x3'
+                , 'mat2x4'
+                , 'mat3x2'
+                , 'mat3x3'
+                , 'mat3x4'
+                , 'mat4x2'
+                , 'mat4x3'
+                , 'mat4x4'
+                , 'uint'
+                , 'uvec2'
+                , 'uvec3'
+                , 'uvec4'
+                , 'samplerCubeShadow'
+                , 'sampler2DArray'
+                , 'sampler2DArrayShadow'
+                , 'isampler2D'
+                , 'isampler3D'
+                , 'isamplerCube'
+                , 'isampler2DArray'
+                , 'usampler2D'
+                , 'usampler3D'
+                , 'usamplerCube'
+                , 'usampler2DArray'
+                , 'coherent'
+                , 'restrict'
+                , 'readonly'
+                , 'writeonly'
+                , 'resource'
+                , 'atomic_uint'
+                , 'noperspective'
+                , 'patch'
+                , 'sample'
+                , 'subroutine'
+                , 'common'
+                , 'partition'
+                , 'active'
+                , 'filter'
+                , 'image1D'
+                , 'image2D'
+                , 'image3D'
+                , 'imageCube'
+                , 'iimage1D'
+                , 'iimage2D'
+                , 'iimage3D'
+                , 'iimageCube'
+                , 'uimage1D'
+                , 'uimage2D'
+                , 'uimage3D'
+                , 'uimageCube'
+                , 'image1DArray'
+                , 'image2DArray'
+                , 'iimage1DArray'
+                , 'iimage2DArray'
+                , 'uimage1DArray'
+                , 'uimage2DArray'
+                , 'image1DShadow'
+                , 'image2DShadow'
+                , 'image1DArrayShadow'
+                , 'image2DArrayShadow'
+                , 'imageBuffer'
+                , 'iimageBuffer'
+                , 'uimageBuffer'
+                , 'sampler1DArray'
+                , 'sampler1DArrayShadow'
+                , 'isampler1D'
+                , 'isampler1DArray'
+                , 'usampler1D'
+                , 'usampler1DArray'
+                , 'isampler2DRect'
+                , 'usampler2DRect'
+                , 'samplerBuffer'
+                , 'isamplerBuffer'
+                , 'usamplerBuffer'
+                , 'sampler2DMS'
+                , 'isampler2DMS'
+                , 'usampler2DMS'
+                , 'sampler2DMSArray'
+                , 'isampler2DMSArray'
+                , 'usampler2DMSArray'
+            ])
+        },
+        "glsl-tokenizer/lib/builtins-300es": function (require, exports, module) {// 300es builtins/reserved words that were previously valid in v100
+            var v100 = require(getCodeName('glsl-tokenizer/lib/builtins'))
 
 // The texture2D|Cube functions have been removed
 // And the gl_ features are updated
-        v100 = v100.slice().filter(function (b) {
-            return !/^(gl\_|texture)/.test(b)
-        })
+            v100 = v100.slice().filter(function (b) {
+                return !/^(gl\_|texture)/.test(b)
+            })
 
-        module.exports = v100.concat([
-            // the updated gl_ constants
-            'gl_VertexID'
-            , 'gl_InstanceID'
-            , 'gl_Position'
-            , 'gl_PointSize'
-            , 'gl_FragCoord'
-            , 'gl_FrontFacing'
-            , 'gl_FragDepth'
-            , 'gl_PointCoord'
-            , 'gl_MaxVertexAttribs'
-            , 'gl_MaxVertexUniformVectors'
-            , 'gl_MaxVertexOutputVectors'
-            , 'gl_MaxFragmentInputVectors'
-            , 'gl_MaxVertexTextureImageUnits'
-            , 'gl_MaxCombinedTextureImageUnits'
-            , 'gl_MaxTextureImageUnits'
-            , 'gl_MaxFragmentUniformVectors'
-            , 'gl_MaxDrawBuffers'
-            , 'gl_MinProgramTexelOffset'
-            , 'gl_MaxProgramTexelOffset'
-            , 'gl_DepthRangeParameters'
-            , 'gl_DepthRange'
+            module.exports = v100.concat([
+                // the updated gl_ constants
+                'gl_VertexID'
+                , 'gl_InstanceID'
+                , 'gl_Position'
+                , 'gl_PointSize'
+                , 'gl_FragCoord'
+                , 'gl_FrontFacing'
+                , 'gl_FragDepth'
+                , 'gl_PointCoord'
+                , 'gl_MaxVertexAttribs'
+                , 'gl_MaxVertexUniformVectors'
+                , 'gl_MaxVertexOutputVectors'
+                , 'gl_MaxFragmentInputVectors'
+                , 'gl_MaxVertexTextureImageUnits'
+                , 'gl_MaxCombinedTextureImageUnits'
+                , 'gl_MaxTextureImageUnits'
+                , 'gl_MaxFragmentUniformVectors'
+                , 'gl_MaxDrawBuffers'
+                , 'gl_MinProgramTexelOffset'
+                , 'gl_MaxProgramTexelOffset'
+                , 'gl_DepthRangeParameters'
+                , 'gl_DepthRange'
 
-            // other builtins
-            , 'trunc'
-            , 'round'
-            , 'roundEven'
-            , 'isnan'
-            , 'isinf'
-            , 'floatBitsToInt'
-            , 'floatBitsToUint'
-            , 'intBitsToFloat'
-            , 'uintBitsToFloat'
-            , 'packSnorm2x16'
-            , 'unpackSnorm2x16'
-            , 'packUnorm2x16'
-            , 'unpackUnorm2x16'
-            , 'packHalf2x16'
-            , 'unpackHalf2x16'
-            , 'outerProduct'
-            , 'transpose'
-            , 'determinant'
-            , 'inverse'
-            , 'texture'
-            , 'textureSize'
-            , 'textureProj'
-            , 'textureLod'
-            , 'textureOffset'
-            , 'texelFetch'
-            , 'texelFetchOffset'
-            , 'textureProjOffset'
-            , 'textureLodOffset'
-            , 'textureProjLod'
-            , 'textureProjLodOffset'
-            , 'textureGrad'
-            , 'textureGradOffset'
-            , 'textureProjGrad'
-            , 'textureProjGradOffset'
-        ])
-    },
+                // other builtins
+                , 'trunc'
+                , 'round'
+                , 'roundEven'
+                , 'isnan'
+                , 'isinf'
+                , 'floatBitsToInt'
+                , 'floatBitsToUint'
+                , 'intBitsToFloat'
+                , 'uintBitsToFloat'
+                , 'packSnorm2x16'
+                , 'unpackSnorm2x16'
+                , 'packUnorm2x16'
+                , 'unpackUnorm2x16'
+                , 'packHalf2x16'
+                , 'unpackHalf2x16'
+                , 'outerProduct'
+                , 'transpose'
+                , 'determinant'
+                , 'inverse'
+                , 'texture'
+                , 'textureSize'
+                , 'textureProj'
+                , 'textureLod'
+                , 'textureOffset'
+                , 'texelFetch'
+                , 'texelFetchOffset'
+                , 'textureProjOffset'
+                , 'textureLodOffset'
+                , 'textureProjLod'
+                , 'textureProjLodOffset'
+                , 'textureGrad'
+                , 'textureGradOffset'
+                , 'textureProjGrad'
+                , 'textureProjGradOffset'
+            ])
+        },
+        "atob-lite/atob-browser.js": function (require, exports, module) {
+            module.exports = function _atob(str) {
+                return atob(str)
+            }
+        },
+        "pad-left/index.js":function(require,exports,module){/*!
+         * pad-left <https://github.com/jonschlinkert/pad-left>
+         *
+         * Copyright (c) 2014-2015, Jon Schlinkert.
+         * Licensed under the MIT license.
+         */
+
+            'use strict';
+
+            var repeat = require(getCodeName('repeat-string'));
+
+            module.exports = function padLeft(str, num, ch) {
+                str = str.toString();
+
+                if (typeof num === 'undefined') {
+                    return str;
+                }
+
+                if (ch === 0) {
+                    ch = '0';
+                } else if (ch) {
+                    ch = ch.toString();
+                } else {
+                    ch = ' ';
+                }
+
+                return repeat(ch, num - str.length) + str;
+            };
+        },
+        "repeat-string/index.js": function(require,exports,module){/*!
+         * repeat-string <https://github.com/jonschlinkert/repeat-string>
+         *
+         * Copyright (c) 2014-2015, Jon Schlinkert.
+         * Licensed under the MIT License.
+         */
+
+            'use strict';
+
+            /**
+             * Results cache
+             */
+
+            var res = '';
+            var cache;
+
+            /**
+             * Expose `repeat`
+             */
+
+            module.exports = repeat;
+
+            /**
+             * Repeat the given `string` the specified `number`
+             * of times.
+             *
+             * **Example:**
+             *
+             * ```js
+             * var repeat = require('repeat-string');
+             * repeat('A', 5);
+             * //=> AAAAA
+             * ```
+             *
+             * @param {String} `string` The string to repeat
+             * @param {Number} `number` The number of times to repeat the string
+             * @return {String} Repeated string
+             * @api public
+             */
+
+            function repeat(str, num) {
+                if (typeof str !== 'string') {
+                    throw new TypeError('repeat-string expects a string.');
+                }
+
+                // cover common, quick use cases
+                if (num === 1) return str;
+                if (num === 2) return str + str;
+
+                var max = str.length * num;
+                if (cache !== str || typeof cache === 'undefined') {
+                    cache = str;
+                    res = '';
+                }
+
+                while (max > res.length && num > 0) {
+                    if (num & 1) {
+                        res += str;
+                    }
+
+                    num >>= 1;
+                    if (!num) break;
+                    str += str;
+                }
+
+                return res.substr(0, max);
+            }
+
+        },
         npmModules: (function () {
             libraries["SystemJS/lib/global-helpers.js"]("undefined" != typeof self ? self : global);
             libraries.amdModules("undefined" != typeof self ? self : global);
