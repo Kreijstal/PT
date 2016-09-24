@@ -1,5 +1,5 @@
 var libraries;
-var modules = function (t) {
+var modules = function (System) {
   var e = this.require
       , n = this.exports
       , r = this.module;
@@ -17,8 +17,8 @@ var modules = function (t) {
       return t
     })
   }());
-  t.registerDynamic("4", [], !1, function (e, n, r) {
-    var i = t.get("@@global-helpers").prepareGlobal(r.id, null, null);
+  System.registerDynamic("4", [], !1, function (e, n, r) {
+    var i = System.get("@@global-helpers").prepareGlobal(r.id, null, null);
     return function () {
       window.performance = window.performance || Date;
       try {
@@ -31,7 +31,7 @@ var modules = function (t) {
     }(),
         i()
   });
-  t.registerDynamic("b", [getCodeName("BlueBird")], !0, function (t, e, n) {
+  System.registerDynamic("b", [getCodeName("BlueBird")], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       var e, n, r = !1, o = i.resolve(t.load()).then(function () {
@@ -82,7 +82,7 @@ var modules = function (t) {
     return e.start = r,
         n.exports
   });
-  t.registerDynamic("f", [], !0, function (t, e, n) {
+  System.registerDynamic("f", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t.map(function (t) {
@@ -111,7 +111,7 @@ var modules = function (t) {
         e.getBinary = o,
         n.exports
   });
-  t.registerDynamic("10", [], !0, function (t, e, n) {
+  System.registerDynamic("10", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       for (var e = "", n = 0; n < t; n++)
@@ -135,7 +135,7 @@ var modules = function (t) {
         e.checkRateLimit = i,
         n.exports
   });
-  t.registerDynamic("11", [], !0, function (t, e, n) {
+  System.registerDynamic("11", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return !t.some(function (t) {
@@ -253,7 +253,7 @@ var modules = function (t) {
         e.createHandlers = l,
         n.exports
   });
-  t.registerDynamic("12", [], !0, function (t, e, n) {
+  System.registerDynamic("12", [], !0, function (t, e, n) {
     "use strict";
     e.defaultHandleFunction = function (t, e, n, r, i) {
       return n.apply(r, i)
@@ -332,7 +332,7 @@ var modules = function (t) {
     return e.PacketHandler = r,
         n.exports
   });
-  t.registerDynamic("13", ["12"], !0, function (t, e, n) {
+  System.registerDynamic("13", ["12"], !0, function (t, e, n) {
     "use strict";
     var r = this && this.__extends || function (t, e) {
           function n() {
@@ -385,7 +385,7 @@ var modules = function (t) {
     return e.DebugPacketHandler = o,
         n.exports
   });
-  t.registerDynamic("14", ["15"], !0, function (t, e, n) {
+  System.registerDynamic("14", ["15"], !0, function (t, e, n) {
     "use strict";
     var r = t("15")
         , i = function () {
@@ -464,7 +464,7 @@ var modules = function (t) {
     return e.BasePacketWriter = i,
         n.exports
   });
-  t.registerDynamic("16", ["14"], !0, function (t, e, n) {
+  System.registerDynamic("16", ["14"], !0, function (t, e, n) {
     "use strict";
     var r = this && this.__extends || function (t, e) {
           function n() {
@@ -548,7 +548,7 @@ var modules = function (t) {
         e.default = o,
         n.exports
   });
-  t.registerDynamic("15", [], !0, function (t, e, n) {
+  System.registerDynamic("15", [], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       for (var n = 0; n < t.length; n++) {
@@ -643,7 +643,7 @@ var modules = function (t) {
         e.decodeString = u,
         n.exports
   });
-  t.registerDynamic("17", ["15"], !0, function (t, e, n) {
+  System.registerDynamic("17", ["15"], !0, function (t, e, n) {
     "use strict";
     var r = t("15")
         , i = function () {
@@ -699,7 +699,7 @@ var modules = function (t) {
     return e.BasePacketReader = i,
         n.exports
   });
-  t.registerDynamic("18", ["17"], !0, function (t, e, n) {
+  System.registerDynamic("18", ["17"], !0, function (t, e, n) {
     "use strict";
     var r = this && this.__extends || function (t, e) {
           function n() {
@@ -780,7 +780,7 @@ var modules = function (t) {
         e.default = o,
         n.exports
   });
-  t.registerDynamic("19", [getCodeName("BlueBird"), "f", "1a", "10", "11", "12", "13", "16", "18", getCodeName("BufferForTheBrowser")], !0, function (t, e, n) {
+  System.registerDynamic("19", [getCodeName("BlueBird"), "f", "1a", "10", "11", "12", "13", "16", "18", getCodeName("BufferForTheBrowser")], !0, function (t, e, n) {
     return function (n) {
       "use strict";
       function r() {
@@ -1014,7 +1014,7 @@ var modules = function (t) {
     }(t(getCodeName("BufferForTheBrowser")).Buffer),
         n.exports
   });
-  t.registerDynamic("1a", [], !0, function (t, e, n) {
+  System.registerDynamic("1a", [], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       for (var n = 0; n < t.length; n++)
@@ -1042,7 +1042,7 @@ var modules = function (t) {
         e.remove = o,
         n.exports
   });
-  t.registerDynamic("1c", ["1a"], !0, function (t, e, n) {
+  System.registerDynamic("1c", ["1a"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return void 0 === t && (t = {}),
@@ -1095,7 +1095,7 @@ var modules = function (t) {
         e.getMethods = u,
         n.exports
   });
-  t.registerDynamic("1d", ["f", "19", "1c"], !0, function (t, e, n) {
+  System.registerDynamic("1d", ["f", "19", "1c"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       for (var n in t)
@@ -1109,11 +1109,11 @@ var modules = function (t) {
     return e.Method = o.Method,
         n.exports
   });
-  t.registerDynamic("1e", ["1d"], !0, function (t, e, n) {
+  System.registerDynamic("1e", ["1d"], !0, function (t, e, n) {
     return n.exports = t("1d"),
         n.exports
   });
-  t.registerDynamic("1f", ["20", "21", "22", "23", "24", "25"], !0, function (t, e, n) {
+  System.registerDynamic("1f", ["20", "21", "22", "23", "24", "25"], !0, function (t, e, n) {
     "use strict";
     var r = t("20")
         , i = t("21")
@@ -1258,7 +1258,7 @@ var modules = function (t) {
     return e.Region = p,
         n.exports
   });
-  t.registerDynamic("26", [getCodeName("Lodash"), "20", "28", "23", "22", "25"], !0, function (t, e, n) {
+  System.registerDynamic("26", [getCodeName("Lodash"), "20", "28", "23", "22", "25"], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n) {
       return t ? {
@@ -1521,7 +1521,7 @@ var modules = function (t) {
         e.createAnEntity = _,
         n.exports
   });
-  t.registerDynamic("29", [getCodeName("Lodash"), "1e", "23", "22", "2a", "2b", "1f", "26", "2c", "2d"], !0, function (t, e, n) {
+  System.registerDynamic("29", [getCodeName("Lodash"), "1e", "23", "22", "2a", "2b", "1f", "26", "2c", "2d"], !0, function (t, e, n) {
     "use strict";
     var r = this && this.__decorate || function (t, e, n, r) {
           var i, o = arguments.length, a = o < 3 ? e : null === r ? r = Object.getOwnPropertyDescriptor(e, n) : r;
@@ -1735,7 +1735,7 @@ var modules = function (t) {
     return e.ClientActions = y,
         n.exports
   });
-  t.registerDynamic("2e", [getCodeName("BlueBird"), getCodeName("Lodash"), "1e", "23", "b", "2c", "29", "21"], !0, function (t, e, n) {
+  System.registerDynamic("2e", [getCodeName("BlueBird"), getCodeName("Lodash"), "1e", "23", "b", "2c", "29", "21"], !0, function (t, e, n) {
     "use strict";
     var r = t(getCodeName("BlueBird"))
         , i = t(getCodeName("Lodash"))
@@ -1867,7 +1867,7 @@ var modules = function (t) {
     return e.GameService = p,
         n.exports
   });
-  t.registerDynamic("2f", [], !0, function (t, e, n) {
+  System.registerDynamic("2f", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       "undefined" != typeof Rollbar && Rollbar.configure({
@@ -1886,7 +1886,7 @@ var modules = function (t) {
         e.reportError = i,
         n.exports
   });
-  t.registerDynamic("30", [getCodeName("BlueBird"), getCodeName("Lodash"), "31", "23", "2f", "21", "2d"], !0, function (t, e, n) {
+  System.registerDynamic("30", [getCodeName("BlueBird"), getCodeName("Lodash"), "31", "23", "2f", "21", "2d"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t.length ? t[0] : u.createDefaultPony()
@@ -2027,7 +2027,7 @@ var modules = function (t) {
     return e.Model = d,
         n.exports
   });
-  t.registerDynamic("32", ["23"], !0, function (t, e, n) {
+  System.registerDynamic("32", ["23"], !0, function (t, e, n) {
     "use strict";
     var r = t("23")
         , i = {
@@ -2135,11 +2135,11 @@ var modules = function (t) {
         ],
         n.exports
   });
-  t.registerDynamic("33", [], !0, function (t, e, n) {
+  System.registerDynamic("33", [], !0, function (t, e, n) {
     return n.exports = '<div ng-class="{ disabled: vm.isDisabled }" class="color-picker"><div ng-style="{ background: vm.bg }" class="color-picker-box"></div><div class="input-group"><input type="text" ng-focus="vm.focus($event)" ng-blur="vm.close()" ng-model="vm.inputColor" ng-disabled="vm.isDisabled" spellcheck="false" ng-change="vm.inputChanged()" class="form-control color-picker-input"><div ng-class="{ open: vm.isOpen }" class="input-group-btn"><button ng-mousedown="vm.toggleOpen()" ng-disabled="vm.isDisabled" class="btn btn-default dropdown-toggle"><span class="caret"></span></button><div uib-dropdown-menu ng-mousedown="vm.stopEvent($event)" class="dropdown-menu dropdown-menu-right color-picker-menu"><div class="color-picker-content"><div ag-drag="vm.dragSV($event)" ag-drag-relative="self" ag-drag-prevent="true" class="color-picker-sv"><div ng-style="{ background: vm.hue }" class="color-picker-sv-bg"><div class="color-picker-sv-overlay-white"><div class="color-picker-sv-overlay-black"></div></div></div><div ng-style="{ left: vm.svLeft + \'%\', top: vm.svTop + \'%\' }" class="color-wheel-circle-sv"><div></div></div></div><div ag-drag="vm.dragHue($event)" ag-drag-relative="self" ag-drag-prevent="true" class="color-picker-hue"><div ng-style="{ top: vm.hueTop + \'%\' }" class="color-wheel-circle-hue"><div></div></div></div></div></div></div></div></div>',
         n.exports
   });
-  t.registerDynamic("34", ["23", "35", "33"], !0, function (t, e, n) {
+  System.registerDynamic("34", ["23", "35", "33"], !0, function (t, e, n) {
     "use strict";
     var r = t("23")
         , i = t("35")
@@ -2309,7 +2309,7 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("36", [], !0, function (t, e, n) {
+  System.registerDynamic("36", [], !0, function (t, e, n) {
     "use strict";
     var r = function () {
       function t() {
@@ -2340,11 +2340,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("37", [], !0, function (t, e, n) {
+  System.registerDynamic("37", [], !0, function (t, e, n) {
     return n.exports = '<div class="row form-group"><div class="col-sm-4"><check-box ng-if="vm.hasLock &amp;&amp; !vm.nonLockable" checked="vm.locked" icon="fa-lock" changed="vm.lockChanged($value)" title="Automatic color" class="lock-box"></check-box><label class="control-label text-muted">{{vm.label || \'Color\'}}</label></div><div class="col-sm-8"><color-picker color="vm.fill" is-disabled="vm.locked" changed="vm.fillChanged($value)"></color-picker></div></div><div ng-if="!vm.outlineHidden" class="row form-group"><div class="col-sm-4"><check-box checked="vm.outlineLocked" icon="fa-lock" changed="vm.outlineLockChanged($value)" title="Automatic outline" class="lock-box"></check-box><label class="control-label text-muted">Outline</label></div><div class="col-sm-8"><color-picker color="vm.outline" is-disabled="vm.outlineLocked"></color-picker></div></div>',
         n.exports
   });
-  t.registerDynamic("38", ["39", "37"], !0, function (t, e, n) {
+  System.registerDynamic("38", ["39", "37"], !0, function (t, e, n) {
     "use strict";
     var r = t("39")
         , i = function () {
@@ -2392,7 +2392,7 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("3a", ["23", "35", "3b"], !0, function (t, e, n) {
+  System.registerDynamic("3a", ["23", "35", "3b"], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       if (e && 0 !== e.w && 0 !== e.h)
@@ -2515,11 +2515,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("3c", [], !0, function (t, e, n) {
+  System.registerDynamic("3c", [], !0, function (t, e, n) {
     return n.exports = '<div class="selection-list"><div class="selection-list-content"><sprite-box ng-repeat="i in vm.sprites track by $index" ng-class="{ active: vm.selected === $index }" ng-click="vm.selected = $index" sprite="i" fill="vm.fill" outline="vm.outline" circle="vm.circle" class="selection-item"></sprite-box></div></div>',
         n.exports
   });
-  t.registerDynamic("3d", ["3c"], !0, function (t, e, n) {
+  System.registerDynamic("3d", ["3c"], !0, function (t, e, n) {
     "use strict";
     var r = function () {
       function t() {
@@ -2544,11 +2544,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("3e", [], !0, function (t, e, n) {
+  System.registerDynamic("3e", [], !0, function (t, e, n) {
     return n.exports = '<div ng-if="vm.compact"><div class="row form-group"><div class="col-sm-4"><label class="control-label">{{vm.label}}</label></div><div class="col-sm-8"><sprite-selection selected="vm.set.type" sprites="vm.sprites" fill="vm.set.fills[0]" outline="vm.set.outlines[0]"></sprite-selection></div></div></div><div ng-if="!vm.compact"><div class="row form-group"><div class="col-sm-12 text-center"><label class="control-label text-muted">{{vm.label}}</label></div></div><div class="row form-group"><div class="col-sm-12"><sprite-selection selected="vm.set.type" sprites="vm.sprites" fill="vm.set.fills[0]" outline="vm.set.outlines[0]"></sprite-selection></div></div></div><div ng-if="vm.set.type &amp;&amp; vm.sets[vm.set.type].length &gt; 1"><div class="row form-group"><div class="col-sm-12 text-center"><label class="control-label text-muted">Color pattern</label></div></div><div class="row form-group"><div class="col-sm-12"><sprite-selection selected="vm.set.pattern" sprites="vm.sets[vm.set.type]" fill="vm.exampleFills" outline="vm.exampleOutlines"></sprite-selection></div></div></div><fill-outline ng-repeat="c in vm.set.fills track by $index" ng-if="vm.patternColors &gt; $index" label="Color {{$index + 1}}" base="vm.base" outline-hidden="vm.outlineHidden" fill="vm.set.fills[$index]" locked="vm.set.lockFills[$index]" non-lockable="$index === 0 &amp;&amp; vm.nonLockable" outline="vm.set.outlines[$index]" outline-locked="vm.set.lockOutlines[$index]"></fill-outline>',
         n.exports
   });
-  t.registerDynamic("3f", ["3e"], !0, function (t, e, n) {
+  System.registerDynamic("3f", ["3e"], !0, function (t, e, n) {
     "use strict";
     var r = function () {
       function t() {
@@ -2591,7 +2591,7 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("40", ["35"], !0, function (t, e, n) {
+  System.registerDynamic("40", ["35"], !0, function (t, e, n) {
     "use strict";
     var r = t("35")
         , i = function () {
@@ -2636,7 +2636,7 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("41", ["23", "31", "42", "43", "44"], !0, function (t, e, n) {
+  System.registerDynamic("41", ["23", "31", "42", "43", "44"], !0, function (t, e, n) {
     "use strict";
     var r = t("23")
         , i = t("31")
@@ -2702,11 +2702,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("45", [], !0, function (t, e, n) {
+  System.registerDynamic("45", [], !0, function (t, e, n) {
     return n.exports = '<div class="chat-box"><i ng-click="vm.toggle($event)" class="fa fa-fw fa-comment chat-open-button game-button"></i><div ng-show="vm.isOpen" class="chat-input-box"><input ng-model="vm.message" ng-keydown="vm.keydown($event)" maxlength="{{::vm.maxSayLength}}" class="chat-input"><i ng-click="vm.send()" class="fa fa-fw fa-angle-double-right chat-send-button game-button"></i></div></div>',
         n.exports
   });
-  t.registerDynamic("46", ["22", "2c", "45"], !0, function (t, e, n) {
+  System.registerDynamic("46", ["22", "2c", "45"], !0, function (t, e, n) {
     "use strict";
     var r = t("22")
         , i = t("2c")
@@ -2787,11 +2787,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("47", [], !0, function (t, e, n) {
+  System.registerDynamic("47", [], !0, function (t, e, n) {
     return n.exports = '<div uib-dropdown is-open="vm.dropdownOpen" class="settings-box"><span id="clock" class="settings-clock">00:00</span><i uib-dropdown-toggle class="fa fa-fw fa-gear game-button"></i><ul uib-dropdown-menu ng-if="vm.dropdownOpen" class="dropdown-menu pull-right settings-box-menu"><li class="dropdown-header">{{vm.server}}</li><li ng-mouseup="$event.stopPropagation(); $event.preventDefault();" ng-click="$event.stopPropagation(); $event.preventDefault();"><a ng-click="vm.changeScale()"><i class="fa fa-fw fa-search"></i> Change scale (x{{vm.scale}})</a></li><li class="divider"></li><li><a ng-click="vm.leave()"><i class="fa fa-fw fa-sign-out"></i> Leave</a></li></ul></div>',
         n.exports
   });
-  t.registerDynamic("48", ["2c", "47"], !0, function (t, e, n) {
+  System.registerDynamic("48", ["2c", "47"], !0, function (t, e, n) {
     "use strict";
     var r = t("2c")
         , i = r.default.game
@@ -2850,11 +2850,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("49", [], !0, function (t, e, n) {
+  System.registerDynamic("49", [], !0, function (t, e, n) {
     return n.exports = '<li ng-if="vm.model.account" uib-dropdown><a uib-dropdown-toggle class="cursor-pointer">{{vm.model.account.name}} <span class="caret"></span></a><ul uib-dropdown-menu><li><a href="/account">Account settings</a></li><li><a href="/auth/sign-out" target="_self" class="cursor-pointer">Sign out</a></li></ul></li>',
         n.exports
   });
-  t.registerDynamic("4a", ["49"], !0, function (t, e, n) {
+  System.registerDynamic("4a", ["49"], !0, function (t, e, n) {
     "use strict";
     var r = function () {
       function t(t, e) {
@@ -2876,11 +2876,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("4b", [], !0, function (t, e, n) {
+  System.registerDynamic("4b", [], !0, function (t, e, n) {
     return n.exports = '<nav class="navbar navbar-inverse"><div class="navbar-header navbar-main"><button ng-click="vm.menuExpanded = !vm.menuExpanded" class="navbar-toggle collapsed"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button><a ng-if="vm.logo &amp;&amp; !vm.isActive(\'/\')" href="/" class="pixelart main-logo-small hidden-xs"><img src="/images/logo-small.png" width="287" height="65"></a></div><div uib-collapse="!vm.menuExpanded" class="collapse navbar-collapse"><div ng-if="vm.model.loading" style="font-size: 20px; padding: 10px 20px;" class="navbar-right text-muted"><i class="fa fa-fw fa-spin fa-spinner"></i></div><form ng-if="!vm.model.loading &amp;&amp; !vm.model.account" class="navbar-form navbar-right"><div uib-dropdown class="button-group"><button uib-dropdown-toggle class="btn btn-default">Sign in <span class="caret"></span></button><ul uib-dropdown-menu><li ng-repeat="p in vm.providers"><a ng-href="{{p.url}}" target="_self"><i ng-class="p.icon" class="fa fa-fw"></i> {{p.name}}</a></li></ul></div></form><ul class="nav navbar-nav navbar-right"><ng-transclude></ng-transclude><li ng-repeat="i in vm.items" ng-class="{ active: vm.isActive(i.href) }" class="navbar-link"><a ng-href="{{i.href}}">{{i.name}}</a></li><li ng-if="vm.model.account" uib-dropdown><a uib-dropdown-toggle class="cursor-pointer">{{vm.model.account.name}} <span class="caret"></span></a><ul uib-dropdown-menu><li><a href="/account">Account settings</a></li><li><a href="/auth/sign-out" target="_self" class="cursor-pointer">Sign out</a></li></ul></li></ul></div></nav>',
         n.exports
   });
-  t.registerDynamic("4c", ["21", "4b"], !0, function (t, e, n) {
+  System.registerDynamic("4c", ["21", "4b"], !0, function (t, e, n) {
     "use strict";
     var r = t("21")
         , i = function () {
@@ -2936,11 +2936,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("4d", [], !0, function (t, e, n) {
+  System.registerDynamic("4d", [], !0, function (t, e, n) {
     return n.exports = '<div class="sign-in-box center-block"><div class="text-center"><p class="lead">Sign in with your social site account</p><div class="sign-in-box-providers"><a ng-repeat="p in vm.providers" ng-href="{{p.url}}" target="_self" title="{{p.name}}" ng-style="{ borderBottomColor: p.disabled ? \'#666\' : p.color }" ng-class="{ disabled: p.disabled }" class="btn btn-lg btn-provider"><i ng-class="p.icon" class="fa fa-fw fa-lg"></i></a></div></div></div>',
         n.exports
   });
-  t.registerDynamic("4e", ["21", "4d"], !0, function (t, e, n) {
+  System.registerDynamic("4e", ["21", "4d"], !0, function (t, e, n) {
     "use strict";
     var r = t("21")
         , i = function () {
@@ -2960,11 +2960,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("4f", [], !0, function (t, e, n) {
+  System.registerDynamic("4f", [], !0, function (t, e, n) {
     return n.exports = '<div class="play-box"><div uib-dropdown class="form-group btn-group dropdown"><button ng-if="!vm.joining" ng-click="vm.play()" ng-disabled="!vm.canPlay" type="button" class="btn btn-lg btn-success play-box-btn"><span ng-if="vm.server"><strong>{{vm.label || \'Play\'}}</strong> on<span> {{vm.server.name}}</span></span><span ng-if="!vm.server" class="text-faded">select server to play</span></button><button ng-if="vm.joining" ng-click="vm.cancel()" type="button" class="btn btn-lg btn-success play-box-btn"><i class="fa fa-spinner fa-spin"></i> Cancel</button><button uib-dropdown-toggle class="btn btn-lg btn-success"><span class="caret"></span></button><ul uib-dropdown-menu style="width: 100%;" class="dropdown-menu"><li ng-repeat="s in vm.servers"><a ng-click="vm.server = s"><div ng-if="s.offline" class="pull-right text-unsafe">offline</div><div ng-if="!s.offline" class="pull-right text-muted">online ({{s.online}})</div><strong>{{s.name}}</strong><div class="text-muted text-wrap">{{s.desc}}</div></a></li></ul></div><div ng-if="vm.server.offline" class="form-group"><div class="alert alert-info">Selected server is offline, try again later</div></div><div ng-if="vm.offline" class="form-group"><div class="alert alert-info">Server is offline, try again later</div></div><div ng-if="vm.invalidVersion &amp;&amp; !vm.offline" class="form-group"><div class="alert alert-info">Your client version is outdated, <a ng-click="vm.reload()" class="alert-link">reload</a> to be able to play.</div></div><div ng-if="vm.protectionError &amp;&amp; !vm.offline" class="form-group"><div class="alert alert-info">DDOS protection error, <a ng-click="vm.reload()" class="alert-link">reload</a> to continue.</div></div><div ng-if="vm.error" class="form-group"><div class="alert alert-danger">{{vm.error}}</div></div><div ng-if="vm.server" class="form-group text-left"><h4>Server rules</h4><p class="text-muted">{{vm.server.desc}}</p></div></div>',
         n.exports
   });
-  t.registerDynamic("50", ["23", "21", "4f"], !0, function (t, e, n) {
+  System.registerDynamic("50", ["23", "21", "4f"], !0, function (t, e, n) {
     "use strict";
     var r = t("23")
         , i = t("21")
@@ -3073,7 +3073,7 @@ var modules = function (t) {
       return t
     })
   })();
-  t.registerDynamic("53", [], !0, function (t, e, n) {
+  System.registerDynamic("53", [], !0, function (t, e, n) {
     "use strict";
     !function (t) {
       t[t.None = 0] = "None",
@@ -3093,7 +3093,7 @@ var modules = function (t) {
     e.ModAction;
     return n.exports
   });
-  t.registerDynamic("54", [getCodeName("Lodash")], !0, function (t, e, n) {
+  System.registerDynamic("54", [getCodeName("Lodash")], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       return t && a.includes(t.roles, e)
@@ -3113,7 +3113,7 @@ var modules = function (t) {
         e.isMod = o,
         n.exports
   });
-  t.registerDynamic("2a", [getCodeName("gl-matrix"), "23", "22", "43", "31", "5c"], !0, function (t, e, n) {
+  System.registerDynamic("2a", [getCodeName("gl-matrix"), "23", "22", "43", "31", "5c"], !0, function (t, e, n) {
     "use strict";
     var r = t(getCodeName("gl-matrix"))
         , i = t("23")
@@ -3214,7 +3214,7 @@ var modules = function (t) {
     return e.Pony = f,
         n.exports
   });
-  t.registerDynamic("2b", [getCodeName("Lodash"), "22", "23", "24"], !0, function (t, e, n) {
+  System.registerDynamic("2b", [getCodeName("Lodash"), "22", "23", "24"], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       if (!t.interactive)
@@ -3483,7 +3483,7 @@ var modules = function (t) {
     return e.Map = l,
         n.exports
   });
-  t.registerDynamic("5e", ["22", "23"], !0, function (t, e, n) {
+  System.registerDynamic("5e", ["22", "23"], !0, function (t, e, n) {
     "use strict";
     var r = t("22")
         , i = t("23")
@@ -3553,7 +3553,7 @@ var modules = function (t) {
     return e.Camera = o,
         n.exports
   });
-  t.registerDynamic("24", [], !0, function (t, e, n) {
+  System.registerDynamic("24", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t !== o.None
@@ -3585,7 +3585,7 @@ var modules = function (t) {
         e.TILE_MAP = [46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 20, 20, 13, 13, 20, 20, 13, 13, 16, 16, 23, 32, 16, 16, 23, 32, 15, 15, 25, 25, 15, 15, 34, 34, 26, 26, 45, 41, 26, 26, 42, 36, 20, 20, 13, 13, 20, 20, 13, 13, 10, 10, 31, 4, 10, 10, 31, 4, 15, 15, 25, 25, 15, 15, 34, 34, 27, 27, 43, 37, 27, 27, 35, 5, 46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 46, 46, 22, 22, 46, 46, 22, 22, 21, 21, 17, 11, 21, 21, 17, 11, 19, 19, 18, 18, 19, 19, 12, 12, 14, 14, 24, 28, 14, 14, 30, 6, 20, 20, 13, 13, 20, 20, 13, 13, 16, 16, 23, 32, 16, 16, 23, 32, 9, 9, 33, 33, 9, 9, 8, 8, 29, 29, 44, 39, 29, 29, 38, 7, 20, 20, 13, 13, 20, 20, 13, 13, 10, 10, 31, 4, 10, 10, 31, 4, 9, 9, 33, 33, 9, 9, 8, 8, 2, 2, 40, 3, 2, 2, 1, 0],
         n.exports
   });
-  t.registerDynamic("5f", [getCodeName("Lodash"), "35", "25"], !0, function (t, e, n) {
+  System.registerDynamic("5f", [getCodeName("Lodash"), "35", "25"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       for (var e = t % d, n = 24 * e / d, r = 1; r < h.length; r++)
@@ -3622,7 +3622,7 @@ var modules = function (t) {
         e.formatHourMinutes = i,
         n.exports
   });
-  t.registerDynamic("60", ["25", "61"], !0, function (t, e, n) {
+  System.registerDynamic("60", ["25", "61"], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n, r, i, o, s, u) {
       return s = a.setXY(t, e, o, s, u),
@@ -3715,7 +3715,7 @@ var modules = function (t) {
     return e.SpriteBatch = l,
         n.exports
   });
-  t.registerDynamic("64", ["65"], !0, function (t, e, n) {
+  System.registerDynamic("64", ["65"], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n, r, i, o) {
       this.location = t,
@@ -3793,7 +3793,7 @@ var modules = function (t) {
         n.exports = o,
         n.exports
   });
-  t.registerDynamic("65", [], !0, function (t, e, n) {
+  System.registerDynamic("65", [], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n) {
       e ? e.bind() : t.bindBuffer(t.ELEMENT_ARRAY_BUFFER, null);
@@ -3842,7 +3842,7 @@ var modules = function (t) {
     return n.exports = r,
         n.exports
   });
-  t.registerDynamic("66", ["65"], !0, function (t, e, n) {
+  System.registerDynamic("66", ["65"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       this.gl = t,
@@ -3881,7 +3881,7 @@ var modules = function (t) {
         n.exports = i,
         n.exports
   });
-  t.registerDynamic("67", ["64", "66"], !0, function (t, e, n) {
+  System.registerDynamic("67", ["64", "66"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       this.bindVertexArrayOES = t.bindVertexArray.bind(t),
@@ -3901,11 +3901,11 @@ var modules = function (t) {
     return n.exports = i,
         n.exports
   });
-  t.registerDynamic("68", ["67"], !0, function (t, e, n) {
+  System.registerDynamic("68", ["67"], !0, function (t, e, n) {
     return n.exports = t("67"),
         n.exports
   });
-  t.registerDynamic("61", [getCodeName("gl-buffer"), getCodeName("gl-texture2d"), "68", "23", "69"], !0, function (t, e, n) {
+  System.registerDynamic("61", [getCodeName("gl-buffer"), getCodeName("gl-texture2d"), "68", "23", "69"], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n, r, i) {
       if (i) {
@@ -4013,7 +4013,7 @@ var modules = function (t) {
     return e.BaseSpriteBatch = l,
         n.exports
   });
-  t.registerDynamic("6b", ["25", "61"], !0, function (t, e, n) {
+  System.registerDynamic("6b", ["25", "61"], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n, r, i, o, s, u, l, c) {
       return l = a.setXY(t, e, u, l, c),
@@ -4122,7 +4122,7 @@ var modules = function (t) {
     return e.PaletteSpriteBatch = l,
         n.exports
   });
-  t.registerDynamic("6c", [], !0, function (t, e, n) {
+  System.registerDynamic("6c", [], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n, r, i) {
       var o = t.tex;
@@ -4187,7 +4187,7 @@ var modules = function (t) {
     return e.SpriteButton = o,
         n.exports
   });
-  t.registerDynamic("6d", ["23"], !0, function (t, e, n) {
+  System.registerDynamic("6d", ["23"], !0, function (t, e, n) {
     "use strict";
     var r = t("23")
         , i = " ".charCodeAt(0)
@@ -4331,7 +4331,7 @@ var modules = function (t) {
     return e.SpriteFont = l,
         n.exports
   });
-  t.registerDynamic("6e", [getCodeName("gl-texture2d")], !0, function (t, e, n) {
+  System.registerDynamic("6e", [getCodeName("gl-texture2d")], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       e.forEach(function (e) {
@@ -4361,7 +4361,7 @@ var modules = function (t) {
         e.releaseTexturesForSpriteSheets = i,
         n.exports
   });
-  t.registerDynamic("69", [getCodeName("gl-shader"), getCodeName("gl-matrix")], !0, function (t, e, n) {
+  System.registerDynamic("69", [getCodeName("gl-shader"), getCodeName("gl-matrix")], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       for (var n = Math.max(t, e), r = 256; r < n;)
@@ -4445,7 +4445,7 @@ var modules = function (t) {
         e.createPaletteShader = c,
         n.exports
   });
-  t.registerDynamic("9e", [], !0, function (t, e, n) {
+  System.registerDynamic("9e", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t.target && /^(input|textarea|select)$/i.test(t.target.tagName)
@@ -4480,7 +4480,7 @@ var modules = function (t) {
     return e.KeyboardController = i,
         n.exports
   });
-  t.registerDynamic("9f", [], !0, function (t, e, n) {
+  System.registerDynamic("9f", [], !0, function (t, e, n) {
     "use strict";
     var r = [1002, 1004, 1003]
         , i = function () {
@@ -4521,7 +4521,7 @@ var modules = function (t) {
     return e.MouseController = i,
         n.exports
   });
-  t.registerDynamic("a0", ["23"], !0, function (t, e, n) {
+  System.registerDynamic("a0", ["23"], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       for (var n = 0; n < t.changedTouches.length; ++n) {
@@ -4649,7 +4649,7 @@ var modules = function (t) {
     return e.TouchController = s,
         n.exports
   });
-  t.registerDynamic("a1", [getCodeName("Lodash")], !0, function (t, e, n) {
+  System.registerDynamic("a1", [getCodeName("Lodash")], !0, function (t, e, n) {
     "use strict";
     var r = t(getCodeName("Lodash"))
         , i = .2
@@ -4706,7 +4706,7 @@ var modules = function (t) {
     return e.GamePadController = o,
         n.exports
   });
-  t.registerDynamic("a2", [getCodeName("Lodash"), "9e", "9f", "a0", "a1"], !0, function (t, e, n) {
+  System.registerDynamic("a2", [getCodeName("Lodash"), "9e", "9f", "a0", "a1"], !0, function (t, e, n) {
     "use strict";
     var r = t(getCodeName("Lodash"))
         , i = t("9e")
@@ -4824,7 +4824,7 @@ var modules = function (t) {
     return e.InputManager = u,
         n.exports
   });
-  t.registerDynamic("42", ["23"], !0, function (t, e, n) {
+  System.registerDynamic("42", ["23"], !0, function (t, e, n) {
     "use strict";
     function r(t, e, n) {
       t.width === e && t.height === n || (t.width = e,
@@ -4851,7 +4851,7 @@ var modules = function (t) {
         e.createOrResizeCanvas = o,
         n.exports
   });
-  t.registerDynamic("a3", [getCodeName("gl-matrix"), getCodeName("gl-fbo"), "23", "22", "2a", "2b", "5e", "25", "24", "5f", "60", "6b", "6c", "6d", "28", "6e", "69", "20", "a2", "3b", "42", "21", "2d", "a4"], !0, function (t, e, n) {
+  System.registerDynamic("a3", [getCodeName("gl-matrix"), getCodeName("gl-fbo"), "23", "22", "2a", "2b", "5e", "25", "24", "5f", "60", "6b", "6c", "6d", "28", "6e", "69", "20", "a2", "3b", "42", "21", "2d", "a4"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return 2 === t ? d.ADMIN_COLOR : 1 === t ? d.SYSTEM_COLOR : d.WHITE
@@ -5295,7 +5295,7 @@ var modules = function (t) {
         e.default = D,
         n.exports
   });
-  t.registerDynamic("2c", ["a3"], !0, function (t, e, n) {
+  System.registerDynamic("2c", ["a3"], !0, function (t, e, n) {
     "use strict";
     var r, i = t("a3"), o = "undefined" != typeof document;
     return Object.defineProperty(e, "__esModule", {
@@ -5308,11 +5308,11 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("a5", [], !0, function (t, e, n) {
+  System.registerDynamic("a5", [], !0, function (t, e, n) {
     return n.exports = '<script type="text/ng-template" id="pony-box-note-popover.html"><textarea cols="20" rows="6" ag-auto-focus ng-model="vm.pony.note" ng-keydown="vm.keydown($event)" ng-blur="vm.blur()" class="form-control pony-box-note-editor"></textarea></script><div class="pony-box"><div class="pony-box-rect"><div class="pony-box-name">{{vm.name}}</div><div class="pony-box-buttons"><div class="btn-group"><button uib-tooltip="{{vm.pony.ignored ? \'Unignore player\' : \'Ignore player\'}}" ng-click="vm.toggleIgnore()" ng-class="{ \'btn-danger\': vm.pony.ignored }" class="btn btn-xs btn-default"><i class="fa fa-ban"></i></button></div> <a ng-if="vm.site" ng-href="{{vm.site.url}}" target="_blank" class="pony-box-site"><i ng-class="vm.site.icon" ng-style="{ color: vm.site.color }" class="fa fa-fw fa-lg"></i><b> {{vm.site.name}}</b></a></div><div ng-if="vm.isMod" class="btn-group pony-box-buttons-mod"><button ng-click="vm.report()" uib-tooltip="Report" class="btn btn-xs btn-default"><i class="fa fa-flag"></i></button><button uib-tooltip="{{vm.isNoteOpen ? null : vm.pony.note}}" tooltip-placement="bottom" tooltip-class="tooltip-pre" uib-popover-template="\'pony-box-note-popover.html\'" popover-placement="bottom" popover-is-open="vm.isNoteOpen" ng-class="{ \'btn-danger\': !!vm.pony.note }" class="btn btn-xs btn-default"><i class="fa fa-sticky-note"></i></button><div uib-dropdown ng-if="vm.isMod" uib-tooltip="{{vm.timeoutTooltip}}" class="btn-group dropdown"><button uib-dropdown-toggle ng-class="{ \'btn-danger\': vm.hasTimeout }" class="btn btn-xs btn-default"><i class="fa fa-clock-o"></i></button><ul uib-dropdown-menu class="dropdown-menu pull-right"><li ng-repeat="t in vm.timeouts"><a ng-click="vm.timeout(t.value)">{{t.label}}</a></li></ul></div><button ng-click="vm.toggleMute()" uib-tooltip="{{vm.pony.muted ? \'Unmute\' : \'Mute\'}}" ng-class="{ \'btn-danger\': vm.pony.muted }" class="btn btn-xs btn-default"><i class="fa fa-microphone-slash"></i></button><button ng-click="vm.toggleShadow()" uib-tooltip="{{vm.pony.shadow ? \'Unshadow\' : \'Shadow\'}}" ng-class="{ \'btn-danger\': vm.pony.shadow }" class="btn btn-xs btn-default"><i class="fa fa-eye-slash"></i></button></div></div><div class="pony-box-avatar"><canvas width="100" height="100"></canvas><div class="pony-box-avatar-cover"></div></div></div>',
         n.exports
   });
-  t.registerDynamic("a6", ["52", "22", "53", "23", "54", "2c", "2d", "a5"], !0, function (t, e, n) {
+  System.registerDynamic("a6", ["52", "22", "53", "23", "54", "2c", "2d", "a5"], !0, function (t, e, n) {
     "use strict";
     var r = t("52")
         , i = t("22")
@@ -5435,7 +5435,7 @@ var modules = function (t) {
         },
         n.exports
   });
-  t.registerDynamic("a7", [getCodeName("BlueBird"), "52", "2e", "30", "32", "34", "36", "38", "3a", "3d", "3f", "40", "41", "46", "48", "4a", "4c", "4e", "50", "a6"], !0, function (t, e, n) {
+  System.registerDynamic("a7", [getCodeName("BlueBird"), "52", "2e", "30", "32", "34", "36", "38", "3a", "3d", "3f", "40", "41", "46", "48", "4a", "4c", "4e", "50", "a6"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       t.run(["$rootScope", function (t) {
@@ -5553,11 +5553,11 @@ var modules = function (t) {
     return e.init = r,
         n.exports
   });
-  t.registerDynamic("a8", [], !0, function (t, e, n) {
+  System.registerDynamic("a8", [], !0, function (t, e, n) {
     return n.exports = '<div ng-init="vm.init()" class="app"><div ng-style="{ display: vm.playing ? \'block\' : \'none\' }" class="app-game"><canvas id="canvas"></canvas><span id="stats"></span><settings-box></settings-box><chat-box></chat-box><pony-box id="pony-box" pony="vm.selected" ng-if="vm.selected"></pony-box><div id="touch-origin"></div><div id="touch-position"></div></div><div ng-if="!vm.playing" class="app-cover"><div class="container"><menu-bar logo="true" model="vm.model"><menu-item href="/" name="Home"></menu-item><menu-item href="/about" name="About"></menu-item><menu-item href="/character" name="Characters" ng-if="vm.model.account"></menu-item></menu-bar><div><div ng-view class="app-view"></div></div><footer class="app-footer clearfix"><div class="pull-left text-muted text-nowrap">version <b>0.16.0-alpha</b></div><div class="pull-right text-muted text-nowrap">&copy; 2016 <a href="https://twitter.com/Agamnentzar" class="text-muted">Agamnentzar</a> | <a href="http://agamnentzar.deviantart.com/" title="DeviantArt" class="text-muted"><i class="fa fa-fw fa-deviantart"></i></a><a href="http://agamnentzar.tumblr.com/" title="Tumblr" class="text-muted"><i class="fa fa-fw fa-tumblr"></i></a><a href="https://twitter.com/Agamnentzar" title="Twitter" class="text-muted"><i class="fa fa-fw fa-twitter"></i></a><a href="https://github.com/Agamnentzar" title="Github" class="text-muted"><i class="fa fa-fw fa-github"></i></a> <a href="mailto:agamnentzar&#64;gmail.com" target="_blank" title="Email" class="text-muted"><i class="fa fa-fw fa-envelope"></i></a></div></footer></div></div></div>',
         n.exports
   });
-  t.registerDynamic("44", ["20", "3b"], !0, function (t, e, n) {
+  System.registerDynamic("44", ["20", "3b"], !0, function (t, e, n) {
     "use strict";
     function r() {
       return i || (i = a.loadSpriteSheets(o.spriteSheets, "/images/"))
@@ -5567,7 +5567,7 @@ var modules = function (t) {
     return e.loadSpriteSheets = r,
         n.exports
   });
-  t.registerDynamic("a4", [], !0, function (t, e, n) {
+  System.registerDynamic("a4", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       if (a)
@@ -5605,7 +5605,7 @@ var modules = function (t) {
         e.removeItem = o,
         n.exports
   });
-  t.registerDynamic("a9", [getCodeName("Lodash"), "22", "23", "43", "31", "20", "44", "5c", "21", "a4"], !0, function (t, e, n) {
+  System.registerDynamic("a9", [getCodeName("Lodash"), "22", "23", "43", "31", "20", "44", "5c", "21", "a4"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t && t.fills && t.fills[0]
@@ -5972,7 +5972,7 @@ var modules = function (t) {
         e.default = v,
         n.exports
   });
-  t.registerDynamic("2d", [getCodeName("Lodash"), "20", "21"], !0, function (t, e, n) {
+  System.registerDynamic("2d", [getCodeName("Lodash"), "20", "21"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t.replace(c, function (t) {
@@ -6040,7 +6040,7 @@ var modules = function (t) {
         e.toSocialSiteInfo = o,
         n.exports
   });
-  t.registerDynamic("aa", [getCodeName("Lodash"), "22", "2d", "23"], !0, function (t, e, n) {
+  System.registerDynamic("aa", [getCodeName("Lodash"), "22", "2d", "23"], !0, function (t, e, n) {
     "use strict";
     var r = t(getCodeName("Lodash"))
         , i = t("22")
@@ -6096,7 +6096,7 @@ var modules = function (t) {
         e.default = s,
         n.exports
   });
-  t.registerDynamic("28", [getCodeName("Lodash"), getCodeName("gl-texture2d"), "23"], !0, function (t, e, n) {
+  System.registerDynamic("28", [getCodeName("Lodash"), getCodeName("gl-texture2d"), "23"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       t && t.refs && t.refs--
@@ -6255,7 +6255,7 @@ var modules = function (t) {
     return e.PaletteManager = l,
         n.exports
   });
-  t.registerDynamic("39", ["35"], !0, function (t, e, n) {
+  System.registerDynamic("39", ["35"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       var e = a.default.parseWithAlpha(t, 1).hsva();
@@ -6280,7 +6280,7 @@ var modules = function (t) {
         e.darkenColor = o,
         n.exports
   });
-  t.registerDynamic("31", [getCodeName("Lodash"), "20", "28", "23", "39", "22", "35"], !0, function (t, e, n) {
+  System.registerDynamic("31", [getCodeName("Lodash"), "20", "28", "23", "39", "22", "35"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return R.mergeWith({}, o(), R.cloneDeep(t), function (t, e) {
@@ -6703,7 +6703,7 @@ var modules = function (t) {
         e.releasePalettes = I,
         n.exports
   });
-  t.registerDynamic("25", ["35"], !0, function (t, e, n) {
+  System.registerDynamic("25", ["35"], !0, function (t, e, n) {
     "use strict";
     var r = t("35");
     return e.WHITE = r.default.parse("white"),
@@ -6723,7 +6723,7 @@ var modules = function (t) {
         e.FAR_COLOR = r.default.fromHsva(0, 0, .8, 1),
         n.exports
   });
-  t.registerDynamic("c9", [], !0, function (t, e, n) {
+  System.registerDynamic("c9", [], !0, function (t, e, n) {
     var r = new Int8Array(4)
         , i = new Int32Array(r.buffer, 0, 1)
         , o = new Float32Array(r.buffer, 0, 1)
@@ -6766,11 +6766,11 @@ var modules = function (t) {
         n.exports = a,
         n.exports
   });
-  t.registerDynamic("ca", ["c9"], !0, function (t, e, n) {
+  System.registerDynamic("ca", ["c9"], !0, function (t, e, n) {
     return n.exports = t("c9"),
         n.exports
   });
-  t.registerDynamic("35", ["ca"], !0, function (t, e, n) {
+  System.registerDynamic("35", ["ca"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       var e = (0 | t).toString(16);
@@ -7219,7 +7219,7 @@ var modules = function (t) {
         e.default = o,
         n.exports
   });
-  t.registerDynamic("22", [], !0, function (t, e, n) {
+  System.registerDynamic("22", [], !0, function (t, e, n) {
     "use strict";
     return e.PONY_SPEED_TROT = 4,
         e.PONY_SPEED_WALK = 2,
@@ -7266,7 +7266,7 @@ var modules = function (t) {
         }],
         n.exports
   });
-  t.registerDynamic("23", [getCodeName("BlueBird"), getCodeName("Lodash"), "22"], !0, function (t, e, n) {
+  System.registerDynamic("23", [getCodeName("BlueBird"), getCodeName("Lodash"), "22"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return new RegExp("^" + Z.escapeRegExp((t || "").trim()) + "$", "i")
@@ -7606,7 +7606,7 @@ var modules = function (t) {
         e.getY = G,
         n.exports
   });
-  t.registerDynamic("3b", [getCodeName("BlueBird"), "35", "23"], !0, function (t, e, n) {
+  System.registerDynamic("3b", [getCodeName("BlueBird"), "35", "23"], !0, function (t, e, n) {
     "use strict";
     function r(t, e) {
       var n = Object.keys(t).reduce(function (e, n) {
@@ -7684,7 +7684,7 @@ var modules = function (t) {
     return e.drawColoredSprite = u,
         n.exports
   });
-  t.registerDynamic("cc", [], !0, function (t, e, n) {
+  System.registerDynamic("cc", [], !0, function (t, e, n) {
     return n.exports = {
       "pony.png": "pony-18957dcd2d.png",
       "pony2.png": "pony2-ff33d811d6.png",
@@ -7692,7 +7692,7 @@ var modules = function (t) {
     },
         n.exports
   });
-  t.registerDynamic("20", ["cc"], !0, function (t, e, n) {
+  System.registerDynamic("20", ["cc"], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return t ? {
@@ -8000,7 +8000,7 @@ var modules = function (t) {
         }),
         n.exports
   });
-  t.registerDynamic("5c", ["20"], !0, function (t, e, n) {
+  System.registerDynamic("5c", ["20"], !0, function (t, e, n) {
     "use strict";
     var r = t("20");
     return e.stand = {
@@ -8050,7 +8050,7 @@ var modules = function (t) {
         e.animations = [e.stand, e.trot],
         n.exports
   });
-  t.registerDynamic("43", ["22", "23", "25", "20", "3b", "5c"], !0, function (t, e, n) {
+  System.registerDynamic("43", ["22", "23", "25", "20", "3b", "5c"], !0, function (t, e, n) {
     "use strict";
     function r() {
       return {
@@ -8309,7 +8309,7 @@ var modules = function (t) {
         e.drawPonyGL2 = d,
         n.exports
   });
-  t.registerDynamic("cd", ["22", "31", "43"], !0, function (t, e, n) {
+  System.registerDynamic("cd", ["22", "31", "43"], !0, function (t, e, n) {
     "use strict";
     var r = t("22")
         , i = t("31")
@@ -8370,23 +8370,23 @@ var modules = function (t) {
         e.default = a,
         n.exports
   });
-  t.registerDynamic("ce", [], !0, function (t, e, n) {
+  System.registerDynamic("ce", [], !0, function (t, e, n) {
     return n.exports = '<div class="text-center heading"><img src="/images/logo.png" width="574" height="130" class="pixelart hidden-xs"><img src="/images/logo-small.png" width="287" height="65" class="pixelart hidden-lg hidden-md hidden-sm"></div><div class="center-block home-content"><div ng-if="vm.model.loading" style="font-size: 50px; padding: 150px 0;" class="text-muted text-center"><i class="fa fa-fw fa-spin fa-spinner"></i></div><div ng-if="!vm.model.loading"><div ng-if="!vm.model.account" class="form-group"><sign-in-box></sign-in-box></div><div ng-if="vm.authError" class="form-group"><div class="alert alert-danger">{{vm.authError}}</div></div><div ng-if="!!vm.model.account"><div class="form-group"><div class="input-group"><input type="text" ng-model="vm.pony.name" placeholder="name of your character" maxlength="{{vm.maxNameLength}}" ng-disabled="vm.joining" class="form-control text-center"><div class="input-group-btn"><a href="/character" ng-class="{ disabled: vm.joining }" class="btn btn-default">edit</a><div uib-dropdown style="width: auto;" class="btn-group"><button type="button" ng-disabled="!vm.ponies.length || vm.joining" uib-dropdown-toggle class="btn btn-default"><span class="caret"></span></button><ul uib-dropdown-menu class="dropdown-menu-right"><li ng-repeat="i in vm.ponies | orderBy:\'name\' track by $index"><a href="#" ng-click="vm.select(i)">{{i.name}}</a></li><li ng-if="vm.canNew"><a href="#" ng-click="vm.new()" class="text-center"><em>new pony</em></a></li></ul></div></div></div></div><div class="form-group"><character-preview pony="vm.pony" state="vm.state"></character-preview></div><div class="form-group text-center"><play-box></play-box></div><div style="max-width: 400px;" class="rules center-block text-left"><h4>General rules</h4><ul class="text-muted"><li>Be kind to others</li><li>Don\'t spam</li><li>Don\'t modify the game with hacks or scripts</li><li>Don\'t encourage spamming or hacking</li></ul></div><div style="max-width: 400px;" class="rules center-block text-left"><h4>Notice</h4><p class="text-muted">This game is very early in development. There might be bugs and occasional downtimes.</p><p class="text-muted">Please do not redistribute any of the game files or code.</p></div></div></div></div>',
         n.exports
   });
-  t.registerDynamic("cf", [], !0, function (t, e, n) {
+  System.registerDynamic("cf", [], !0, function (t, e, n) {
     return n.exports = '<h1>About</h1><div class="row"><div class="col-md-6"><p class="lead">A game of ponies building a town\n</p><h2>Keyboard shortcuts</h2><ul><li><b>movement</b><ul><li>use <kbd><i class="fa fa-arrow-up"></i></kbd> <kbd><i class="fa fa-arrow-left"></i></kbd> <kbd><i class="fa fa-arrow-down"></i></kbd> <kbd><i class="fa fa-arrow-right"></i></kbd>\nor <kbd class="b">W</kbd> <kbd class="b">A</kbd> <kbd class="b">S</kbd> <kbd class="b">D</kbd> to move</li><li>hold <kbd class="b">shift</kbd> to walk slowly</li></ul></li><li><b>chat</b><ul><li><kbd class="b">enter</kbd> to open chat box and send a message</li><li><kbd class="b">esc</kbd> to cancel the message</li></ul></li><li><b>zoom (1x, 2x, 3x, 4x)</b> - <kbd class="b">P</kbd></li><li><b>hide all text</b> - <kbd class="b">F2</kbd></li><li><b>fade all objects</b> - <kbd class="b">F4</kbd></li><li><b>fullscreen</b> - <kbd class="b">F11</kbd></li><li>hold <kbd class="b">shift</kbd> to be able to click on ground and items behind other players</li></ul><h2>Emotes</h2><p>You can use emotes in chat by typings their name surrounded by colons <samp>:apple:</samp>\nor by using unicode characters assigned to them. Available emotes:\n</p><ul><li>:face: - ツ</li><li>:derp: - シ</li><li>:heart: - ❤</li><li>:rock: - ⽯</li><li>:apple: - 🍎</li><li>:pizza: - 🍕</li><li>:pumpkin: - 🎃</li></ul><h2>Technology</h2><p>The entire game is written in <a href="http://www.typescriptlang.org/">TypeScript</a>,\na typed superset of JavaScript that compiles to plain JavaScript.\nServer side code is running on <a href="https://nodejs.org/en/">Node.js</a> server with WebSockets for communication.\nUser interface is built using <a href="https://angularjs.org/">Angular.js</a> framework and \nthe game itself is using WebGL for rendering graphics.\n</p><h2>The Team</h2><h3 id="agamnentzar">Agamnentzar</h3>\n<p><a href="http://agamnentzar.deviantart.com/">deviantart</a> | <a href="http://agamnentzar.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Designer</li>\n<li>Programmer</li>\n<li>Artist</li>\n</ul>\n<h3 id="shino">Shino</h3>\n<p><a href="http://shinodage.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<h3 id="chirachan">ChiraChan</h3>\n<p><a href="http://chiramii-chan.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<h3 id="velenor">Velenor</h3>\n<p><a href="http://velenor.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<h3 id="disastral">Disastral</h3>\n<p><a href="http://askdisastral.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<h3 id="cyberpon3">CyberPon3</h3>\n<p><a href="http://cyberpon3.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Programmer</li>\n</ul>\n<h2>Other contributors</h2><p><strong>OtakuAP</strong> - <a href="http://otakuap.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n<li>Animator</li>\n</ul>\n<p><strong>Velvet-Frost</strong> - <a href="http://velvet-frost.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Jet7Wave</strong> - <a href="http://jetwave.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Meno</strong> - <a href="http://menojar.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Lalieri</strong> - <a href="http://lalieri.tumblr.com/">tumblr</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n<p><strong>Goodly</strong> - <a href="http://goodlyay.deviantart.com/">deviantart</a></p>\n<ul>\n<li>Artist</li>\n</ul>\n</div><div class="col-md-6"><h2>Changelog</h2><h4 id="v0-16-0">v0.16.0</h4>\n<ul>\n<li>Added option for locking back leg accessory</li>\n<li>Added loading message when joining to the game</li>\n<li>Added button for opening color picker without selecting input box</li>\n<li>Added floating character preview when scrolling far down in character editor</li>\n<li>Added shortcut <kbd>F4</kbd> for fading all objects</li>\n<li>Improved rendering performance</li>\n<li>Improved selection when selecting a pony from a group of stacked ponies</li>\n<li>Fixed issues when joining to the game</li>\n<li>Fixed issues with updating game state when game runs in background tab</li>\n<li>Fixed issue with glasses color difference between editor and the game</li>\n<li>Fixed issue with automatic account merging not working in certain cases</li>\n<li>Fixed issue with clock showing 60 minutes</li>\n<li>Fixed scale on high DPI devices</li>\n<li>Fixed graphical glitches on some devices</li>\n<li>Fixed cancelling joining not working in certain cases</li>\n<li>Fixed back hair and tail color resetting in certain cases</li>\n</ul>\n<h4 id="v0-15-2">v0.15.2</h4>\n<ul>\n<li>Fixed deleting ponies</li>\n<li>Fixed clouds overlapping</li>\n<li>Fixed glass in glasses not rendering properly</li>\n</ul>\n<h4 id="v0-15-1">v0.15.1</h4>\n<ul>\n<li>Fixed errors when leaving and joining the game</li>\n<li>Fixed selection ring not showing up</li>\n<li>Fixed non-flipped buttmark being drawn incorrectly</li>\n<li>Fixed color parsing issue with empty colors</li>\n<li>Fixed locking colors for accessories</li>\n</ul>\n<h4 id="v0-15-0">v0.15.0</h4>\n<ul>\n<li>Added socks</li>\n<li>Added server name in settings dropdown</li>\n<li>Added associated social site account list on account page</li>\n<li>Added saving of last used zoom level</li>\n<li>Removed security check causing page styles to not load on some setups</li>\n<li>Improved performance of rendering engine</li>\n<li>Increased max number of ponies to 20</li>\n<li>Fixed redirecting to home page when reloading account page</li>\n<li>Fixed game screen blinking randomly</li>\n</ul>\n<h4 id="v0-14-5">v0.14.5</h4>\n<ul>\n<li>Fixed wrapping long names on character selection box</li>\n</ul>\n<h4 id="v0-14-4">v0.14.4</h4>\n<ul>\n<li>Added duplicate character option to character creator</li>\n<li>Added better error handling for DDOS protection errors</li>\n<li>Added option to share social accounts on pony selection box</li>\n<li>Added automatic closing of pony selection box when selected pony leaves the game</li>\n<li>Enabled swear filter by default on safe server</li>\n<li>Removed security check causing page to not load on some setups</li>\n<li>Fixed game crashing when changing scale if given resolution is not suported</li>\n<li>Fixed caching issues with main page</li>\n</ul>\n<h4 id="v0-14-3">v0.14.3</h4>\n<ul>\n<li>Fixed color picker hiding when selecting a color</li>\n<li>Fixed color picker input not selecting text when focused on firefox</li>\n<li>Fixed performance issue when selecting colors in character creator</li>\n<li>Fixed being redirected to home page from character creator on refresh</li>\n</ul>\n<h4 id="v0-14-2">v0.14.2</h4>\n<ul>\n<li>Added client script version check when joining to the game</li>\n</ul>\n<h4 id="v0-14-1">v0.14.1</h4>\n<ul>\n<li>Hotfixes</li>\n</ul>\n<h4 id="v0-14-0">v0.14.0</h4>\n<ul>\n<li>Added selecting other players (hold <kbd>shift</kbd> to be able to click on ground and items behind other players)</li>\n<li>Added option for ignoring other players</li>\n<li>Fixed about page inaccuracies</li>\n<li>Fixed gamepad controls</li>\n</ul>\n<h4 id="v0-13-2">v0.13.2</h4>\n<ul>\n<li>Added slow walking with <kbd>shift</kbd> key</li>\n<li>Adjusted day-night cycle length and night darkness intensity</li>\n<li>Adjusted dead zone for gamepads</li>\n<li>Improved networking performance</li>\n<li>Fixed disconnect issues on mobile devices</li>\n</ul>\n<h4 id="v0-13-1">v0.13.1</h4>\n<ul>\n<li>Fixed multiple servers not connecting properly</li>\n</ul>\n<h4 id="v0-13-0">v0.13.0</h4>\n<ul>\n<li>Added touch and gamepad controls</li>\n<li>Added day-night cycle</li>\n<li>Added game time clock</li>\n<li>Added option to leave game without having to reload the page</li>\n<li>Added support for multiple servers</li>\n<li>Fixed horn outlines</li>\n<li>Fixed zoom repeating when holding zoom key</li>\n<li>Fixed getting logged out when closing browser</li>\n</ul>\n<h4 id="v0-12-1">v0.12.1</h4>\n<ul>\n<li>Added back lighting test shortcut <kbd>T</kbd></li>\n<li>Added keyboard shortcut <kbd>F2</kbd> for hiding all text messages</li>\n<li>Fixed issue with setting color and opennes independently for left and right eye</li>\n<li>Fixed issue with incorrect pony name text placement</li>\n<li>Fixed being able to spawn inside a tree</li>\n</ul>\n<h4 id="v0-12-0">v0.12.0</h4>\n<ul>\n<li>Added trees</li>\n<li>Added pumpkins</li>\n<li>Added eyeshadow</li>\n<li>Added hats</li>\n<li>Added tie</li>\n<li>Added reading glasses</li>\n<li>Added flower ear accessory</li>\n<li>Added new face markings</li>\n<li>Added new emotes</li>\n<li>Changed map design</li>\n<li>Fixed head accessories placement without hair</li>\n<li>Fixed not being able to set 6th color on 2nd mane</li>\n</ul>\n<h4 id="v0-11-4">v0.11.4</h4>\n<ul>\n<li>Added new scarf pattern</li>\n<li>Improved rendering performance</li>\n<li>Fixed not being able to see name of a pony when they are saying something</li>\n<li>Fixed issues with server restart</li>\n<li>Fixed fetlocks in trot animation</li>\n<li>Fixed issues with font and emote spacing</li>\n</ul>\n<h4 id="v0-11-3">v0.11.3</h4>\n<ul>\n<li>Added scarf accessory</li>\n<li>Added option for hiding all chat messages with russian text</li>\n<li>Added list of rules and in-development notice</li>\n<li>Fixed some issues with chat messages</li>\n<li>Fixed multiple issues with manes</li>\n<li>Fixed issue with fetlocks</li>\n</ul>\n<h4 id="v0-11-2">v0.11.2</h4>\n<ul>\n<li>Added announcements support</li>\n<li>Added hide background switch for pony creator</li>\n<li>Removed stones from the spawning area</li>\n</ul>\n<h4 id="v0-11-1">v0.11.1</h4>\n<ul>\n<li>Added polish characters to pixel font</li>\n<li>Fixed sign-in with facebook</li>\n<li>Fixed cancelling character edit</li>\n<li>Fixed clouds</li>\n<li>Fixed spelling mistake</li>\n<li>Fixed buttmark position</li>\n</ul>\n<h4 id="v0-11-0">v0.11.0</h4>\n<ul>\n<li>Added cyrillic characters to pixel font</li>\n<li>Added logos</li>\n<li>Added optional swear filter</li>\n<li>Added more mane styles</li>\n<li>Reworked sign-in and account system</li>\n<li>Improved networking performance</li>\n</ul>\n<h4 id="v0-10-1">v0.10.1</h4>\n<ul>\n<li>Fixed connection resetting every 10 seconds when not in game</li>\n</ul>\n<h4 id="v0-10-0">v0.10.0</h4>\n<ul>\n<li>Added back butterflies</li>\n<li>Improved networking performance</li>\n<li>Fixed not initialized errors</li>\n<li>Fixed deleting character not updating character list</li>\n<li>Fixed cursor and camera offset errors on screens with high pixel density</li>\n<li>Fixed styling issue in chat box</li>\n</ul>\n<h4 id="v0-9-8">v0.9.8</h4>\n<ul>\n<li>Improved connection performance</li>\n<li>Fixed issues with chat box focus on Safari and Edge</li>\n</ul>\n<h4 id="v0-9-7">v0.9.7</h4>\n<ul>\n<li>Added chat buttons</li>\n<li>Improved connection performance</li>\n<li>Fixed automatically signing in after signing up for new account</li>\n<li>Fixed character name not saving if joining the game from home screen</li>\n</ul>\n<h4 id="v0-9-6">v0.9.6</h4>\n<ul>\n<li>Added logging off after 15 minutes of no activity</li>\n<li>Improved performance of joining to the game</li>\n<li>Fixed multiple issues with character creator on IE11</li>\n</ul>\n<h4 id="v0-9-5">v0.9.5</h4>\n<ul>\n<li>Fixed non-flippable buttmarks</li>\n<li>Fixed some rate limiting issues</li>\n</ul>\n<h4 id="v0-9-4">v0.9.4</h4>\n<ul>\n<li>Removed ability to log into the same character multiple times</li>\n<li>Added back rocks</li>\n<li>Added displaying of WegGL initialization error</li>\n</ul>\n<h4 id="v0-9-3">v0.9.3</h4>\n<ul>\n<li>Removed rocks</li>\n</ul>\n<h4 id="v0-9-2">v0.9.2</h4>\n<ul>\n<li>Removed butterflies</li>\n<li>Removed debug code</li>\n</ul>\n<h4 id="v0-9-1">v0.9.1</h4>\n<ul>\n<li>Fixed issue with rendering when value is out of range</li>\n</ul>\n<h4 id="v0-9-0">v0.9.0</h4>\n<ul>\n<li>Added shading to trot animation</li>\n<li>Added new mane styles</li>\n<li>Added mane color patterns</li>\n<li>Added option for non-flippable butt marks</li>\n<li>Added account system</li>\n<li>Added saving characters on server side</li>\n<li>Fixed eye colors switching sides  when turning left and right</li>\n<li>Fixed performance issues with rendering</li>\n<li>Fixed shader code not working on some low end devices</li>\n<li>Fixed errors when character has invalid values set for sprite types</li>\n<li>Fixed being able to use transparency for character colors</li>\n<li>Fixed chat not limiting characters properly</li>\n</ul>\n<h4 id="v0-8-0">v0.8.0</h4>\n<ul>\n<li>Added character customization in game</li>\n<li>Added eye blinking</li>\n<li>Added character selection on home screen</li>\n</ul>\n<h4 id="v0-7-0">v0.7.0</h4>\n<ul>\n<li>Removed spawn command</li>\n<li>Added character creation prototype</li>\n</ul>\n<h4 id="v0-6-1">v0.6.1</h4>\n<ul>\n<li>Fixed mouse not working in the game</li>\n</ul>\n<h4 id="v0-6-0">v0.6.0</h4>\n<ul>\n<li>Added AFK indicator</li>\n<li>Updated styles</li>\n<li>Fixed wrong cursor position on retina displays and zommed in pages</li>\n<li>Fixed emoticon parsing</li>\n<li>Fixed issue on mobile devices</li>\n</ul>\n<h4 id="v0-5-0">v0.5.0</h4>\n<ul>\n<li>Added butterfies</li>\n<li>Added apples</li>\n<li>Added apple emote to chat</li>\n<li>Fixed login form not displaying on mobile safari</li>\n</ul>\n<div class="text-muted">• c •</div></div></div>',
         n.exports
   });
-  t.registerDynamic("d0", [], !0, function (t, e, n) {
+  System.registerDynamic("d0", [], !0, function (t, e, n) {
     return n.exports = '<div ng-init="vm.init()" class="row"><div class="col-md-6 text-center"><div style="max-width: 400px; margin: auto;" class="input-group"><input type="text" ng-model="vm.pony.name" placeholder="name of your character" maxlength="{{vm.maxNameLength}}" class="form-control text-center"><div class="input-group-btn"><button type="button" ng-click="vm.new()" ng-disabled="!vm.canNew" class="btn btn-default">new</button><div uib-dropdown class="btn-group"><button type="button" ng-disabled="!vm.ponies.length" uib-dropdown-toggle class="btn btn-default"><span class="caret"></span></button><ul uib-dropdown-menu class="dropdown-menu-right"><li ng-repeat="p in vm.ponies | orderBy:\'name\' track by $index"><a href="#" ng-click="vm.select(p)">{{p.name}}</a></li></ul></div><button type="button" ng-if="!vm.deleting" ng-disabled="!vm.canDelete" ng-click="vm.deleting = true" title="delete pony" class="btn btn-danger"><i class="fa fa-trash"></i></button><button type="button" ng-if="vm.deleting" ng-disabled="!vm.canDelete" ng-click="vm.deleting = false" uib-tooltip="cancel" class="btn btn-danger"><i class="fa fa-fw fa-times"></i></button><button type="button" ng-if="vm.deleting" ng-disabled="!vm.canDelete" ng-click="vm.delete()" uib-tooltip="confirm delete" class="btn btn-success"><i class="fa fa-fw fa-check"></i></button></div></div><div style="margin: 30px auto 20px auto;" fix-to-top="vm.fixed = fixed" fix-to-top-offset="-40" class="character-preview-box"><character-preview pony="vm.pony" state="vm.state" no-background="true"></character-preview></div><div class="form-group text-center"><button ng-disabled="!vm.canDuplicate" ng-click="vm.duplicate()" class="btn btn-lg btn-default">Duplicate</button> <button ng-disabled="!vm.canRevert" ng-click="vm.revert()" class="btn btn-lg btn-default">Revert</button> <button ng-disabled="!vm.canSave" ng-click="vm.save()" class="btn btn-lg btn-default">Save</button></div><div style="max-width: 400px;" class="center-block"><play-box label="Save and Play" error="vm.error"></play-box></div><div style="max-width: 400px;" class="rules center-block text-left"><h4>General rules</h4><ul class="text-muted"><li>Be kind to others</li><li>Don\'t spam</li><li>Don\'t modify the game with hacks or scripts</li><li>Don\'t encourage spamming or hacking</li></ul></div><div style="max-width: 400px;" class="rules center-block text-left"><h4>Notice</h4><p class="text-muted">This game is very early in development. There might be bugs and occasional downtimes.</p><p class="text-muted">Please do not redistribute any of the game files or code.</p></div></div><div style="min-height: 500px;" class="col-md-6"><uib-tabset type="pills" active="vm.activeTab" ng-if="vm.loaded"><uib-tab heading="body"><div class="panel container-fluid character-tab"><div class="form-horizontal"><div class="row form-group"><div class="col-sm-4"><label class="control-label">General options</label></div><div class="col-sm-8"><div class="clearfix"><check-box icon="fa-check" checked="vm.pony.customOutlines" class="pull-left"></check-box><label style="margin-left: 10px;" class="form-control-static text-muted">allow custom outlines</label></div></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Show social site</label></div><div class="col-sm-8"><div uib-dropdown class="dropdown"><button uib-dropdown-toggle class="btn btn-default"><i ng-if="vm.site.icon" ng-class="vm.site.icon" ng-style="{ color: vm.site.color }" class="fa fa-fw fa-lg"></i><b> {{vm.site.name}} </b><span class="caret"></span></button><ul uib-dropdown-menu class="dropdown-menu"><li ng-repeat="s in vm.sites"><a ng-click="vm.site = s"><i ng-class="s.icon" ng-style="{ color: s.color }" class="fa fa-fw fa-lg"></i><b> {{s.name}}</b></a></li></ul></div></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Animation</label></div><div class="col-sm-8"><div class="btn-group"><label ng-repeat="a in ::vm.animations" ng-model="vm.activeAnimation" uib-btn-radio="::$index" class="btn btn-primary">{{::a.name}}</label></div> <button ng-if="vm.canExport" ng-click="vm.export()" class="btn btn-default">export</button></div></div><div class="row form-group"><div class="col-sm-4"><check-box icon="fa-play" checked="vm.playAnimation" class="lock-box"></check-box><label class="control-label">Frame</label></div><div class="col-sm-8"><input type="number" ng-model="vm.state.animationFrame" ng-disabled="vm.playAnimation" min="0" class="form-control"></div></div><hr><fill-outline label="Body color" fill="vm.pony.coatFill" outline="vm.pony.coatOutline" outline-locked="vm.pony.lockCoatOutline" outline-hidden="!vm.customOutlines"></fill-outline><hr><sprite-set-selection label="Horn" base="vm.baseCoatColor" set="vm.pony.horn" sets="::vm.horns" outline-hidden="!vm.customOutlines" compact="true"></sprite-set-selection><hr><sprite-set-selection label="Wings" base="vm.baseCoatColor" set="vm.pony.wings" sets="::vm.wings" outline-hidden="!vm.customOutlines" compact="true"></sprite-set-selection><hr><sprite-set-selection label="Front hooves" base="vm.baseCoatColor" set="vm.pony.frontHooves" sets="::vm.frontHooves" outline-hidden="!vm.customOutlines" compact="true"></sprite-set-selection><hr><sprite-set-selection label="Back hooves" base="vm.baseCoatColor" set="vm.pony.backHooves" sets="::vm.backHooves" outline-hidden="!vm.customOutlines" compact="true"></sprite-set-selection><hr><div class="row form-group"><div class="col-sm-12 text-center"><label class="control-label text-muted">Butt mark</label></div></div><div class="row form-group"><div class="col-sm-7"><button ng-click="vm.clearCM()" title="Clear all" class="btn btn-primary"><i class="fa fa-fw fa-trash"></i></button> <div class="btn-group"><label ng-model="vm.brushType" uib-btn-radio="\'eraser\'" title="Eraser" class="btn btn-primary"><i class="fa fa-fw fa-eraser"></i></label><label ng-model="vm.brushType" uib-btn-radio="\'eyedropper\'" title="Eyedropper" class="btn btn-primary"><i class="fa fa-fw fa-eyedropper"></i></label><label ng-model="vm.brushType" uib-btn-radio="\'brush\'" title="Brush" class="btn btn-primary"><i class="fa fa-fw fa-paint-brush"></i></label></div></div><div class="col-sm-5"><color-picker color="vm.brush"></color-picker></div></div><div class="row form-group"><div class="col-sm-12 text-center"><bitmap-box bitmap="vm.pony.cm" tool="vm.brushType" color="vm.brush" width="::vm.cmSize" height="::vm.cmSize"></bitmap-box></div></div><div class="row form-group"><div class="col-sm-12 text-center"><check-box icon="fa-check" checked="vm.pony.cmFlip"></check-box><label style="margin-left: 10px; vertical-align: top;" class="form-control-static text-muted">don\'t flip mark on the other side</label></div></div></div></div></uib-tab><uib-tab heading="mane"><div class="panel container-fluid character-tab"><div class="form-horizontal"><sprite-set-selection label="Mane" base="vm.baseHairColor" set="vm.pony.mane" sets="::vm.manes" outline-hidden="!vm.customOutlines" non-lockable="true"></sprite-set-selection><hr><sprite-set-selection label="Back mane" base="vm.baseHairColor" set="vm.pony.backMane" sets="::vm.backManes" outline-hidden="!vm.customOutlines"></sprite-set-selection></div></div></uib-tab><uib-tab heading="tail"><div class="panel container-fluid character-tab"><div class="form-horizontal"><sprite-set-selection label="Tail" base="vm.baseHairColor" set="vm.pony.tail" sets="::vm.tails" outline-hidden="!vm.customOutlines"></sprite-set-selection></div></div></uib-tab><uib-tab heading="face"><div class="panel container-fluid character-tab"><div class="form-horizontal"><div class="row form-group"><div class="col-sm-4"><label class="control-label">Eyelashes</label></div><div class="col-sm-8"><div class="btn-group"><label ng-model="vm.pony.eyelashes" uib-btn-radio="0" class="btn btn-primary">no</label><label ng-model="vm.pony.eyelashes" uib-btn-radio="1" class="btn btn-primary">yes</label></div></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Eye color</label></div><div class="col-sm-8"><color-picker color="vm.pony.eyeColorRight" changed="vm.eyeColorLockChanged(vm.pony.lockEyeColor)"></color-picker></div></div><div class="row form-group"><div class="col-sm-4"><check-box checked="vm.pony.lockEyeColor" icon="fa-lock" changed="vm.eyeColorLockChanged($value)" class="lock-box"></check-box><label class="control-label">Eye color (left)</label></div><div class="col-sm-8"><color-picker color="vm.pony.eyeColorLeft" is-disabled="vm.pony.lockEyeColor"></color-picker></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Eye whites color</label></div><div class="col-sm-8"><color-picker color="vm.pony.eyeWhites"></color-picker></div></div><div class="row form-group"><div class="col-sm-4"><check-box checked="vm.pony.lockEyes" icon="fa-lock" changed="vm.eyeOpennessChanged($value)" class="lock-box"></check-box><label class="control-label">Eye openness</label></div><div class="col-sm-4 col-xs-6"><input type="number" ng-model="vm.pony.eyeOpennessRight" min="1" max="6" step="1" ng-change="vm.eyeOpennessChanged(vm.pony.lockEyes)" class="form-control"></div><div class="col-sm-4 col-xs-6"><input type="number" ng-model="vm.pony.eyeOpennessLeft" min="1" max="6" step="1" ng-disabled="vm.pony.lockEyes" class="form-control"></div></div><div class="row form-group"><div class="col-sm-4"><check-box checked="vm.pony.eyeshadow" icon="fa-check" class="lock-box"></check-box><label class="control-label">Eyeshadow</label></div><div class="col-sm-8"><color-picker color="vm.pony.eyeshadowColor" is-disabled="!vm.pony.eyeshadow"></color-picker></div></div><hr><div class="row form-group"><div class="col-sm-4"><label class="control-label">Expression</label></div><div class="col-sm-8"><sprite-selection selected="vm.pony.muzzle" sprites="vm.muzzles" fill="vm.pony.coatFill" outline="vm.pony.coatOutline" circle="vm.pony.coatFill"></sprite-selection></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Fangs</label></div><div class="col-sm-8"><sprite-selection selected="vm.pony.fangs" sprites="vm.fangs" outline="vm.pony.coatOutline" circle="vm.pony.coatFill"></sprite-selection></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Markings</label></div><div class="col-sm-8"><sprite-selection selected="vm.pony.freckles" sprites="vm.freckles" fill="vm.pony.frecklesColor" outline="vm.pony.coatOutline" circle="vm.pony.coatFill"></sprite-selection></div></div><div class="row form-group"><div class="col-sm-4"><label class="control-label">Markings color</label></div><div class="col-sm-8"><color-picker color="vm.pony.frecklesColor" is-disabled="!vm.pony.freckles"></color-picker></div></div><hr><sprite-set-selection label="Facial hair" base="vm.baseHairColor" set="vm.pony.facialHair" sets="::vm.facialHair" outline-hidden="!vm.customOutlines"></sprite-set-selection></div></div></uib-tab><uib-tab heading="other"><div class="panel container-fluid character-tab"><div class="form-horizontal"><uib-tabset active="vm.activeAccessoryTab"><uib-tab heading="head"><div style="margin-top: 10px;"><sprite-set-selection label="Head accessories" base="vm.baseHeadAccessoryColor" set="vm.pony.headAccessory" sets="::vm.headAccessories" outline-hidden="!vm.customOutlines" non-lockable="true"></sprite-set-selection><hr><sprite-set-selection label="Ear accessories" base="vm.baseEarAccessoryColor" set="vm.pony.earAccessory" sets="::vm.earAccessories" outline-hidden="!vm.customOutlines" non-lockable="true"></sprite-set-selection><hr><sprite-set-selection label="Face accessories" base="vm.baseFaceAccessoryColor" set="vm.pony.faceAccessory" sets="::vm.faceAccessories" outline-hidden="!vm.customOutlines" non-lockable="true"></sprite-set-selection></div></uib-tab><uib-tab heading="neck"><div style="margin-top: 10px;"><sprite-set-selection label="Neck accessories" base="vm.baseNeckAccessoryColor" set="vm.pony.neckAccessory" sets="::vm.neckAccessories" outline-hidden="!vm.customOutlines" non-lockable="true"></sprite-set-selection></div></uib-tab><uib-tab heading="legs"><div style="margin-top: 10px;"><sprite-set-selection label="Front leg accessories" base="vm.baseFrontLegAccessoryColor" set="vm.pony.frontLegAccessory" sets="::vm.frontLegAccessories" outline-hidden="!vm.customOutlines" non-lockable="true"></sprite-set-selection><hr><div class="row form-group"><div class="col-sm-12"><div class="clearfix"><check-box icon="fa-check" checked="vm.pony.lockBackLegAccessory" class="pull-left"></check-box><label style="margin-left: 10px;" class="form-control-static text-muted">use the same accessory for back legs</label></div></div></div><sprite-set-selection label="Back leg accessories" base="vm.baseBackLegAccessoryColor" set="vm.pony.backLegAccessory" sets="::vm.backLegAccessories" outline-hidden="!vm.customOutlines" non-lockable="true" ng-if="!vm.pony.lockBackLegAccessory"></sprite-set-selection></div></uib-tab></uib-tabset></div></div></uib-tab></uib-tabset></div></div>',
         n.exports
   });
-  t.registerDynamic("d1", [], !0, function (t, e, n) {
+  System.registerDynamic("d1", [], !0, function (t, e, n) {
     return n.exports = '<div ng-init="vm.init()"><h1>Account settings</h1></div><div class="row"><div class="col-md-6"><form name="form" ng-submit="vm.submit()" style="max-width: 400px;" class="form"><div class="form-group"><h3>Account details</h3></div><div class="form-group"><label for="account-name" class="control-label">name</label><input id="account-name" type="text" ng-model="vm.data.name" required maxlength="{{vm.nameMaxLength}}" class="form-control"></div><div ng-if="vm.error" class="form-group"><div class="alert alert-danger">{{vm.error}}</div></div><div class="form-group"><button type="submit" ng-disabled="!vm.canSubmit || form.$pristine || form.$invalid || form.$pending" class="btn btn-primary">Save</button></div></form></div><div class="col-md-6"><div class="form form-horizontal"><div class="form-group row"><div class="col-xs-12"><h3>Game settings</h3></div></div><div class="form-group row"><div class="col-xs-6"><label class="control-label">bad word filter</label></div><div class="col-xs-6 btn-group"><label ng-model="vm.settings.filterSwearWords" uib-btn-radio="true" class="btn btn-primary">ON</label><label ng-model="vm.settings.filterSwearWords" uib-btn-radio="false" class="btn btn-primary">OFF</label></div></div><div class="form-group row"><div class="col-xs-6"><label class="control-label">hide all messages with russian text</label></div><div class="col-xs-6 btn-group"><label ng-model="vm.settings.filterCyrillic" uib-btn-radio="true" class="btn btn-primary">ON</label><label ng-model="vm.settings.filterCyrillic" uib-btn-radio="false" class="btn btn-primary">OFF</label></div></div></div><h3>Connected accounts</h3><div ng-repeat="s in vm.sites"><a ng-href="{{s.url}}" target="_blank"><i ng-class="s.icon" class="fa fa-fw fa-lg"></i><b>{{s.name}}</b></a></div></div><div class="row"><div class="col-xs-12"><a href="/" style="max-width: 200px; margin-top: 50px;" class="btn btn-lg btn-primary btn-block center-block"><i class="fa fa-angle-double-left"></i> Back to game</a></div></div></div>',
         n.exports
   });
-  t.registerDynamic("d2", [getCodeName("AngularRoute"), getCodeName("AngularAnimate"), getCodeName("angular-ui/bootstrap.js"), getCodeName("Angular"), "2f", "a4", "21", "a7", "a8", "a9", "aa", "cd", "ce", "cf", "d0", "d1"], !0, function (t, e, n) {
+  System.registerDynamic("d2", [getCodeName("AngularRoute"), getCodeName("AngularAnimate"), getCodeName("angular-ui/bootstrap.js"), getCodeName("Angular"), "2f", "a4", "21", "a7", "a8", "a9", "aa", "cd", "ce", "cf", "d0", "d1"], !0, function (t, e, n) {
     "use strict";
     t(getCodeName("AngularRoute")),
         t(getCodeName("AngularAnimate")),
@@ -8481,7 +8481,7 @@ var modules = function (t) {
     ]),
         n.exports
   });
-  t.registerDynamic("21", [], !0, function (t, e, n) {
+  System.registerDynamic("21", [], !0, function (t, e, n) {
     "use strict";
     function r(t) {
       return "undefined" != typeof document ? document.body.getAttribute(t) : null
@@ -8498,7 +8498,7 @@ var modules = function (t) {
     "undefined" != typeof window && (window.debugOptions = e.debugOptions),
         n.exports
   });
-  t.registerDynamic("main", ["3", "4", "d2", getCodeName("BlueBird"), getCodeName("Angular"), "21"], !0, function (t, e, n) {
+  System.registerDynamic("main", ["3", "4", "d2", getCodeName("BlueBird"), getCodeName("Angular"), "21"], !0, function (t, e, n) {
     "use strict";
     window.__ponytown = !0,
         t("3"),
