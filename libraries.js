@@ -321,7 +321,7 @@ var mdls = {
         passTo: "Bluebird/bluebird.js"
     },
     Lodash: {
-        name: "26",
+        name: "27",
         passThrough: true,
         passTo: "lodash/lodash.js"
     },
