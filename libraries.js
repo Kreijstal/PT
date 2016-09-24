@@ -1,11 +1,11 @@
 var mdls = {
     "toBlobShim": {
-        name: "4",
+        name: "4 <deleted>",
         dependencies: [],
         executingRequire: false
     },
     "CanvasContext2DEllipseShim": {
-        name: "5",
+        name: "5 <deleted>",
         dependencies: [],
         executingRequire: true
     },
@@ -15,22 +15,22 @@ var mdls = {
         executingRequire: false
     },
     "angular/angular-route.js": {
-        name: "6",
+        name: "5",
         dependencies: ["Angular"],
         executingRequire: false
     },
     "angular/angular-animate.js": {
-        name: "9",
+        name: "8",
         dependencies: ["Angular"],
         executingRequire: false
     },
     "angular-ui/bootstrap.js": {
-        name: "b",
+        name: "a",
         dependencies: [],
         executingRequire: false
     },
     "Bluebird/bluebird.js": {
-        name: "c",
+        name: "d3",
         dependencies: [],
         executingRequire: true
     },
@@ -301,22 +301,22 @@ var mdls = {
 }
     , //Passthroughs
     Angular: {
-        name: "7",
+        name: "6",
         passThrough: true,
         passTo: "angular.js"
     },
     AngularRoute: {
-        name: "8",
+        name: "7",
         passThrough: true,
         passTo: "angular/angular-route.js"
     },
     AngularAnimate: {
-        name: "a",
+        name: "9",
         passThrough: true,
         passTo: "angular/angular-animate.js"
     },
     BlueBird: {
-        name: "d",
+        name: "c",
         passThrough: true,
         passTo: "Bluebird/bluebird.js"
     },
