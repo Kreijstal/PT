@@ -6280,16 +6280,16 @@ var modules = function (System) {
         e.darkenColor = o,
         n.exports
   });
-  System.registerDynamic("31", [getCodeName("Lodash"), "20", "28", "23", "39", "22", "35"], !0, function (t, e, n) {
+  System.registerDynamic("31", [getCodeName("Lodash"), "20", "28", "23", "39", "22", "35"], !0, function (require, exports, module) {
     "use strict";
-    function r(t) {
-      return R.mergeWith({}, o(), R.cloneDeep(t), function (t, e) {
+    function fixPony(t) {
+      return lodash.mergeWith({}, createDefaultPony(), lodash.cloneDeep(t), function (t, e) {
         if (null == e)
           return t
       })
     }
 
-    function i(t, e, n) {
+    function createSpriteSet(t, e, n) {
       void 0 === e && (e = !0),
       void 0 === n && (n = "gold");
       var r = [n, "dodgerblue", "limegreen", "orchid", "crimson", "aquamarine"]
@@ -6304,25 +6304,25 @@ var modules = function (System) {
       }
     }
 
-    function o() {
+    function createDefaultPony() {
       return {
         id: null,
         name: "",
         site: null,
-        horn: i(0, !0, "red"),
-        wings: i(0, !0, "red"),
-        frontHooves: i(0, !1, "orange"),
-        backHooves: i(0, !1, "orange"),
-        mane: i(2, !1),
-        backMane: i(1),
-        tail: i(1),
-        facialHair: i(0),
-        headAccessory: i(0, !1, "violet"),
-        earAccessory: i(0, !1, "gray"),
-        faceAccessory: i(0, !1, "black"),
-        neckAccessory: i(0, !1, "violet"),
-        frontLegAccessory: i(0, !1, "violet"),
-        backLegAccessory: i(0, !1, "violet"),
+        horn: createSpriteSet(0, !0, "red"),
+        wings: createSpriteSet(0, !0, "red"),
+        frontHooves: createSpriteSet(0, !1, "orange"),
+        backHooves: createSpriteSet(0, !1, "orange"),
+        mane: createSpriteSet(2, !1),
+        backMane: createSpriteSet(1),
+        tail: createSpriteSet(1),
+        facialHair: createSpriteSet(0),
+        headAccessory: createSpriteSet(0, !1, "violet"),
+        earAccessory: createSpriteSet(0, !1, "gray"),
+        faceAccessory: createSpriteSet(0, !1, "black"),
+        neckAccessory: createSpriteSet(0, !1, "violet"),
+        frontLegAccessory: createSpriteSet(0, !1, "violet"),
+        backLegAccessory: createSpriteSet(0, !1, "violet"),
         lockBackLegAccessory: !0,
         coatFill: "red",
         coatOutline: "darkred",
@@ -6341,7 +6341,7 @@ var modules = function (System) {
         muzzle: 0,
         freckles: 0,
         frecklesColor: "darkred",
-        cm: R.range(0, L.CM_SIZE * L.CM_SIZE).map(function () {
+        cm: lodash.range(0, L.CM_SIZE * L.CM_SIZE).map(function () {
           return ""
         }),
         cmFlip: !1,
@@ -6391,7 +6391,7 @@ var modules = function (System) {
       } : null
     }
 
-    function h(t) {
+    function toRenderInfo(t) {
       return {
         name: t.name,
         site: t.site,
@@ -6441,7 +6441,7 @@ var modules = function (System) {
       }
     }
 
-    function d(t) {
+    function getLengthOfChildrenArrays(t) {
       return t.map(function (t) {
         return t ? t.map(function (t) {
           return t.length
@@ -6449,152 +6449,152 @@ var modules = function (System) {
       })
     }
 
-    function v(t) {
+    function compressColor(t) {
       return t ? U.default.parse(t).toHexRGB() : ""
     }
 
-    function m(t) {
+    function deleteNulls(t) {
       return Object.keys(t).forEach(function (e) {
         null == t[e] && delete t[e]
       }),
           t
     }
 
-    function g(t) {
-      return t ? 1 : 0
+    function booloeanToInt(boolean) {
+      return boolean ? 1 : 0
     }
 
-    function y(t) {
-      return !!+t
+    function numberButZero(number) {
+      return !!+number
     }
 
-    function b(t, e) {
-      return t.slice(0, e).map(g).join(" ")
+    function compressBooleans(t, e) {
+      return t.slice(0, e).map(booloeanToInt).join(" ")
     }
 
-    function _(t) {
-      return t && t.split ? t.split(" ").map(y) : null
+    function decompressBooleans(t) {
+      return t && t.split ? t.split(" ").map(numberButZero) : null
     }
 
-    function w(t, e) {
-      return t.slice(0, e).map(v).join(" ")
+    function compressColor(t, e) {
+      return t.slice(0, e).map(compressColor).join(" ")
     }
 
-    function x(t) {
+    function decompressColor(t) {
       return t && t.split ? t.split(" ") : null
     }
 
-    function E(t, e, n, r) {
+    function compressPonyObject(objToCompress, e, n, r) {
       if (void 0 === n && (n = !0),
           void 0 === r && (r = 0),
-          !t || n && 0 === t.type)
+          !objToCompress || n && 0 === objToCompress.type)
         return null;
-      var i = e ? d(e) : null
-          , o = Math.max(i ? j.at(j.at(i, t.type), t.pattern) : 6, r);
-      return [t.type, t.pattern, w(t.fills, o), w(t.outlines, o), b(t.lockFills, o), b(t.lockOutlines, o)]
+      var i = e ? getLengthOfChildrenArrays(e) : null
+          , o = Math.max(i ? j.at(j.at(i, objToCompress.type), objToCompress.pattern) : 6, r);
+      return [objToCompress.type, objToCompress.pattern, compressColor(objToCompress.fills, o), compressColor(objToCompress.outlines, o), compressBooleans(objToCompress.lockFills, o), compressBooleans(objToCompress.lockOutlines, o)]
     }
 
-    function $(t) {
+    function decompressPonyObject(t) {
       return t ? {
         type: t[0],
         pattern: t[1],
-        fills: x(t[2]),
-        outlines: x(t[3]),
-        lockFills: _(t[4]),
-        lockOutlines: _(t[5])
+        fills: decompressColor(t[2]),
+        outlines: decompressColor(t[3]),
+        lockFills: decompressBooleans(t[4]),
+        lockOutlines: decompressBooleans(t[5])
       } : null
     }
 
-    function S(t) {
+    function compressPonyInfo(ponyobj) {
       var e = {
-        name: t.name,
-        site: t.site,
-        h: E(t.horn, F.ponyHorns),
-        w: E(t.wings, F.ponyWings),
-        fh: E(t.frontHooves, null),
-        bh: E(t.backHooves, null),
-        m: E(t.mane, F.ponyManes, !1, 1),
-        bm: E(t.backMane, F.ponyBackManes, !1),
-        t: E(t.tail, F.ponyTails, !1),
-        fac: E(t.facialHair, F.ponyFacialHair),
-        ha: E(t.headAccessory, F.ponyHeadAccessories),
-        ea: E(t.earAccessory, F.ponyEarAccessories),
-        fa: E(t.faceAccessory, F.ponyFaceAccessories),
-        na: E(t.neckAccessory, F.ponyNeckAccessories),
-        fla: E(t.frontLegAccessory, F.ponyFrontLegAccessoriesStand[0]),
-        bla: t.lockBackLegAccessory ? null : E(t.backLegAccessory, F.ponyBackLegAccessoriesStand[0]),
-        lbl: g(t.lockBackLegAccessory),
-        cf: v(t.coatFill),
-        co: v(t.coatOutline),
-        lco: g(t.lockCoatOutline),
-        el: t.eyelashes,
-        ecl: v(t.eyeColorLeft),
-        ecr: v(t.eyeColorRight),
-        ew: v(t.eyeWhites),
-        eol: t.eyeOpennessLeft,
-        eor: t.eyeOpennessRight,
-        es: g(t.eyeshadow),
-        esc: v(t.eyeshadowColor),
-        le: g(t.lockEyes),
-        lec: g(t.lockEyeColor),
-        fan: t.fangs,
-        mu: t.muzzle,
-        fr: t.freckles,
-        frc: t.freckles ? v(t.frecklesColor) : null,
-        cm: t.cm && t.cm.some(function (t) {
+        name: ponyobj.name,
+        site: ponyobj.site,
+        h: compressPonyObject(ponyobj.horn, F.ponyHorns),
+        w: compressPonyObject(ponyobj.wings, F.ponyWings),
+        fh: compressPonyObject(ponyobj.frontHooves, null),
+        bh: compressPonyObject(ponyobj.backHooves, null),
+        m: compressPonyObject(ponyobj.mane, F.ponyManes, !1, 1),
+        bm: compressPonyObject(ponyobj.backMane, F.ponyBackManes, !1),
+        t: compressPonyObject(ponyobj.tail, F.ponyTails, !1),
+        fac: compressPonyObject(ponyobj.facialHair, F.ponyFacialHair),
+        ha: compressPonyObject(ponyobj.headAccessory, F.ponyHeadAccessories),
+        ea: compressPonyObject(ponyobj.earAccessory, F.ponyEarAccessories),
+        fa: compressPonyObject(ponyobj.faceAccessory, F.ponyFaceAccessories),
+        na: compressPonyObject(ponyobj.neckAccessory, F.ponyNeckAccessories),
+        fla: compressPonyObject(ponyobj.frontLegAccessory, F.ponyFrontLegAccessoriesStand[0]),
+        bla: ponyobj.lockBackLegAccessory ? null : compressPonyObject(ponyobj.backLegAccessory, F.ponyBackLegAccessoriesStand[0]),
+        lbl: booloeanToInt(ponyobj.lockBackLegAccessory),
+        cf: compressColor(ponyobj.coatFill),
+        co: compressColor(ponyobj.coatOutline),
+        lco: booloeanToInt(ponyobj.lockCoatOutline),
+        el: ponyobj.eyelashes,
+        ecl: compressColor(ponyobj.eyeColorLeft),
+        ecr: compressColor(ponyobj.eyeColorRight),
+        ew: compressColor(ponyobj.eyeWhites),
+        eol: ponyobj.eyeOpennessLeft,
+        eor: ponyobj.eyeOpennessRight,
+        es: booloeanToInt(ponyobj.eyeshadow),
+        esc: compressColor(ponyobj.eyeshadowColor),
+        le: booloeanToInt(ponyobj.lockEyes),
+        lec: booloeanToInt(ponyobj.lockEyeColor),
+        fan: ponyobj.fangs,
+        mu: ponyobj.muzzle,
+        fr: ponyobj.freckles,
+        frc: ponyobj.freckles ? compressColor(ponyobj.frecklesColor) : null,
+        cm: ponyobj.cm && ponyobj.cm.some(function (t) {
           return !!t
-        }) ? R.dropRightWhile(t.cm.map(v), function (t) {
+        }) ? lodash.dropRightWhile(ponyobj.cm.map(compressColor), function (t) {
           return !t
         }) : null,
-        cmf: g(t.cmFlip),
-        col: g(t.customOutlines)
+        cmf: booloeanToInt(ponyobj.cmFlip),
+        col: booloeanToInt(ponyobj.customOutlines)
       };
-      return m(e)
+      return deleteNulls(e)
     }
 
-    function T(t) {
+    function decompressPonyInfo(t) {
       var e = {
         id: t.id,
         name: t.name,
         site: t.site,
         lastUsed: t.lastUsed,
-        horn: $(t.h),
-        wings: $(t.w),
-        frontHooves: $(t.fh),
-        backHooves: $(t.bh),
-        mane: $(t.m),
-        backMane: $(t.bm),
-        tail: $(t.t),
-        facialHair: $(t.fac),
-        headAccessory: $(t.ha),
-        earAccessory: $(t.ea),
-        faceAccessory: $(t.fa),
-        neckAccessory: $(t.na),
-        frontLegAccessory: $(t.fla),
-        backLegAccessory: $(t.bla),
-        lockBackLegAccessory: y(t.lbl),
+        horn: decompressPonyObject(t.h),
+        wings: decompressPonyObject(t.w),
+        frontHooves: decompressPonyObject(t.fh),
+        backHooves: decompressPonyObject(t.bh),
+        mane: decompressPonyObject(t.deleteNulls),
+        backMane: decompressPonyObject(t.bm),
+        tail: decompressPonyObject(t.t),
+        facialHair: decompressPonyObject(t.fac),
+        headAccessory: decompressPonyObject(t.ha),
+        earAccessory: decompressPonyObject(t.ea),
+        faceAccessory: decompressPonyObject(t.fa),
+        neckAccessory: decompressPonyObject(t.na),
+        frontLegAccessory: decompressPonyObject(t.fla),
+        backLegAccessory: decompressPonyObject(t.bla),
+        lockBackLegAccessory: numberButZero(t.lbl),
         coatFill: t.cf,
         coatOutline: t.co,
-        lockCoatOutline: y(t.lco),
+        lockCoatOutline: numberButZero(t.lco),
         eyelashes: t.el,
         eyeColorLeft: t.ecl,
         eyeColorRight: t.ecr,
         eyeWhites: t.ew,
         eyeOpennessLeft: t.eol,
         eyeOpennessRight: t.eor,
-        eyeshadow: y(t.es),
+        eyeshadow: numberButZero(t.es),
         eyeshadowColor: t.esc,
-        lockEyes: y(t.le),
-        lockEyeColor: y(t.lec),
+        lockEyes: numberButZero(t.le),
+        lockEyeColor: numberButZero(t.lec),
         fangs: t.fan,
         muzzle: t.mu,
         freckles: t.fr,
         frecklesColor: t.frc,
         cm: t.cm,
-        cmFlip: y(t.cmf),
-        customOutlines: y(t.col)
+        cmFlip: numberButZero(t.cmf),
+        customOutlines: numberButZero(t.col)
       };
-      return r(e)
+      return fixPony(e)
     }
 
     function k(t, e) {
@@ -6630,7 +6630,7 @@ var modules = function (System) {
       }
     }
 
-    function O(t, e) {
+    function toPalette(t, e) {
       return {
         name: t.name,
         site: t.site,
@@ -6682,26 +6682,26 @@ var modules = function (System) {
       }
     }
 
-    function I(t) {
-      R.forOwn(t, P.releasePalette)
+    function releasePalettes(t) {
+      lodash.forOwn(t, P.releasePalette)
     }
 
-    var R = t(getCodeName("Lodash"))
-        , F = t("20")
-        , P = t("28")
-        , j = t("23")
-        , N = t("39")
-        , L = t("22")
-        , U = t("35");
-    return e.fixPony = r,
-        e.createSpriteSet = i,
-        e.createDefaultPony = o,
-        e.toRenderInfo = h,
-        e.compressPonyInfo = S,
-        e.decompressPonyInfo = T,
-        e.toPalette = O,
-        e.releasePalettes = I,
-        n.exports
+    var lodash = require(getCodeName("Lodash"))
+        , F = require("20")
+        , P = require("28")
+        , j = require("23")
+        , N = require("39")
+        , L = require("22")
+        , U = require("35");
+    return exports.fixPony = fixPony,
+        exports.createSpriteSet = createSpriteSet,
+        exports.createDefaultPony = createDefaultPony,
+        exports.toRenderInfo = toRenderInfo,
+        exports.compressPonyInfo = compressPonyInfo,
+        exports.decompressPonyInfo = decompressPonyInfo,
+        exports.toPalette = toPalette,
+        exports.releasePalettes = releasePalettes,
+        module.exports
   });
   System.registerDynamic("25", ["35"], !0, function (t, e, n) {
     "use strict";
@@ -7282,12 +7282,12 @@ var modules = function (System) {
       return (t & e) === e
     }
 
-    function a(t, e) {
-      return t ? t[s(0 | e, 0, t.length - 1)] : null
+    function at(t, e) {
+      return t ? t[clamp(0 | e, 0, t.length - 1)] : null
     }
 
-    function s(t, e, n) {
-      return t > e ? t < n ? t : n : e
+    function clamp(t, min, max) {
+      return t > min ? t < max ? t : max : min
     }
 
     function u(t, e) {
@@ -7485,8 +7485,8 @@ var modules = function (System) {
     }
 
     function L(t, e, n, r) {
-      var i = Math.floor(100 * s(t, 0, 1e5)) | n << 24
-          , o = Math.floor(100 * s(e, 0, 1e5)) | r << 24;
+      var i = Math.floor(100 * clamp(t, 0, 1e5)) | n << 24
+          , o = Math.floor(100 * clamp(e, 0, 1e5)) | r << 24;
       return [i ^ nt, o ^ rt]
     }
 
@@ -7551,8 +7551,8 @@ var modules = function (System) {
     e.matchString = r,
         e.fromNow = i,
         e.hasFlag = o,
-        e.at = a,
-        e.clamp = s,
+        e.at = at,
+        e.clamp = clamp,
         e.findById = u,
         e.remove = l,
         e.removeById = c,
