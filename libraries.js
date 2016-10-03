@@ -1314,6 +1314,7 @@ function getLibraries(System) {
                 if (null != e) {
                     var n, r = Ei;
                     null != Si[t] && (r = Si[t]._config),
+
                         e = T(r, e),
                         n = new A(e),
                         n.parentLocale = Si[t],
@@ -80070,8 +80071,7 @@ b" + i + "*=d\
 
             module.exports = function lookupConstant (number) {
                 return gl10[number]
-            }}
-        ,
+            }},
         "gl-constants/1.0/numbers.js": function(require,exports,module){module.exports = {
             0: 'NONE',
             1: 'ONE',
