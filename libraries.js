@@ -81696,12 +81696,213 @@ b" + i + "*=d\
             }
 
         },
-        "gl-vao/vao.js": {
-            //https://github.com/stackgl/gl-vao/blob/master/vao.js
-            "name": "62" , "dependencies": ["gl-vao/lib/vao-native.js","gl-vao/lib/vao-emulated.js"], "executingRequire": true
-        },"gl-vao/lib/vao-native.js":{"name":"5f","dependencies":["gl-vao/lib/do-bind.js"],"executingRequire":true},
-        "gl-vao/lib/vao-emulated.js":{"name":"61","dependencies":["gl-vao/lib/do-bind.js"],"executingRequire":true},
-        "gl-vao/lib/do-bind.js":{"name":"60","dependencies":[],"executingRequire":true},
+        "gl-vao/vao.js": function(require,exports,module){"use strict"
+
+            var createVAONative = require(getCodeName("gl-vao/lib/vao-native.js"))
+            var createVAOEmulated = require(getCodeName("gl-vao/lib/vao-emulated.js"))
+
+            function ExtensionShim (gl) {
+                this.bindVertexArrayOES = gl.bindVertexArray.bind(gl)
+                this.createVertexArrayOES = gl.createVertexArray.bind(gl)
+                this.deleteVertexArrayOES = gl.deleteVertexArray.bind(gl)
+            }
+
+            function createVAO(gl, attributes, elements, elementsType) {
+                var ext = gl.createVertexArray
+                    ? new ExtensionShim(gl)
+                    : gl.getExtension('OES_vertex_array_object')
+                var vao
+
+                if(ext) {
+                    vao = createVAONative(gl, ext)
+                } else {
+                    vao = createVAOEmulated(gl)
+                }
+                vao.update(attributes, elements, elementsType)
+                return vao
+            }
+
+            module.exports = createVAO},
+        "gl-vao/lib/vao-native.js":function(require,exports,module){"use strict"
+
+            var bindAttribs = require(getCodeName("gl-vao/lib/do-bind.js"))
+
+            function VertexAttribute(location, dimension, a, b, c, d) {
+                this.location = location
+                this.dimension = dimension
+                this.a = a
+                this.b = b
+                this.c = c
+                this.d = d
+            }
+
+            VertexAttribute.prototype.bind = function(gl) {
+                switch(this.dimension) {
+                    case 1:
+                        gl.vertexAttrib1f(this.location, this.a)
+                        break
+                    case 2:
+                        gl.vertexAttrib2f(this.location, this.a, this.b)
+                        break
+                    case 3:
+                        gl.vertexAttrib3f(this.location, this.a, this.b, this.c)
+                        break
+                    case 4:
+                        gl.vertexAttrib4f(this.location, this.a, this.b, this.c, this.d)
+                        break
+                }
+            }
+
+            function VAONative(gl, ext, handle) {
+                this.gl = gl
+                this._ext = ext
+                this.handle = handle
+                this._attribs = []
+                this._useElements = false
+                this._elementsType = gl.UNSIGNED_SHORT
+            }
+
+            VAONative.prototype.bind = function() {
+                this._ext.bindVertexArrayOES(this.handle)
+                for(var i=0; i<this._attribs.length; ++i) {
+                    this._attribs[i].bind(this.gl)
+                }
+            }
+
+            VAONative.prototype.unbind = function() {
+                this._ext.bindVertexArrayOES(null)
+            }
+
+            VAONative.prototype.dispose = function() {
+                this._ext.deleteVertexArrayOES(this.handle)
+            }
+
+            VAONative.prototype.update = function(attributes, elements, elementsType) {
+                this.bind()
+                bindAttribs(this.gl, elements, attributes)
+                this.unbind()
+                this._attribs.length = 0
+                if(attributes)
+                    for(var i=0; i<attributes.length; ++i) {
+                        var a = attributes[i]
+                        if(typeof a === "number") {
+                            this._attribs.push(new VertexAttribute(i, 1, a))
+                        } else if(Array.isArray(a)) {
+                            this._attribs.push(new VertexAttribute(i, a.length, a[0], a[1], a[2], a[3]))
+                        }
+                    }
+                this._useElements = !!elements
+                this._elementsType = elementsType || this.gl.UNSIGNED_SHORT
+            }
+
+            VAONative.prototype.draw = function(mode, count, offset) {
+                offset = offset || 0
+                var gl = this.gl
+                if(this._useElements) {
+                    gl.drawElements(mode, count, this._elementsType, offset)
+                } else {
+                    gl.drawArrays(mode, offset, count)
+                }
+            }
+
+            function createVAONative(gl, ext) {
+                return new VAONative(gl, ext, ext.createVertexArrayOES())
+            }
+
+            module.exports = createVAONative},
+        "gl-vao/lib/vao-emulated.js":function(require,exports,module){"use strict"
+
+            var bindAttribs = require(getCodeName("gl-vao/lib/do-bind.js" ))
+
+            function VAOEmulated(gl) {
+                this.gl = gl
+                this._elements = null
+                this._attributes = null
+                this._elementsType = gl.UNSIGNED_SHORT
+            }
+
+            VAOEmulated.prototype.bind = function() {
+                bindAttribs(this.gl, this._elements, this._attributes)
+            }
+
+            VAOEmulated.prototype.update = function(attributes, elements, elementsType) {
+                this._elements = elements
+                this._attributes = attributes
+                this._elementsType = elementsType || this.gl.UNSIGNED_SHORT
+            }
+
+            VAOEmulated.prototype.dispose = function() { }
+            VAOEmulated.prototype.unbind = function() { }
+
+            VAOEmulated.prototype.draw = function(mode, count, offset) {
+                offset = offset || 0
+                var gl = this.gl
+                if(this._elements) {
+                    gl.drawElements(mode, count, this._elementsType, offset)
+                } else {
+                    gl.drawArrays(mode, offset, count)
+                }
+            }
+
+            function createVAOEmulated(gl) {
+                return new VAOEmulated(gl)
+            }
+
+            module.exports = createVAOEmulated},
+        "gl-vao/lib/do-bind.js":function(require,exports,module){"use strict"
+
+            function doBind(gl, elements, attributes) {
+                if(elements) {
+                    elements.bind()
+                } else {
+                    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, null)
+                }
+                var nattribs = gl.getParameter(gl.MAX_VERTEX_ATTRIBS)|0
+                if(attributes) {
+                    if(attributes.length > nattribs) {
+                        throw new Error("gl-vao: Too many vertex attributes")
+                    }
+                    for(var i=0; i<attributes.length; ++i) {
+                        var attrib = attributes[i]
+                        if(attrib.buffer) {
+                            var buffer = attrib.buffer
+                            var size = attrib.size || 4
+                            var type = attrib.type || gl.FLOAT
+                            var normalized = !!attrib.normalized
+                            var stride = attrib.stride || 0
+                            var offset = attrib.offset || 0
+                            buffer.bind()
+                            gl.enableVertexAttribArray(i)
+                            gl.vertexAttribPointer(i, size, type, normalized, stride, offset)
+                        } else {
+                            if(typeof attrib === "number") {
+                                gl.vertexAttrib1f(i, attrib)
+                            } else if(attrib.length === 1) {
+                                gl.vertexAttrib1f(i, attrib[0])
+                            } else if(attrib.length === 2) {
+                                gl.vertexAttrib2f(i, attrib[0], attrib[1])
+                            } else if(attrib.length === 3) {
+                                gl.vertexAttrib3f(i, attrib[0], attrib[1], attrib[2])
+                            } else if(attrib.length === 4) {
+                                gl.vertexAttrib4f(i, attrib[0], attrib[1], attrib[2], attrib[3])
+                            } else {
+                                throw new Error("gl-vao: Invalid vertex attribute")
+                            }
+                            gl.disableVertexAttribArray(i)
+                        }
+                    }
+                    for(; i<nattribs; ++i) {
+                        gl.disableVertexAttribArray(i)
+                    }
+                } else {
+                    gl.bindBuffer(gl.ARRAY_BUFFER, null)
+                    for(var i=0; i<nattribs; ++i) {
+                        gl.disableVertexAttribArray(i)
+                    }
+                }
+            }
+
+            module.exports = doBind},
         npmModules: (function () {
             libraries["SystemJS/lib/global-helpers.js"]("undefined" != typeof self ? self : global);
             libraries.amdModules("undefined" != typeof self ? self : global);
