@@ -32,6 +32,6 @@
   "homepage": "https://github.com/DrMilgram/PT#readme",
   "dependencies": {
     "http-proxy": "^1.14.0",
-    "jsdom": "^9.4.2"
+    "jsdom": "^26.0.0"
   }
 }
